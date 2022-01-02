@@ -1,0 +1,76 @@
+.select__card {
+	border: none;
+	background: var(--background-card);
+	border: 0.3rem solid transparent;
+	cursor: pointer;
+	height: 25rem;
+	width: 25rem;
+
+	margin-right: 2rem;
+	border-radius: 1rem;
+
+	box-shadow: 0rem 0.4rem 0.4rem var(--shadow-block);
+	padding: 2rem;
+
+	transition: all 0.25s;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	&.active {
+		p,
+		h3 {
+			color: var(--text-secondary);
+		}
+		svg {
+			fill: var(--text-secondary);
+		}
+		transform: scale(1.025);
+		border: 0.3rem solid var(--text-secondary);
+	}
+
+	&:hover {
+		transform: scale(1.025);
+		p,
+		h3 {
+			color: var(--text-secondary);
+			transition: all 0.25s;
+		}
+
+		svg {
+			transition: all 0.25s;
+			fill: var(--text-secondary);
+		}
+	}
+
+	& p {
+		font-size: 1.45rem;
+		color: var(--background-primary);
+		margin-top: 2.5rem;
+	}
+
+	& h3 {
+		color: var(--background-primary);
+		font-size: 2.45rem;
+		font-weight: 600;
+		margin-bottom: 0.75rem;
+	}
+
+	&.selected {
+		border: 0.2rem solid var(--text-secondary);
+
+		p {
+			color: var(--text-secondary);
+		}
+
+		svg {
+			fill: var(--text-secondary);
+		}
+	}
+
+	svg {
+		fill: var(--background-primary);
+	}
+}

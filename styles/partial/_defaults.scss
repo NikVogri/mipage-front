@@ -1,0 +1,107 @@
+*,
+*::before,
+*::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: inherit;
+}
+
+body {
+	position: relative;
+}
+
+html {
+	font-size: 62.5%;
+	font-family: "Roboto", sans-serif !important;
+	background-color: var(--background-primary);
+	color: var(--text-primary);
+}
+
+p {
+	font-size: 1.6rem;
+	font-weight: 400;
+}
+
+a {
+	text-decoration: none;
+	color: var(--text-secondary);
+	font-size: 1.6rem;
+	font-weight: 400;
+
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
+input,
+.form-control {
+	padding: 1.25rem 1rem;
+	font-size: 1.7rem;
+	font-family: inherit;
+	font-weight: 400;
+	outline: none;
+	border-radius: 3px;
+	border: 2px solid var(--outline);
+	background-color: var(--background-card);
+	width: 100%;
+
+	box-shadow: 0.2rem 0.2rem 0.2rem var(--shadow-block);
+
+	color: #fff;
+	// @include outline();
+
+	&.invalid {
+		border: solid 2px var(--color-pop-hover);
+	}
+}
+
+label {
+	font-size: 1.6rem;
+	font-weight: 500;
+	margin-bottom: 0.25rem;
+	margin-top: 1.5rem;
+	display: block;
+}
+
+.form-error {
+	font-size: 1.2rem;
+	font-weight: 400;
+	display: block;
+	margin-top: 0.5rem;
+
+	color: var(--color-pop);
+}
+
+.form-button {
+	font-size: 1.6rem;
+	font-family: inherit;
+	font-weight: 700;
+	padding: 1rem 1rem;
+	color: var(--text-primary);
+	margin-top: 2.5rem;
+	background-color: var(--button-primary);
+	width: 100%;
+
+	min-height: 4.7rem;
+	box-shadow: 0.2rem 0.2rem 0.2rem var(--shadow-block);
+
+	border: none;
+	cursor: pointer;
+
+	border-radius: 0.5rem;
+
+	&:hover {
+		background-color: var(--button-primary-hover);
+	}
+
+	&:disabled {
+		background-color: var(--button-primary-disabled);
+		cursor: not-allowed;
+	}
+}
+
+.custom-portal {
+	height: 0;
+	width: 0;
+}

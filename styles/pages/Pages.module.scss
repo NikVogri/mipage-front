@@ -1,0 +1,44 @@
+.heading {
+	font-size: 1.8rem;
+	padding-bottom: 1.5rem;
+
+	color: var(--text-primary);
+}
+
+.no__found {
+	font-size: 1.4rem;
+	color: var(--text-secondary);
+}
+
+.sticky__rb {
+	position: fixed;
+	bottom: 10%;
+	right: 10%;
+	background: var(--color-pop);
+
+	height: 5rem;
+	width: 5rem;
+	border-radius: 50%;
+
+	box-shadow: 0rem 0rem 1.5rem var(--shadow-block);
+	cursor: pointer;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	transition: all 0.25s ease-in-out;
+
+	&:hover {
+		background: var(--color-pop);
+		transform: translateX(-0.3rem) translateY(-0.3rem) scale(1.1);
+	}
+}
+
+.pages__container {
+	width: 100%;
+	padding: 2rem 0;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, 18rem);
+	gap: 2rem;
+}

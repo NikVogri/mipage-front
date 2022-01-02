@@ -1,0 +1,59 @@
+.page__card {
+	background: var(--background-card);
+	min-height: 18rem;
+	padding: 1.5rem;
+	position: relative;
+
+	&:hover {
+		text-decoration: none;
+	}
+
+	border-radius: 1rem;
+
+	box-shadow: 0rem 0.4rem 0.4rem var(--shadow-block);
+	overflow: hidden;
+
+	transition: all 0.35s;
+
+	&:hover {
+		transform: scale(1.025);
+		background: var(--color-secondary-600);
+		transition: all 0.35s;
+	}
+
+	.visibility_icon {
+		fill: var(--text-secondary);
+		position: absolute;
+		bottom: 1rem;
+		left: 1.5rem;
+	}
+
+	.type_icon {
+		fill: var(--text-secondary);
+		position: absolute;
+		bottom: 1rem;
+		right: 1.5rem;
+	}
+}
+
+.card__text {
+	h3 {
+		font-size: 1.8rem;
+		color: var(--text-primary);
+		font-weight: 700;
+	}
+	time {
+		color: var(--text-secondary);
+		font-size: 1.25rem;
+	}
+}
+
+.card__members {
+	margin-top: 1.25rem;
+	display: flex;
+}
+
+.page__card_wrapper {
+	height: 17rem;
+	width: 15rem;
+}
