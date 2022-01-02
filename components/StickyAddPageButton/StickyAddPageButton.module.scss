@@ -1,0 +1,24 @@
+.add_page_btn {
+	position: fixed;
+	bottom: 10%;
+	right: 10%;
+	background: var(--color-pop);
+
+	height: 5rem;
+	width: 5rem;
+	border-radius: 50%;
+
+	box-shadow: 0rem 0rem 1.5rem var(--shadow-block);
+	cursor: pointer;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	transition: all 0.25s ease-in-out;
+
+	&:hover {
+		background: var(--color-pop);
+		transform: translateX(-0.3rem) translateY(-0.3rem) scale(1.1);
+	}
+}

@@ -10,9 +10,25 @@ import { HiOutlinePlus } from "react-icons/hi";
 
 import styles from "styles/pages/Pages.module.scss";
 import PageCardSkeleton from "components/UI/PageCardSkeleton";
+import useWithAuth from "hooks/useWithAuth";
+import StickyAddPageButton from "components/StickyAddPageButton";
 
 const Home = () => {
-	const { data: pages, isLoading } = useGetUserPagesQuery(null, { skip: false });
+	const { token } = useWithAuth();
+	const { data: pages, isLoading } = useGetUserPagesQuery(token, { skip: !token });
+
+	if (isLoading) {
+		return (
+			<Container>
+				<h5 className={styles.heading}>My Pages</h5>
+				<div className={styles.pages__container}>
+					{new Array(5).fill(0).map((_, i) => (
+						<PageCardSkeleton key={i} />
+					))}
+				</div>
+			</Container>
+		);
+	}
 
 	return (
 		<Container>
@@ -33,13 +49,7 @@ const Home = () => {
 					))}
 				<AddPageCard />
 			</div>
-			<div className={styles.sticky__rb}>
-				<Link href="/pages/new">
-					<a className="h-full w-full flex items-center justify-center">
-						<HiOutlinePlus color="white" size={20} />
-					</a>
-				</Link>
-			</div>
+			<StickyAddPageButton />
 			<Link href="/">
 				<a>back</a>
 			</Link>
