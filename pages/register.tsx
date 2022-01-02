@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import LoadingButton from "components/UI/LoadingButton";
 
 import styles from "../styles/pages/Register.module.scss";
+import ErrorFormMessage from "components/Form/ErrorFormMessage";
 
 const signupValidationSchema = Yup.object().shape({
 	email: Yup.string().email("Please enter a correct email address").required("Email is required"),
@@ -60,11 +61,7 @@ const Register = () => {
 				>
 					<Form>
 						<h1 className="heading__primary">Create your account</h1>
-						{authError && (
-							<p className="text-red-500 text-center text-3xl p-3 border border-red-500 rounded">
-								{authError}
-							</p>
-						)}
+						{authError && <ErrorFormMessage message={authError} />}
 						<Field name="email">
 							{({ field, form }: { field: string; form: FormikValues }) => (
 								<div className="form-group">

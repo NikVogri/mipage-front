@@ -3,12 +3,13 @@ import Link from "next/link";
 import { Formik, Field, Form, FormikValues } from "formik";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { clearAuthError, login, selectAuth, selectAuthError } from "features/auth/authSlice";
+import { clearAuthError, getMe, login, selectAuth, selectAuthError } from "features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "hooks/redux-hooks";
 
 import LoadingButton from "components/UI/LoadingButton";
 
 import styles from "styles/pages/Login.module.scss";
+import ErrorFormMessage from "components/Form/ErrorFormMessage";
 
 const loginValidationSchema = Yup.object().shape({
 	email: Yup.string().email("Email needs to be an email address").required("Email is required"),
@@ -52,11 +53,7 @@ const Login = () => {
 				>
 					<Form>
 						<h1 className="heading__primary">Login to your account</h1>
-						{authError && (
-							<p className="text-red-500 text-center text-3xl p-3 border border-red-500 rounded">
-								{authError}
-							</p>
-						)}
+						{authError && <ErrorFormMessage message={authError} />}
 						<Field name="email">
 							{({ field, form }: { field: string; form: FormikValues }) => (
 								<div className="form-group">
