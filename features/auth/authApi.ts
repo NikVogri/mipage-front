@@ -1,6 +1,7 @@
 import axios from "config/axios";
+import { User } from "models";
 
-export const fetchMe = async (jwt: string): Promise<any> => {
+export const fetchMe = async (jwt: string): Promise<User | void> => {
 	try {
 		const res = await axios.get("/users/me", { headers: { Authorization: `Bearer ${jwt}` } });
 		return res.data;
@@ -11,7 +12,7 @@ export const fetchMe = async (jwt: string): Promise<any> => {
 	}
 };
 
-export const postLogin = async (loginData: { email: string; password: string }): Promise<any> => {
+export const postLogin = async (loginData: { email: string; password: string }): Promise<string> => {
 	const res = await axios.post("/auth/login", loginData);
 	return res.data.token;
 };

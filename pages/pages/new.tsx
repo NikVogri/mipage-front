@@ -1,3 +1,4 @@
+import * as Yup from "yup";
 import { useState } from "react";
 import { PageType } from "models";
 import { useRouter } from "next/router";
@@ -9,7 +10,9 @@ import PageAccessabilitySelection from "components/Form/CreatePage/PageAccessabi
 import Container from "components/UI/Container";
 import LoadingButton from "components/UI/LoadingButton";
 
-import * as Yup from "yup";
+import ErrorFormMessage from "components/Form/ErrorFormMessage";
+import useWithAuth from "hooks/useWithAuth";
+
 import styles from "../../styles/pages/New.module.scss";
 
 const pageTitleValidationSchema = Yup.object().shape({
@@ -17,9 +20,9 @@ const pageTitleValidationSchema = Yup.object().shape({
 });
 
 const CreateNewPage = () => {
-	const [createPage, { isLoading, data, isSuccess }] = useCreatePageMutation();
-
+	const { token } = useWithAuth();
 	const router = useRouter();
+	const [createPage, { isLoading, data, isSuccess, isError, error }] = useCreatePageMutation();
 
 	const [selectedType, setSelectedType] = useState<PageType>(PageType.notebook);
 	const [isPrivate, setIsPrivate] = useState(false);
@@ -31,7 +34,7 @@ const CreateNewPage = () => {
 			isPrivate,
 		};
 
-		await createPage(page);
+		await createPage({ pageData: page, token });
 	};
 
 	if (isSuccess) {
@@ -47,6 +50,7 @@ const CreateNewPage = () => {
 				onSubmit={handleCreatePage}
 			>
 				<Form>
+					{isError && <ErrorFormMessage message={(error as any).data.message} />}
 					<Field name="title">
 						{({ field, form }: { field: string; form: FormikValues }) => (
 							<div>

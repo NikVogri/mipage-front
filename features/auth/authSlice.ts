@@ -107,7 +107,6 @@ const authSlice = createSlice({
 		});
 
 		builder.addMatcher(isRejected(), (state, { payload }) => {
-			console.log("here");
 			state.error = payload as string;
 			state.loading = false;
 		});
