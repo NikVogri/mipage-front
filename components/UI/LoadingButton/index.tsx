@@ -24,7 +24,7 @@ const LoadingButton = ({ children, isLoading, size, ...props }: LoadingButtonPro
 
 	return (
 		<button {...props} className="form-button" disabled={isLoading}>
-			{loading ? <LoadingSpinner size={size} /> : children}
+			{loading ? <LoadingSpinner size={size ? size : 16} className="mx-auto" /> : children}
 		</button>
 	);
 };
