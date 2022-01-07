@@ -51,6 +51,7 @@ export const login = createAsyncThunk(
 		try {
 			const token = await postLogin(loginData);
 			localStorage.setItem("token", token);
+			await thunkAPI.dispatch(getMe(token));
 		} catch (err: any) {
 			return thunkAPI.rejectWithValue(
 				err?.response?.data?.message || "Something went wrong, please try again later."
@@ -58,6 +59,23 @@ export const login = createAsyncThunk(
 		}
 	}
 );
+
+export const getMe = createAsyncThunk("/user/me", async (token: string, thunkAPI) => {
+	try {
+		const user = await fetchMe(token);
+
+		if (user) {
+			thunkAPI.dispatch(setUser(user));
+			thunkAPI.dispatch(setToken(token));
+		} else {
+			thunkAPI.dispatch(clearUser());
+		}
+	} catch (err: any) {
+		return thunkAPI.rejectWithValue(
+			err?.response?.data?.message || "Something went wrong, please try again later."
+		);
+	}
+});
 
 const authSlice = createSlice({
 	name: "auth",
@@ -118,21 +136,5 @@ export const { setUser, clearUser, setLoading, setAuthError, clearAuthError, set
 // selects
 export const selectAuth = (state: RootState) => state.auth;
 export const selectAuthError = (state: RootState) => state.auth.error;
-
-// trunks
-export const getMe =
-	(jwt: string): AppThunk =>
-	async (dispatch) => {
-		dispatch(setLoading(true));
-		const user = await fetchMe(jwt);
-		dispatch(setLoading(false));
-
-		if (user) {
-			dispatch(setUser(user));
-			dispatch(setToken(jwt));
-		} else {
-			dispatch(clearUser());
-		}
-	};
 
 export default authSlice.reducer;

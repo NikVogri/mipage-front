@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Formik, Field, Form, FormikValues } from "formik";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { clearAuthError, getMe, login, selectAuth, selectAuthError } from "features/auth/authSlice";
+import { clearAuthError, login, selectAuth, selectAuthError } from "features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "hooks/redux-hooks";
 
 import LoadingButton from "components/UI/LoadingButton";

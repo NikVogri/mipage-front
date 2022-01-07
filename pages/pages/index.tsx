@@ -6,7 +6,6 @@ import Container from "components/UI/Container";
 import AddPageCard from "components/Page/AddPageCard";
 
 import { useGetUserPagesQuery } from "features/page/pagesApi";
-import { HiOutlinePlus } from "react-icons/hi";
 
 import styles from "styles/pages/Pages.module.scss";
 import PageCardSkeleton from "components/UI/PageCardSkeleton";
