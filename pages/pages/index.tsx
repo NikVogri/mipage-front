@@ -32,7 +32,9 @@ const Home = () => {
 	return (
 		<Container>
 			<h5 className={styles.heading}>My Pages</h5>
-			{pages && <p className={styles.no__found}>You {"don't"} have any pages yet, create one now!</p>}
+			{pages && !pages.length && (
+				<p className={styles.no__found}>You {"don't"} have any pages yet, create one now!</p>
+			)}
 			<div className={styles.pages__container}>
 				{pages &&
 					pages.map((page: Page) => (

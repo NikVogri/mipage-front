@@ -27,6 +27,7 @@ const PageCard = ({ title, id, type, isPrivate, owner, members }: PageItemProps)
 			<a className={styles.page__card} title={title}>
 				<div className={styles.card__text}>
 					<h3>{shortenText(title, 35)}</h3>
+					<p>{members.length} members</p>
 				</div>
 
 				<div className={styles.card__footer}>
