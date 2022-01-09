@@ -38,3 +38,25 @@ export interface Page {
 	owner: PageOwner;
 	members: PageMember[];
 }
+
+export type SidebarPage = Pick<Page, "id" | "title" | "type" | "updatedAt">;
+
+export interface TodoItem {
+	id: string;
+	completed: false;
+	title: string;
+	todoId: string;
+	createdAt: Date;
+	completedAt?: Date;
+}
+
+export interface Todo {
+	title: string;
+	color: string;
+	pageId: string;
+	id: string;
+	allCompleted: boolean;
+	createdAt: Date;
+	updatedAt: Date;
+	items?: TodoItem[];
+}

@@ -6,18 +6,19 @@ const useWithAuth = () => {
 	const isAuth = useAppSelector((state) => state.auth.isAuth);
 	const loading = useAppSelector((state) => state.auth.loading);
 	const token = useAppSelector((state) => state.auth.token);
+	const id = useAppSelector((state) => state.auth.id);
+	const username = useAppSelector((state) => state.auth.username);
 	const router = useRouter();
 
 	useEffect(() => {
-		console.log(isAuth, loading);
 		if (!isAuth && !loading) {
 			router.push("/login");
 		}
-	}, [isAuth, loading, token, router]);
+	}, [isAuth, loading, router]);
 
 	return {
-		// 	id: id as string,
-		// 	username: username as string,
+		id: id as string,
+		username: username as string,
 		token: token as string,
 	};
 };

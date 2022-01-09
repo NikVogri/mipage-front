@@ -1,0 +1,11 @@
+.card {
+	background: var(--background-card);
+	border-radius: 0.9rem;
+	padding: 1.8rem;
+	width: 100%;
+
+	margin-bottom: 3.5rem;
+	overflow: hidden;
+
+	box-shadow: 0 0.4rem 0.4rem var(--shadow-block);
+}

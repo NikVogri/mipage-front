@@ -1,0 +1,69 @@
+.todo__card {
+	display: flex;
+	align-items: center;
+	padding: 0.25rem 0.75rem;
+
+	transition: all 0.3s ease-out;
+
+	.todo__content {
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+		background: none;
+		border: none;
+		cursor: pointer;
+		text-align: left;
+
+		.checkmark {
+			transition: all 0.15s ease-out;
+			height: 1.45rem;
+			fill: var(--background-card);
+			margin-right: 1.25rem;
+
+			&.active {
+				fill: var(--color-pop);
+			}
+		}
+	}
+
+	&:hover {
+		background-color: var(--background-card);
+
+		span {
+			color: var(--text-primary);
+		}
+
+		.checkmark {
+			fill: var(--color-pop);
+		}
+	}
+
+	input {
+		width: 1.5rem;
+		margin-right: 2rem;
+		background-color: var(--background-card);
+	}
+
+	span {
+		flex: 1;
+		font-size: 1.45rem;
+		color: var(--text-secondary);
+	}
+
+	.todo__remove {
+		background: none;
+		border: none;
+		cursor: pointer;
+		font-weight: 700;
+		font-size: 1.5rem;
+		margin-left: auto;
+
+		svg {
+			fill: var(--background-primary);
+		}
+	}
+}
+
+.spinner {
+	fill: var(--text-secondary) !important;
+}

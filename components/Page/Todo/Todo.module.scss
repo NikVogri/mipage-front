@@ -1,0 +1,17 @@
+@import "styles/partial/mixins";
+
+.todo {
+	&__loading {
+		@include absolute_center();
+		padding: 3.75rem;
+		border-radius: 0.5rem;
+	}
+
+	&__container {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, 32%);
+		grid-auto-rows: minmax(15rem, 1fr);
+		row-gap: 3rem;
+		column-gap: 2%;
+	}
+}

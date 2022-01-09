@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Page } from "models";
+import { Page, SidebarPage } from "models";
 
 export const pageApi = createApi({
 	baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_BE_BASE_URL }),
@@ -14,6 +14,22 @@ export const pageApi = createApi({
 					},
 				};
 			},
+		}),
+		getSinglePage: build.query<Page, { token: string; pageId: string }>({
+			query: ({ token, pageId }) => ({
+				url: `pages/${pageId}`,
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			}),
+		}),
+		getSidebarPages: build.query<SidebarPage[], string>({
+			query: (token) => ({
+				url: `pages/minimal`,
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			}),
 		}),
 		createPage: build.mutation<Page, { token: string; pageData: Partial<Page> }>({
 			query: ({ pageData, token }) => {
@@ -40,4 +56,4 @@ export const pageApi = createApi({
 	}),
 });
 
-export const { useGetUserPagesQuery, useCreatePageMutation } = pageApi;
+export const { useGetUserPagesQuery, useCreatePageMutation, useGetSinglePageQuery, useGetSidebarPagesQuery } = pageApi;

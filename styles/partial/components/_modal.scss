@@ -1,0 +1,14 @@
+@mixin modal_defaults {
+	min-width: 50rem;
+
+	h3 {
+		font-size: 1.5rem;
+		padding: 0.5rem 0;
+		color: var(--text-primary);
+	}
+
+	label {
+		margin-bottom: 0.75rem;
+		color: var(--text-secondary);
+	}
+}

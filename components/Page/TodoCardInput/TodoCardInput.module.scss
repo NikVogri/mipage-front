@@ -1,0 +1,49 @@
+.card_input {
+	form {
+		width: 100%;
+		position: relative;
+	}
+
+	input {
+		background-color: transparent;
+		box-shadow: none;
+		border: none;
+		border-bottom: solid 1px var(--background-card);
+		height: 2rem;
+		margin-bottom: 2rem;
+		padding: 1.5rem 0;
+		outline: none;
+		border-radius: 0;
+		transition: all 0.25s ease-out;
+		font-size: 1.3rem;
+
+		&:focus {
+			border: none;
+			border-bottom: solid 1px var(--color-pop-hover);
+		}
+	}
+
+	i {
+		position: absolute;
+		right: 0rem;
+		top: 1.25rem;
+		background: none;
+		border: none;
+		padding: 0 0.25rem;
+		pointer-events: none;
+		opacity: 0;
+
+		svg {
+			transition: all 0.4s ease-in;
+			fill: var(--color-secondary-900);
+		}
+
+		&.valid.active {
+			pointer-events: all;
+			opacity: 1;
+			svg {
+				fill: var(--color-pop);
+			}
+		}
+	}
+}

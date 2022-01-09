@@ -6,7 +6,6 @@ interface LoadingSpinnerProps {
 }
 
 const LoadingSpinner = ({ size, className }: LoadingSpinnerProps) => {
-	console.log(size);
 	return <ImSpinner8 className={`animate-spin ${className}`} size={size ? size : 32} />;
 };
 

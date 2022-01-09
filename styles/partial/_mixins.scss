@@ -1,0 +1,16 @@
+@mixin outline {
+	transition: all 0.1s;
+	border: solid 2px transparent;
+
+	&:focus {
+		box-shadow: 0 0 0.45rem var(--color-secondary-700);
+		border: solid 2px var(--color-secondary-300);
+	}
+}
+
+@mixin absolute_center {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+} ;
