@@ -114,8 +114,8 @@ export const todoApi = createApi({
 					await queryFulfilled;
 					dispatch(
 						todoApi.util.updateQueryData("getPageTodos", { pageId, token }, (todoBlocks) => {
-							todoBlocks.filter((tb) => tb.id !== todoId);
-							// TODO: fix this
+							const todoBlockToRemove = todoBlocks.findIndex((todo) => todo.id === todoId);
+							todoBlocks.splice(todoBlockToRemove, 1);
 						})
 					);
 				} catch {}
