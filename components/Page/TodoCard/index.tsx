@@ -40,6 +40,7 @@ const TodoCard: React.FC<TodoCardProps> = ({ id, color, title, items = [], pageI
 			<div className={styles.card}>
 				<TodoCardInfo items={items} title={title} />
 				<TodoCardInput pageId={pageId} todoId={id} token={token} />
+				{!items.length && <span className={styles.no__tasks}>No tasks yet!</span>}
 				<ul>
 					{sortedTasks.map((item: TodoItem) => (
 						<TodoListItem

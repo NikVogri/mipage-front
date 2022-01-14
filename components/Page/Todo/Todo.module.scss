@@ -9,9 +9,13 @@
 
 	&__container {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, 32%);
+		grid-template-columns: repeat(auto-fit, minmax(25rem, 49%));
 		grid-auto-rows: minmax(15rem, 1fr);
 		row-gap: 3rem;
 		column-gap: 2%;
+
+		@media only screen and (max-width: 1000px) {
+			grid-template-columns: repeat(auto-fit, 100%);
+		}
 	}
 }
