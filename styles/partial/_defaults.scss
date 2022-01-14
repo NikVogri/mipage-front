@@ -83,10 +83,11 @@ label {
 	background-color: var(--button-primary);
 	width: 100%;
 
+	border: solid 1px var(--outline);
+
 	min-height: 4.7rem;
 	box-shadow: 0.2rem 0.2rem 0.2rem var(--shadow-block);
 
-	border: none;
 	cursor: pointer;
 
 	border-radius: 0.5rem;
@@ -98,6 +99,16 @@ label {
 	&:disabled {
 		background-color: var(--button-primary-disabled);
 		cursor: not-allowed;
+	}
+
+	&.btn-create {
+		background-color: var(--button-modal-confirm);
+	}
+
+	&.btn-md {
+		min-height: 1.5rem;
+		padding: 0 1rem;
+		height: 3.5rem !important;
 	}
 }
 

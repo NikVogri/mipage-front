@@ -1,27 +1,32 @@
 :root {
 	--color-secondary-100: #dee3ea;
-    --color-secondary-200: #b2bdcd;
-    --color-secondary-300: #5d7290;
-    --color-secondary-600: #323d4d;
-    --color-secondary-700: #242c37;
-    --color-secondary-800: #151a21;
-    --color-secondary-900: #0b0e11;
-	
-	--color-pop: #FD6868;
+	--color-secondary-200: #b2bdcd;
+	--color-secondary-300: #5d7290;
+	--color-secondary-600: #323d4d;
+	--color-secondary-700: #242c37;
+	--color-secondary-800: #151a21;
+	--color-secondary-900: #0b0e11;
+
+	--color-pop: #fd6868;
 	--color-pop-hover: #fa5e5e;
-	--color-dangerous: #FF3A31;
+	--color-dangerous: #ff3a31;
+	--color-green: #27ae60;
 
 	--background-primary: #18191a;
 	--background-card: #242526;
 
 	--button-primary: var(--color-pop);
+	--button-create: var(--color-green);
 	--button-primary-hover: var(--color-pop-hover);
 	--button-primary-disabled: var(--color-secondary-600);
+
+	--button-modal-close: var(--color-pop);
+	--button-modal-confirm: #219653;
 
 	--button-accent: var(--color-accent);
 	--button-darker: var(--color-primary-300);
 
-	--outline: #3a3b3c;
+	--outline: #4a4a4a;
 
 	--text-primary: #e4e6eb;
 	--text-secondary: #b0b3b8;
