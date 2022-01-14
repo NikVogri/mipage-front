@@ -5,10 +5,11 @@ interface LoadingButtonProps {
 	children: any;
 	isLoading: boolean;
 	size?: number;
+	className?: string;
 	[props: string]: any;
 }
 
-const LoadingButton = ({ children, isLoading, size, ...props }: LoadingButtonProps): JSX.Element => {
+const LoadingButton = ({ children, isLoading, size, className, ...props }: LoadingButtonProps): JSX.Element => {
 	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
@@ -23,7 +24,7 @@ const LoadingButton = ({ children, isLoading, size, ...props }: LoadingButtonPro
 	}, [isLoading]);
 
 	return (
-		<button {...props} className="form-button" disabled={isLoading}>
+		<button {...props} className={`${className} form-button`} disabled={isLoading}>
 			{loading ? <LoadingSpinner size={size ? size : 16} className="mx-auto" /> : children}
 		</button>
 	);

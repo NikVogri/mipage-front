@@ -27,6 +27,7 @@ const TodoCardInput: React.FC<TodoCardInput> = ({ pageId, todoId, token }) => {
 			await createTodoItem({ title: input, pageId, todoId, token });
 			setIsInputValid(false);
 			setInput("");
+			setFocused(false);
 		}
 	};
 
