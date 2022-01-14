@@ -143,6 +143,34 @@ export const todoApi = createApi({
 				} catch {}
 			},
 		}),
+		updateTodoBlock: build.mutation<
+			Todo,
+			{ token: string; pageId: string; todoId: string; title: string; color: string }
+		>({
+			query: ({ title, color, token, pageId, todoId }) => {
+				return {
+					url: `pages/${pageId}/todos/${todoId}`,
+					body: { title, color },
+					method: "PATCH",
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				};
+			},
+			async onQueryStarted({ todoId, pageId, token }, { dispatch, queryFulfilled }) {
+				try {
+					const { data: updatedTodoBlock } = await queryFulfilled;
+					dispatch(
+						todoApi.util.updateQueryData("getPageTodos", { pageId, token }, (todoBlocks) => {
+							const todoBlockIndex = todoBlocks.findIndex((todo) => todo.id === todoId);
+							if (todoBlockIndex < 0) return;
+
+							todoBlocks[todoBlockIndex] = updatedTodoBlock;
+						})
+					);
+				} catch {}
+			},
+		}),
 	}),
 });
 
@@ -153,4 +181,5 @@ export const {
 	useRemoveTodoItemMutation,
 	useRemoveTodoBlockMutation,
 	useCreateTodoBlockMutation,
+	useUpdateTodoBlockMutation,
 } = todoApi;
