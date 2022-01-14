@@ -165,7 +165,10 @@ export const todoApi = createApi({
 							const todoBlockIndex = todoBlocks.findIndex((todo) => todo.id === todoId);
 							if (todoBlockIndex < 0) return;
 
-							todoBlocks[todoBlockIndex] = updatedTodoBlock;
+							todoBlocks[todoBlockIndex] = {
+								...updatedTodoBlock,
+								items: todoBlocks[todoBlockIndex].items,
+							};
 						})
 					);
 				} catch {}
