@@ -2,9 +2,10 @@ import { Formik, Form, Field, FormikValues, FieldConfig } from "formik";
 import { useCreateTodoBlockMutation } from "features/todo/todoApi";
 import { FaPlus } from "react-icons/fa";
 import { useState } from "react";
+import { CirclePicker } from "react-color";
 
 import LoadingButton from "components/UI/LoadingButton";
-import Modal from "react-modal";
+import Modal from "components/UI/Modal";
 
 import * as Yup from "yup";
 
@@ -22,10 +23,13 @@ const createTodoBlockValidationSchema = Yup.object().shape({
 const AddTodoCard: React.FC<AddTodoCardProps> = ({ token, pageId }) => {
 	const [createdTodoBlock, { isLoading }] = useCreateTodoBlockMutation();
 	const [modalIsOpen, setIsOpen] = useState(false);
+	const [selectedColor, setSelectedColor] = useState("#000000");
 
 	const handleSubmit = async (e: FormikValues) => {
-		await createdTodoBlock({ title: e.title, color: e.color, token, pageId });
-		setIsOpen(false);
+		if (selectedColor && e.title) {
+			await createdTodoBlock({ title: e.title, color: selectedColor, token, pageId });
+			setIsOpen(false);
+		}
 	};
 
 	return (
@@ -33,22 +37,13 @@ const AddTodoCard: React.FC<AddTodoCardProps> = ({ token, pageId }) => {
 			<button className={styles.todo__card} title="Add a new todo list" onClick={() => setIsOpen(true)}>
 				<FaPlus />
 			</button>
-			<Modal
-				ariaHideApp={false}
-				isOpen={modalIsOpen}
-				contentLabel="Add todo list block"
-				className={styles.add__todoblock__modal}
-				overlayClassName={styles.add__todoblock__modal_overlay}
-				onRequestClose={() => setIsOpen(false)}
-			>
-				{/* // TODO: Temp modal - create reusable modal with css style */}
-				<h1 className="heading__primary">Add new todo block</h1>
-				<hr />
+
+			<Modal isOpen={modalIsOpen} setIsOpen={setIsOpen} contentLabel="Add a new todo block">
+				<Modal.Head title="Add a new todo block" closeModal={() => setIsOpen(false)} />
 
 				<Formik
 					initialValues={{
 						title: "",
-						color: "#000000",
 					}}
 					validationSchema={createTodoBlockValidationSchema}
 					onSubmit={handleSubmit}
@@ -59,7 +54,7 @@ const AddTodoCard: React.FC<AddTodoCardProps> = ({ token, pageId }) => {
 								<div className="form-group">
 									<label className="label">Title</label>
 									<input
-										className={`form-control ${
+										className={`form-control form-control-modal ${
 											form.errors.title && form.touched.title ? "invalid" : ""
 										}`}
 										type="string"
@@ -72,35 +67,21 @@ const AddTodoCard: React.FC<AddTodoCardProps> = ({ token, pageId }) => {
 								</div>
 							)}
 						</Field>
-						<Field name="color">
-							{({ field, form }: { field: FieldConfig; form: FormikValues }) => (
-								<div className="form-group">
-									<label className="label">Block header color</label>
-									<input
-										className={`form-control ${
-											form.errors.color && form.touched.color ? "invalid" : ""
-										} ${styles.color__picker}`}
-										type="color"
-										required
-										{...field}
-									/>
-									{form.errors.color && form.touched.color && (
-										<span className="form-error">{form.errors.color}</span>
-									)}
-								</div>
-							)}
-						</Field>
 
-						<LoadingButton isLoading={isLoading} className="form-button" disabled={isLoading} type="submit">
-							Submit
-						</LoadingButton>
+						<div className={`form-group ${styles.color__picker}`}>
+							<label className="label">Header color</label>
+							<CirclePicker width="100%" onChange={({ hex }) => setSelectedColor(hex)} />
+						</div>
+
+						<Modal.Footer>
+							<div className={styles.btn__container}>
+								<LoadingButton isLoading={isLoading} className="btn-create btn-md" type="submit">
+									Submit
+								</LoadingButton>
+							</div>
+						</Modal.Footer>
 					</Form>
 				</Formik>
-
-				<br />
-
-				<hr />
-				<button onClick={() => setIsOpen(false)}>Close</button>
 			</Modal>
 		</>
 	);
