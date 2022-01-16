@@ -1,24 +1,28 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { RootState } from "store";
 
 export interface AuthState {
-	loading: boolean;
-	error: any;
+	needsSync: boolean;
 }
 
 const initialState: AuthState = {
-	loading: false,
-	error: null,
+	needsSync: false,
 };
 
 const pageSlice = createSlice({
 	name: "page",
 	initialState,
-	reducers: {},
+	reducers: {
+		setNeedsSync: (state, { payload }: { payload: boolean }) => {
+			state.needsSync = payload;
+		},
+	},
 });
 
-// export const {} = pageSlice.actions;
+export const { setNeedsSync } = pageSlice.actions;
 
 // selects
+export const selectNeedsSync = (state: RootState) => state.page.needsSync;
 // trunks
 
 export default pageSlice.reducer;
