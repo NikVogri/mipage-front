@@ -1,28 +1,29 @@
-import { useRouter } from "next/router";
-import { useGetSinglePageQuery } from "features/page/pagesApi";
-
 import useWithAuth from "hooks/useWithAuth";
+import { useGetSinglePageQuery } from "features/page/pagesApi";
+import { useRouter } from "next/router";
 
-import styles from "../../styles/pages/Page.module.scss";
+import PageCenter from "components/Page/PageCenter";
+import PageErrorLoading from "components/Page/PageErrorLoading";
 import PageLeftSide from "components/Page/PageLeftSide";
 import PageRightSide from "components/Page/PageRightSide";
-import PageCenter from "components/Page/PageCenter";
 import SpinnerCentered from "components/UI/SpinnerCentered";
-import PageErrorLoading from "components/Page/PageErrorLoading";
+
+import styles from "../../styles/pages/Page.module.scss";
 
 const Page = () => {
 	const router = useRouter();
 	const { token } = useWithAuth();
+
 	const { data, isError, isLoading } = useGetSinglePageQuery(
 		{ token, pageId: router.query.pageId as string },
-		{ skip: false }
+		{ skip: !process.browser || !router.query.pageId }
 	);
 
 	if (isError) {
 		return <PageErrorLoading />;
 	}
 
-	if (isLoading) {
+	if (isLoading || !data) {
 		return <SpinnerCentered />;
 	}
 
