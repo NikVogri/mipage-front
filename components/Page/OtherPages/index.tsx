@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { SidebarPage } from "models";
+import { PageType, SidebarPage } from "models";
 import { useGetSidebarPagesQuery } from "features/page/pagesApi";
 
 import Link from "next/link";
@@ -38,15 +38,37 @@ const OtherPages: React.FC<OtherPagesProps> = ({ token }) => {
 			<h3>Other Pages</h3>
 			<ul>
 				{data!.map((page: SidebarPage) => {
-					return isCurrentPage(page.id) ? (
-						<li key={page.id}>{page.title}</li>
-					) : (
-						<li key={page.id}>
-							<Link href={`/pages/${page.id}`}>
-								<a>{page.title}</a>
-							</Link>
-						</li>
-					);
+					// TODO: split this into components
+					if (page.type === PageType.todo) {
+						return isCurrentPage(page.id) ? (
+							<li key={page.id}>{page.title}</li>
+						) : (
+							<li key={page.id}>
+								<Link href={`/pages/${page.id}`}>
+									<a>{page.title}</a>
+								</Link>
+							</li>
+						);
+					}
+
+					if (page.type === PageType.notebook) {
+						return (
+							<div>
+								<p>{page.title}</p>
+								<ul>
+									{page.notebooks!.map((notebook) => (
+										<li key={notebook.id}>
+											<Link href={`/pages/${page.id}?n=${notebook.id}`}>
+												<a>{notebook.title}</a>
+											</Link>
+										</li>
+									))}
+								</ul>
+							</div>
+						);
+					}
+
+					return <></>;
 				})}
 			</ul>
 		</aside>

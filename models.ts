@@ -15,6 +15,20 @@ export enum PageType {
 export interface Notebook {
 	id: string;
 	title: string;
+	banner: string | null;
+	createdAt: string;
+	updatedAt: string;
+	blocks: NotebookBlock[];
+}
+
+export type SidebarNotebook = Pick<Notebook, "id" | "title">;
+
+export interface NotebookBlock {
+	id: string;
+	type: NotebookBlockType;
+	content: string;
+	createdAt: string;
+	updatedAt: string;
 }
 
 export interface PageOwner {
@@ -39,7 +53,13 @@ export interface Page {
 	members: PageMember[];
 }
 
-export type SidebarPage = Pick<Page, "id" | "title" | "type" | "updatedAt">;
+export interface SidebarPage {
+	id: string;
+	title: string;
+	type: PageType;
+	updatedAt: string;
+	notebooks?: SidebarNotebook[];
+}
 
 export interface TodoItem {
 	id: string;
@@ -59,4 +79,10 @@ export interface Todo {
 	createdAt: Date;
 	updatedAt: Date;
 	items?: TodoItem[];
+}
+
+export enum NotebookBlockType {
+	image = "image",
+	richText = "richText",
+	code = "code",
 }
