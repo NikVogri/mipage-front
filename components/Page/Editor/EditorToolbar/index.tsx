@@ -10,6 +10,7 @@ import styles from "./EditorToolbar.module.scss";
 interface EditorToolbarProps {
 	editorState: EditorState;
 	setEditorState: (newState: EditorState) => void;
+	id: string;
 }
 
 interface Widget {
@@ -88,7 +89,7 @@ const inlineStyles: InlineStyle[] = [
 // 	},
 // ];
 
-const EditorToolbar: React.FC<EditorToolbarProps> = ({ editorState, setEditorState }) => {
+const EditorToolbar: React.FC<EditorToolbarProps> = ({ editorState, setEditorState, id }) => {
 	const [showToolbar, setShowToolbar] = useState(false);
 	const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
@@ -105,8 +106,9 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({ editorState, setEditorSta
 	useEffect(() => {
 		const handleMouseEvent = (e: MouseEvent) => {
 			const selection = window.getSelection()?.toString();
+			const editor = document.querySelector(`.editor-${id}`);
 
-			if (selection && selection.trim().length > 1) {
+			if (selection && selection.trim().length > 1 && editor!.contains(e.target as Node)) {
 				const { x, y } = e;
 				setShowToolbar(true);
 				setMousePos({ x, y });
@@ -126,7 +128,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({ editorState, setEditorSta
 			window.removeEventListener("mouseup", handleMouseEvent);
 			window.removeEventListener("dblclick", handleMouseEvent);
 		};
-	}, []);
+	}, [id]);
 
 	if (!showToolbar) {
 		return <div></div>;

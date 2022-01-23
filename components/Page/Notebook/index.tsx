@@ -1,12 +1,9 @@
 import { useGetNotebookQuery } from "features/notebook/notebookApi";
-import { selectNeedsSync, setNeedsSync } from "features/page/pagesSlice";
-import { useAppDispatch, useAppSelector } from "hooks/redux-hooks";
 import { useRouter } from "next/router";
-
-import useWarnBeforePathChange from "hooks/useWarnBeforePathChange";
 
 import NotebookBlock from "../NotebookBlock";
 import LoadingSpinner from "components/LoadingSpinner";
+import CreateNotebookBlockDevider from "../CreateNotebookBlockDevider";
 
 interface NotebookProps {
 	pageId: string;
@@ -14,18 +11,6 @@ interface NotebookProps {
 }
 
 const Notebook: React.FC<NotebookProps> = ({ pageId, token }) => {
-	const needsSync = useAppSelector(selectNeedsSync);
-	const dispatch = useAppDispatch();
-
-	useWarnBeforePathChange(needsSync, () => {
-		const userConfirmed = confirm("You have unsaved changes. Are you sure you want to leave this page?");
-
-		if (userConfirmed) {
-			dispatch(setNeedsSync(false));
-		}
-
-		return userConfirmed;
-	});
 	const router = useRouter();
 	const { data, isError, error, isLoading } = useGetNotebookQuery(
 		{ pageId, token, notebookId: router.query.n as string },
@@ -57,6 +42,8 @@ const Notebook: React.FC<NotebookProps> = ({ pageId, token }) => {
 					id={block.id}
 				/>
 			))}
+
+			<CreateNotebookBlockDevider notebookId={router.query.n as string} token={token} pageId={pageId} />
 		</div>
 	);
 };
