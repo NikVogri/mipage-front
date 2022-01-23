@@ -37,8 +37,13 @@ const CreateNewPage = () => {
 		await createPage({ pageData: page, token });
 	};
 
-	if (isSuccess) {
-		router.push(`/pages/${data!.id}`);
+	if (isSuccess && data) {
+		if (data?.type === PageType.notebook) {
+			const notebookId = data.notebooks[0].id;
+			router.push(`/pages/${data.id}?n=${notebookId}`);
+		} else {
+			router.push(`/pages/${data.id}`);
+		}
 	}
 
 	return (
