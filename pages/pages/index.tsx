@@ -46,6 +46,7 @@ const Home = () => {
 							isPrivate={false}
 							owner={page.owner}
 							members={page.members}
+							notebooks={page.notebooks}
 						/>
 					))}
 				<AddPageCard />

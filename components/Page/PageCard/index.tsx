@@ -14,6 +14,10 @@ interface PageItemProps {
 	isPrivate: boolean;
 	owner: PageOwner;
 	members: PageMember[];
+	notebooks?: {
+		id: string;
+		title: string;
+	}[];
 }
 
 const shortenText = (text: string, maxLen: number): string => {
@@ -21,13 +25,15 @@ const shortenText = (text: string, maxLen: number): string => {
 	return text;
 };
 
-const PageCard = ({ title, id, type, isPrivate, owner, members }: PageItemProps): JSX.Element => {
+const PageCard = ({ title, id, type, isPrivate, owner, members, notebooks }: PageItemProps): JSX.Element => {
 	return (
-		<Link href={`/pages/${id}`}>
+		<Link href={`/pages/${id}${type === PageType.notebook ? `?n=${notebooks?.[0]?.id}` : ""}`}>
 			<a className={styles.page__card} title={title}>
 				<div className={styles.card__text}>
 					<h3>{shortenText(title, 35)}</h3>
-					<p>{members.length} members</p>
+					<p>
+						{members.length + 1} {members.length + 1 > 1 ? "members" : "member"}
+					</p>
 				</div>
 
 				<div className={styles.card__footer}>
