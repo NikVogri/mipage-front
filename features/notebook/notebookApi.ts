@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Notebook, NotebookBlock } from "models";
+import { Notebook, NotebookBlock, NotebookBlockType } from "models";
 
 export const notebookApi = createApi({
 	baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_BE_BASE_URL }),
@@ -42,7 +42,30 @@ export const notebookApi = createApi({
 				} catch {}
 			},
 		}),
+		createNotebookBlock: build.mutation<
+			NotebookBlock,
+			{ pageId: string; notebookId: string; token: string; type: NotebookBlockType }
+		>({
+			query: ({ token, pageId, notebookId, type }) => ({
+				url: `pages/${pageId}/notebooks/${notebookId}/notebook-blocks`,
+				method: "POST",
+				body: { type },
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			}),
+			async onQueryStarted({ pageId, token, notebookId }, { dispatch, queryFulfilled }) {
+				try {
+					const { data: updatedNotebookBlock } = await queryFulfilled;
+					dispatch(
+						notebookApi.util.updateQueryData("getNotebook", { pageId, token, notebookId }, (notebook) => {
+							notebook.blocks.push(updatedNotebookBlock);
+						})
+					);
+				} catch {}
+			},
+		}),
 	}),
 });
 
-export const { useGetNotebookQuery, useUpdateNotebookBlockMutation } = notebookApi;
+export const { useGetNotebookQuery, useUpdateNotebookBlockMutation, useCreateNotebookBlockMutation } = notebookApi;
