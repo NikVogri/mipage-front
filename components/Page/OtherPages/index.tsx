@@ -42,7 +42,7 @@ const OtherPages: React.FC<OtherPagesProps> = ({ token }) => {
 					</a>
 				</Link>
 			</div>
-			<ul>
+			<ul className={styles.other__pages_list}>
 				{data!.map((page: SidebarPage) => {
 					if (page.type === PageType.todo) {
 						return (

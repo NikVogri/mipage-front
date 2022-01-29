@@ -1,11 +1,22 @@
+@import "../../../styles/partial/components/scrollbar";
+
 .other__pages {
-	ul {
+	max-height: 50vh;
+
+	& .other__pages_list {
+		max-height: 45vh;
+		overflow-y: auto;
+		padding-right: 1rem;
 		list-style: none;
 		padding: 0;
+
+		@include scrollbar;
 
 		li {
 			font-size: 1.4rem;
 		}
+
+		padding-bottom: 1rem;
 	}
 
 	h3 {

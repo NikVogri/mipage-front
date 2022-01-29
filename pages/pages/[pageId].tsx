@@ -29,9 +29,8 @@ const Page = () => {
 
 	return (
 		<main className={styles.page}>
-			<PageLeftSide />
+			<PageLeftSide members={data!.members} owner={data!.owner} />
 			<PageCenter pageType={data!.type} pageId={data!.id} />
-			<PageRightSide members={data!.members} owner={data!.owner} />
 		</main>
 	);
 };
