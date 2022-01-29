@@ -4,6 +4,7 @@ import { Page, SidebarPage } from "models";
 export const pageApi = createApi({
 	baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_BE_BASE_URL }),
 	reducerPath: "pageApi",
+	tagTypes: ["SidebarPages", "UserPages"],
 	endpoints: (build) => ({
 		getUserPages: build.query<Page[], string>({
 			query: (token) => {
@@ -14,6 +15,7 @@ export const pageApi = createApi({
 					},
 				};
 			},
+			providesTags: ["UserPages"],
 		}),
 		getSinglePage: build.query<Page, { token: string; pageId: string }>({
 			query: ({ token, pageId }) => ({
@@ -30,6 +32,7 @@ export const pageApi = createApi({
 					Authorization: `Bearer ${token}`,
 				},
 			}),
+			providesTags: ["SidebarPages"],
 		}),
 		createPage: build.mutation<Page, { token: string; pageData: Partial<Page> }>({
 			query: ({ pageData, token }) => {
@@ -42,16 +45,7 @@ export const pageApi = createApi({
 					},
 				};
 			},
-			async onQueryStarted({}, { dispatch, queryFulfilled }) {
-				try {
-					const { data: createdPage } = await queryFulfilled;
-					dispatch(
-						pageApi.util.updateQueryData("getUserPages", "", (pages) => {
-							pages.unshift(createdPage);
-						})
-					);
-				} catch {}
-			},
+			invalidatesTags: ["UserPages", "SidebarPages"],
 		}),
 	}),
 });
