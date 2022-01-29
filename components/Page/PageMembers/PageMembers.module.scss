@@ -1,0 +1,17 @@
+.page__members {
+	h3 {
+		font-size: 2rem;
+		font-weight: 500;
+	}
+}
+
+.members__container {
+	padding-top: 1.5rem;
+
+	display: flex;
+
+	li {
+		background-color: var(--background-card);
+		border-radius: 50%;
+	}
+}
