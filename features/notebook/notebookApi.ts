@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Notebook, NotebookBlock, NotebookBlockType } from "models";
+import { pageApi } from "features/page/pagesApi";
+import { Notebook, NotebookBlock, NotebookBlockType, SidebarNotebook, SidebarPage } from "models";
 
 export const notebookApi = createApi({
 	baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_BE_BASE_URL }),
@@ -42,6 +43,34 @@ export const notebookApi = createApi({
 				} catch {}
 			},
 		}),
+		createNotebook: build.mutation<NotebookBlock, { pageId: string; token: string; title: string }>({
+			query: ({ token, pageId, title }) => ({
+				url: `pages/${pageId}/notebooks`,
+				method: "POST",
+				body: { title },
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			}),
+			async onQueryStarted({ token, pageId }, { dispatch, queryFulfilled }) {
+				try {
+					const { data: createdNotebook } = await queryFulfilled;
+
+					dispatch(
+						pageApi.util.updateQueryData("getSidebarPages", token, (sidebarPages) => {
+							console.log("trying to update");
+							const pageIndex = sidebarPages.findIndex((page) => page.id === pageId);
+							if (pageIndex < 0) return;
+
+							sidebarPages[pageIndex].notebooks?.push({
+								id: createdNotebook.id,
+								title: createdNotebook.title,
+							});
+						})
+					);
+				} catch {}
+			},
+		}),
 		createNotebookBlock: build.mutation<
 			NotebookBlock,
 			{ pageId: string; notebookId: string; token: string; type: NotebookBlockType }
@@ -68,4 +97,9 @@ export const notebookApi = createApi({
 	}),
 });
 
-export const { useGetNotebookQuery, useUpdateNotebookBlockMutation, useCreateNotebookBlockMutation } = notebookApi;
+export const {
+	useGetNotebookQuery,
+	useUpdateNotebookBlockMutation,
+	useCreateNotebookBlockMutation,
+	useCreateNotebookMutation,
+} = notebookApi;

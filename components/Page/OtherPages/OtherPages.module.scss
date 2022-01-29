@@ -9,7 +9,45 @@
 	}
 
 	h3 {
-		font-size: 2.2rem;
-		padding: 2rem 0;
+		font-size: 2rem;
+		font-weight: 500;
+	}
+
+	h4 {
+		margin-bottom: 0.5rem;
+	}
+
+	span {
+		padding: 0 0.25rem;
+		font-size: 1.5rem;
+		font-weight: regular;
+		opacity: 0.3;
+	}
+
+	a {
+		display: block;
+		font-size: 1.4rem;
+		padding: 0.2rem 1rem;
+		width: 100%;
+		border-radius: 0.5rem;
+	}
+}
+
+.card_head_container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	margin-bottom: 2rem;
+}
+
+.create_page_btn {
+	background: var(--color-pop);
+	border-radius: 0.5rem;
+	transition: background 0.2s ease-in-out;
+	width: inherit !important;
+
+	&:hover {
+		background: var(--color-pop-hover);
 	}
 }

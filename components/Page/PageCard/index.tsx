@@ -4,7 +4,7 @@ import { PageMember, PageOwner, PageType } from "models";
 import Avatar from "components/Avatar";
 
 import styles from "./PageCard.module.scss";
-import { BsBook, BsCardChecklist, BsLock } from "react-icons/bs";
+import { BsBook, BsCardChecklist } from "react-icons/bs";
 import { MdLock, MdPublic } from "react-icons/md";
 
 interface PageItemProps {
