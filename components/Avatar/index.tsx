@@ -5,6 +5,13 @@ import styles from "./Avatar.module.scss";
 export interface AvatarProps {
 	avatar?: string | null;
 	username: string;
+	outline?: string;
+	size?: "md";
+}
+export interface AvatarAdditionalProps {
+	additionalCount: number;
+	size?: "md";
+	outline?: string;
 }
 
 function getRandomColor(string: string): string {
@@ -17,20 +24,33 @@ function getRandomColor(string: string): string {
 	var g = (num >> 8) & 255;
 	var b = num & 255;
 
-	return `rgb(${r}, ${g}, ${b}, 0.3)`;
+	return `rgb(${r}, ${g}, ${b}, 0.5)`;
 }
 
-const Avatar: React.FC<AvatarProps> = ({ avatar, username }) => {
+const Avatar = ({ avatar, username, outline, size }: AvatarProps) => {
 	if (!avatar) {
 		return (
-			<div className={styles.avatar} style={{ backgroundColor: getRandomColor(username) }}>
+			<div
+				className={`${styles.avatar} ${size ? styles[size] : ""}`}
+				style={{
+					backgroundColor: getRandomColor(username),
+					border: outline ? `solid 2px ${outline}` : undefined,
+				}}
+			>
 				<span>{username[0].toUpperCase()}</span>
+
+				<div className={styles.additional__info}>{username}</div>
 			</div>
 		);
 	}
 
 	return (
-		<div className={styles.avatar}>
+		<div
+			className={`${styles.avatar} ${size ? styles[size] : ""}`}
+			style={{
+				border: outline ? `solid 2px ${outline}` : undefined,
+			}}
+		>
 			<Image
 				src={avatar}
 				alt={username}
@@ -38,8 +58,29 @@ const Avatar: React.FC<AvatarProps> = ({ avatar, username }) => {
 				width="100%"
 				height="100%"
 			/>
+			<div className={styles.additional__info}>{username}</div>
 		</div>
 	);
 };
+
+const Additional: React.FC<AvatarAdditionalProps> = ({ additionalCount, outline, size }) => {
+	return (
+		<div>
+			<div
+				className={`${styles.avatar} ${size ? styles[size] : ""}`}
+				style={{
+					backgroundColor: "#ccc",
+					color: "black",
+					zIndex: 0,
+					border: outline ? `solid 2px ${outline}` : undefined,
+				}}
+			>
+				+{additionalCount}
+			</div>
+		</div>
+	);
+};
+
+Avatar.Additional = Additional;
 
 export default Avatar;

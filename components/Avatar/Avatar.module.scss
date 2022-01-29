@@ -1,7 +1,13 @@
 .avatar {
-	height: 3rem;
-	width: 3rem;
+	position: relative;
+	z-index: 99999;
+	min-height: 3rem;
+	min-width: 3rem;
 	border-radius: 50%;
+
+	border: solid 1px var(--outline);
+
+	cursor: default;
 
 	display: flex;
 	align-items: center;
@@ -16,4 +22,33 @@
 		max-width: 100%;
 		max-height: 100%;
 	}
+
+	&.md {
+		min-height: 4rem;
+		min-width: 4rem;
+		font-size: 1.8rem;
+	}
+
+	&:hover .additional__info {
+		display: block;
+	}
+}
+
+.additional__info {
+	position: absolute;
+	z-index: 9999999;
+	top: 50%;
+	right: -8rem;
+	transform: translateY(-50%);
+
+	border: solid 1px var(--outline);
+	padding: 0 0.5rem;
+	border-radius: 0.5rem;
+
+	background: var(--background-card);
+	box-shadow: 0.25rem 0.25rem 1rem var(--shadow-block);
+
+	font-size: 1.5rem;
+
+	display: none;
 }
