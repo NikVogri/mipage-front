@@ -25,6 +25,7 @@ export type SidebarNotebook = Pick<Notebook, "id" | "title">;
 
 export interface NotebookBlock {
 	id: string;
+	title: string;
 	type: NotebookBlockType;
 	content: string;
 	createdAt: string;
