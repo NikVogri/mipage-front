@@ -44,7 +44,7 @@ const Todo: React.FC<TodoProps> = ({ pageId, token }) => {
 						token={token}
 					/>
 				))}
-			<AddTodoCard pageId={pageId} token={token} />
+			<AddTodoCard pageId={pageId} token={token} todosCount={data?.length} />
 		</div>
 	);
 };

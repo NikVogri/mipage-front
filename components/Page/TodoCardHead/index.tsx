@@ -67,8 +67,8 @@ const TodoCardHead: React.FC<TodoCardHeadProps> = ({ color, title, pageId, todoI
 				</MenuItem>
 			</Menu>
 
-			<Modal isOpen={modalIsOpen} setIsOpen={setIsOpen} contentLabel="Add a new todo block">
-				<Modal.Head title="Add a new todo block" closeModal={() => setIsOpen(false)} />
+			<Modal isOpen={modalIsOpen} setIsOpen={setIsOpen} contentLabel="Update todo block">
+				<Modal.Head title="Update todo block" closeModal={() => setIsOpen(false)} />
 
 				<Formik
 					initialValues={{
@@ -105,7 +105,7 @@ const TodoCardHead: React.FC<TodoCardHeadProps> = ({ color, title, pageId, todoI
 						<Modal.Footer>
 							<div className={styles.btn__container}>
 								<LoadingButton isLoading={isLoading} className="btn-create btn-md" type="submit">
-									Submit
+									Save
 								</LoadingButton>
 							</div>
 						</Modal.Footer>
