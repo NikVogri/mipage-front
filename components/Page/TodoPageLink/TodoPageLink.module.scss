@@ -1,0 +1,33 @@
+.container {
+	background: var(--background-primary);
+	border-radius: 0.5rem;
+	box-shadow: 0.25rem 0.25rem 0.5rem var(--shadow-block);
+}
+
+.todo_link {
+	display: flex !important;
+	align-items: center;
+	justify-content: flex-start;
+
+	h4 {
+		font-size: 1.8rem;
+		margin: 0;
+		padding: 0.5rem 0;
+		margin-bottom: 0;
+	}
+
+	svg {
+		margin-left: 0.1rem;
+		margin-right: 1rem;
+		opacity: 0.5;
+	}
+
+	&.active {
+		svg {
+			opacity: 1;
+		}
+
+		font-weight: bold;
+		background-color: var(--color-secondary-700);
+	}
+}
