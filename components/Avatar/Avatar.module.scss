@@ -1,8 +1,8 @@
 .avatar {
 	position: relative;
 	z-index: 99999;
-	min-height: 3rem;
-	min-width: 3rem;
+	height: 3rem;
+	width: 3rem;
 	border-radius: 50%;
 
 	border: solid 1px var(--outline);
@@ -24,8 +24,8 @@
 	}
 
 	&.md {
-		min-height: 4rem;
-		min-width: 4rem;
+		height: 4rem;
+		width: 4rem;
 		font-size: 1.8rem;
 	}
 
