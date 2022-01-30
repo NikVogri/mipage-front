@@ -30,7 +30,7 @@ export const pageExtendedApi = baseApi.injectEndpoints({
 					Authorization: `Bearer ${token}`,
 				},
 			}),
-			// providesTags: ["SidebarPages"],
+			providesTags: ["SidebarPages"],
 		}),
 		createPage: build.mutation<Page, { token: string; pageData: Partial<Page> }>({
 			query: ({ pageData, token }) => {
