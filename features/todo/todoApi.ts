@@ -1,9 +1,7 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import baseApi from "features/baseApi";
 import { Todo, TodoItem } from "models";
 
-export const todoApi = createApi({
-	baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_BE_BASE_URL }),
-	reducerPath: "todoApi",
+export const todoExtendedApi = baseApi.injectEndpoints({
 	endpoints: (build) => ({
 		getPageTodos: build.query<Todo[], { pageId: string; token: string }>({
 			query: ({ token, pageId }) => ({
@@ -28,7 +26,7 @@ export const todoApi = createApi({
 				try {
 					const { data: createdTodoItem } = await queryFulfilled;
 					dispatch(
-						todoApi.util.updateQueryData("getPageTodos", { pageId, token }, (todoBlocks) => {
+						baseApi.util.updateQueryData("getPageTodos", { pageId, token }, (todoBlocks) => {
 							const todoBlockToUpdate = todoBlocks.find((todo) => todo.id === createdTodoItem.todoId);
 							if (!todoBlockToUpdate) return;
 
@@ -56,7 +54,7 @@ export const todoApi = createApi({
 				try {
 					const { data: updatedTodoItem } = await queryFulfilled;
 					dispatch(
-						todoApi.util.updateQueryData("getPageTodos", { pageId, token }, (todoBlocks) => {
+						baseApi.util.updateQueryData("getPageTodos", { pageId, token }, (todoBlocks) => {
 							const todoBlockToUpdate = todoBlocks.find((todo) => todo.id === todoId);
 							if (!todoBlockToUpdate) return;
 
@@ -87,7 +85,7 @@ export const todoApi = createApi({
 					try {
 						await queryFulfilled;
 						dispatch(
-							todoApi.util.updateQueryData("getPageTodos", { pageId, token }, (todoBlocks) => {
+							baseApi.util.updateQueryData("getPageTodos", { pageId, token }, (todoBlocks) => {
 								const todoBlockToUpdate = todoBlocks.find((todo) => todo.id === todoId);
 								if (!todoBlockToUpdate) return;
 
@@ -113,7 +111,7 @@ export const todoApi = createApi({
 				try {
 					await queryFulfilled;
 					dispatch(
-						todoApi.util.updateQueryData("getPageTodos", { pageId, token }, (todoBlocks) => {
+						baseApi.util.updateQueryData("getPageTodos", { pageId, token }, (todoBlocks) => {
 							const todoBlockToRemove = todoBlocks.findIndex((todo) => todo.id === todoId);
 							todoBlocks.splice(todoBlockToRemove, 1);
 						})
@@ -136,7 +134,7 @@ export const todoApi = createApi({
 				try {
 					const { data: createdTodoBlock } = await queryFulfilled;
 					dispatch(
-						todoApi.util.updateQueryData("getPageTodos", { pageId, token }, (todoBlocks) => {
+						baseApi.util.updateQueryData("getPageTodos", { pageId, token }, (todoBlocks) => {
 							todoBlocks.unshift(createdTodoBlock);
 						})
 					);
@@ -161,7 +159,7 @@ export const todoApi = createApi({
 				try {
 					const { data: updatedTodoBlock } = await queryFulfilled;
 					dispatch(
-						todoApi.util.updateQueryData("getPageTodos", { pageId, token }, (todoBlocks) => {
+						baseApi.util.updateQueryData("getPageTodos", { pageId, token }, (todoBlocks) => {
 							const todoBlockIndex = todoBlocks.findIndex((todo) => todo.id === todoId);
 							if (todoBlockIndex < 0) return;
 
@@ -185,4 +183,4 @@ export const {
 	useRemoveTodoBlockMutation,
 	useCreateTodoBlockMutation,
 	useUpdateTodoBlockMutation,
-} = todoApi;
+} = todoExtendedApi;

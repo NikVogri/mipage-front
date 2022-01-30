@@ -1,10 +1,7 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { pageApi } from "features/page/pagesApi";
-import { Notebook, NotebookBlock, NotebookBlockType, SidebarNotebook, SidebarPage } from "models";
+import baseApi from "features/baseApi";
+import { Notebook, NotebookBlock, NotebookBlockType } from "models";
 
-export const notebookApi = createApi({
-	baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_BE_BASE_URL }),
-	reducerPath: "notebookApi",
+export const notebookExtendedApi = baseApi.injectEndpoints({
 	endpoints: (build) => ({
 		getNotebook: build.query<Notebook, { pageId: string; notebookId: string; token: string }>({
 			query: ({ token, pageId, notebookId }) => ({
@@ -30,7 +27,7 @@ export const notebookApi = createApi({
 				try {
 					const { data: updatedNotebookBlock } = await queryFulfilled;
 					dispatch(
-						notebookApi.util.updateQueryData("getNotebook", { pageId, token, notebookId }, (notebook) => {
+						baseApi.util.updateQueryData("getNotebook", { pageId, token, notebookId }, (notebook) => {
 							const notebookBlockIndex = notebook.blocks.findIndex(
 								(block) => block.id === notebookBlockId
 							);
@@ -57,7 +54,7 @@ export const notebookApi = createApi({
 					const { data: createdNotebook } = await queryFulfilled;
 
 					dispatch(
-						pageApi.util.updateQueryData("getSidebarPages", token, (sidebarPages) => {
+						baseApi.util.updateQueryData("getSidebarPages", token, (sidebarPages) => {
 							console.log("trying to update");
 							const pageIndex = sidebarPages.findIndex((page) => page.id === pageId);
 							if (pageIndex < 0) return;
@@ -87,7 +84,7 @@ export const notebookApi = createApi({
 				try {
 					const { data: updatedNotebookBlock } = await queryFulfilled;
 					dispatch(
-						notebookApi.util.updateQueryData("getNotebook", { pageId, token, notebookId }, (notebook) => {
+						baseApi.util.updateQueryData("getNotebook", { pageId, token, notebookId }, (notebook) => {
 							notebook.blocks.push(updatedNotebookBlock);
 						})
 					);
@@ -102,4 +99,4 @@ export const {
 	useUpdateNotebookBlockMutation,
 	useCreateNotebookBlockMutation,
 	useCreateNotebookMutation,
-} = notebookApi;
+} = notebookExtendedApi;

@@ -1,10 +1,8 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import baseApi from "features/baseApi";
+
 import { Page, SidebarPage } from "models";
 
-export const pageApi = createApi({
-	baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_BE_BASE_URL }),
-	reducerPath: "pageApi",
-	tagTypes: ["SidebarPages", "UserPages"],
+export const pageExtendedApi = baseApi.injectEndpoints({
 	endpoints: (build) => ({
 		getUserPages: build.query<Page[], string>({
 			query: (token) => {
@@ -32,7 +30,7 @@ export const pageApi = createApi({
 					Authorization: `Bearer ${token}`,
 				},
 			}),
-			providesTags: ["SidebarPages"],
+			// providesTags: ["SidebarPages"],
 		}),
 		createPage: build.mutation<Page, { token: string; pageData: Partial<Page> }>({
 			query: ({ pageData, token }) => {
@@ -50,4 +48,5 @@ export const pageApi = createApi({
 	}),
 });
 
-export const { useGetUserPagesQuery, useCreatePageMutation, useGetSinglePageQuery, useGetSidebarPagesQuery } = pageApi;
+export const { useGetUserPagesQuery, useCreatePageMutation, useGetSinglePageQuery, useGetSidebarPagesQuery } =
+	pageExtendedApi;
