@@ -6,10 +6,18 @@ interface LoadingWrapperProps {
 	isLoading: boolean;
 	SpinnerSize?: number;
 	delay?: number;
+	className?: string;
 	[props: string]: any;
 }
 
-const LoadingWrapper = ({ children, isLoading, SpinnerSize, delay, ...props }: LoadingWrapperProps): JSX.Element => {
+const LoadingWrapper = ({
+	children,
+	isLoading,
+	SpinnerSize,
+	delay,
+	className,
+	...props
+}: LoadingWrapperProps): JSX.Element => {
 	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
@@ -23,7 +31,9 @@ const LoadingWrapper = ({ children, isLoading, SpinnerSize, delay, ...props }: L
 		return () => clearTimeout(loader);
 	}, [isLoading, delay]);
 
-	return <div>{loading ? <LoadingSpinner size={SpinnerSize || 16} {...props} /> : children}</div>;
+	return (
+		<div className={className}>{loading ? <LoadingSpinner size={SpinnerSize || 16} {...props} /> : children}</div>
+	);
 };
 
 export default LoadingWrapper;

@@ -36,12 +36,14 @@ export interface PageOwner {
 	id: string;
 	avatar?: string | null;
 	username: string;
+	email: string;
 }
 
 export interface PageMember {
 	id: string;
 	avatar?: string | null;
 	username: string;
+	email: string;
 }
 
 export interface Page {
@@ -86,4 +88,13 @@ export enum NotebookBlockType {
 	image = "image",
 	richText = "richText",
 	code = "code",
+}
+
+export interface SearchedUser {
+	id: string;
+	username: string;
+	email: string;
+	avatar: string | null;
+	createdAt: Date;
+	updatedAt: Date;
 }
