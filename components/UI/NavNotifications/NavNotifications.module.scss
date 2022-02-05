@@ -3,46 +3,7 @@
 	margin-left: auto;
 }
 
-.notifications__btn {
-	// position: relative;
-}
-
-.notifications__container {
-	font-family: inherit;
-	position: absolute;
-	bottom: -20rem;
-	right: 0;
-
-	width: 35rem;
-	min-height: 20rem;
-	padding: 1rem;
-
-	background-color: var(--background-card);
-	border-radius: 0.5rem;
-
-	border: solid 1px var(--outline);
-
-	display: none;
-
-	box-shadow: 0.5rem 0.5rem 1rem var(--shadow-block);
-
-	&.active {
-		display: block;
-	}
-
-	ul {
-		padding: 1rem 0;
-	}
-
-	h3 {
-		font-weight: 700;
-		font-size: 1.7rem;
-		border-bottom: solid 1px var(--outline);
-		padding: 0 0 0.5rem 0;
-	}
-}
-
-.undread__notif {
+.unread__notif__reminder {
 	height: 0.85rem;
 	width: 0.85rem;
 	background-color: var(--color-pop);
