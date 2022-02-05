@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { getMe } from "features/auth/authSlice";
 import { useAppDispatch } from "hooks/redux-hooks";
+import Header from "../Header";
 
 interface LayoutInterface {
 	children: React.ReactNode;
@@ -17,7 +18,12 @@ const Layout: React.FC<LayoutInterface> = ({ children }) => {
 		}
 	}, [dispatch]);
 
-	return <div>{children}</div>;
+	return (
+		<div>
+			<Header />
+			{children}
+		</div>
+	);
 };
 
 export default Layout;

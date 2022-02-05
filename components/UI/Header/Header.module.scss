@@ -1,0 +1,15 @@
+.header {
+	height: 5rem;
+	background-color: var(--background-card);
+
+	display: flex;
+	align-items: center;
+
+	padding: 0 3.5rem;
+
+	box-shadow: 0.5rem 0.5rem 2rem var(--shadow-block);
+
+	border-bottom: solid 1px var(--outline);
+
+	font-size: 1.5rem;
+}
