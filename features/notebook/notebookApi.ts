@@ -1,4 +1,5 @@
 import baseApi from "features/baseApi";
+import { pageExtendedApi } from "features/page/pagesApi";
 import { Notebook, NotebookBlock, NotebookBlockType } from "models";
 
 export const notebookExtendedApi = baseApi.injectEndpoints({
@@ -27,15 +28,19 @@ export const notebookExtendedApi = baseApi.injectEndpoints({
 				try {
 					const { data: updatedNotebookBlock } = await queryFulfilled;
 					dispatch(
-						baseApi.util.updateQueryData("getNotebook", { pageId, token, notebookId }, (notebook) => {
-							const notebookBlockIndex = notebook.blocks.findIndex(
-								(block) => block.id === notebookBlockId
-							);
+						notebookExtendedApi.util.updateQueryData(
+							"getNotebook",
+							{ pageId, token, notebookId },
+							(notebook) => {
+								const notebookBlockIndex = notebook.blocks.findIndex(
+									(block) => block.id === notebookBlockId
+								);
 
-							if (notebookBlockIndex < 0) return;
+								if (notebookBlockIndex < 0) return;
 
-							notebook.blocks[notebookBlockIndex] = updatedNotebookBlock;
-						})
+								notebook.blocks[notebookBlockIndex] = updatedNotebookBlock;
+							}
+						)
 					);
 				} catch {}
 			},
@@ -54,8 +59,7 @@ export const notebookExtendedApi = baseApi.injectEndpoints({
 					const { data: createdNotebook } = await queryFulfilled;
 
 					dispatch(
-						baseApi.util.updateQueryData("getSidebarPages", token, (sidebarPages) => {
-							console.log("trying to update");
+						pageExtendedApi.util.updateQueryData("getSidebarPages", token, (sidebarPages) => {
 							const pageIndex = sidebarPages.findIndex((page) => page.id === pageId);
 							if (pageIndex < 0) return;
 
@@ -84,9 +88,13 @@ export const notebookExtendedApi = baseApi.injectEndpoints({
 				try {
 					const { data: updatedNotebookBlock } = await queryFulfilled;
 					dispatch(
-						baseApi.util.updateQueryData("getNotebook", { pageId, token, notebookId }, (notebook) => {
-							notebook.blocks.push(updatedNotebookBlock);
-						})
+						notebookExtendedApi.util.updateQueryData(
+							"getNotebook",
+							{ pageId, token, notebookId },
+							(notebook) => {
+								notebook.blocks.push(updatedNotebookBlock);
+							}
+						)
 					);
 				} catch {}
 			},

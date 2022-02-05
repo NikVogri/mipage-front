@@ -26,7 +26,7 @@ export const todoExtendedApi = baseApi.injectEndpoints({
 				try {
 					const { data: createdTodoItem } = await queryFulfilled;
 					dispatch(
-						baseApi.util.updateQueryData("getPageTodos", { pageId, token }, (todoBlocks) => {
+						todoExtendedApi.util.updateQueryData("getPageTodos", { pageId, token }, (todoBlocks) => {
 							const todoBlockToUpdate = todoBlocks.find((todo) => todo.id === createdTodoItem.todoId);
 							if (!todoBlockToUpdate) return;
 
@@ -54,7 +54,7 @@ export const todoExtendedApi = baseApi.injectEndpoints({
 				try {
 					const { data: updatedTodoItem } = await queryFulfilled;
 					dispatch(
-						baseApi.util.updateQueryData("getPageTodos", { pageId, token }, (todoBlocks) => {
+						todoExtendedApi.util.updateQueryData("getPageTodos", { pageId, token }, (todoBlocks) => {
 							const todoBlockToUpdate = todoBlocks.find((todo) => todo.id === todoId);
 							if (!todoBlockToUpdate) return;
 
@@ -85,7 +85,7 @@ export const todoExtendedApi = baseApi.injectEndpoints({
 					try {
 						await queryFulfilled;
 						dispatch(
-							baseApi.util.updateQueryData("getPageTodos", { pageId, token }, (todoBlocks) => {
+							todoExtendedApi.util.updateQueryData("getPageTodos", { pageId, token }, (todoBlocks) => {
 								const todoBlockToUpdate = todoBlocks.find((todo) => todo.id === todoId);
 								if (!todoBlockToUpdate) return;
 
@@ -98,7 +98,6 @@ export const todoExtendedApi = baseApi.injectEndpoints({
 		),
 		removeTodoBlock: build.mutation<Todo, { token: string; pageId: string; todoId: string }>({
 			query: ({ token, pageId, todoId }) => {
-				console.log(token, pageId, todoId);
 				return {
 					url: `pages/${pageId}/todos/${todoId}`,
 					method: "DELETE",
@@ -111,7 +110,7 @@ export const todoExtendedApi = baseApi.injectEndpoints({
 				try {
 					await queryFulfilled;
 					dispatch(
-						baseApi.util.updateQueryData("getPageTodos", { pageId, token }, (todoBlocks) => {
+						todoExtendedApi.util.updateQueryData("getPageTodos", { pageId, token }, (todoBlocks) => {
 							const todoBlockToRemove = todoBlocks.findIndex((todo) => todo.id === todoId);
 							todoBlocks.splice(todoBlockToRemove, 1);
 						})
@@ -134,7 +133,7 @@ export const todoExtendedApi = baseApi.injectEndpoints({
 				try {
 					const { data: createdTodoBlock } = await queryFulfilled;
 					dispatch(
-						baseApi.util.updateQueryData("getPageTodos", { pageId, token }, (todoBlocks) => {
+						todoExtendedApi.util.updateQueryData("getPageTodos", { pageId, token }, (todoBlocks) => {
 							todoBlocks.unshift(createdTodoBlock);
 						})
 					);
@@ -159,7 +158,7 @@ export const todoExtendedApi = baseApi.injectEndpoints({
 				try {
 					const { data: updatedTodoBlock } = await queryFulfilled;
 					dispatch(
-						baseApi.util.updateQueryData("getPageTodos", { pageId, token }, (todoBlocks) => {
+						todoExtendedApi.util.updateQueryData("getPageTodos", { pageId, token }, (todoBlocks) => {
 							const todoBlockIndex = todoBlocks.findIndex((todo) => todo.id === todoId);
 							if (todoBlockIndex < 0) return;
 

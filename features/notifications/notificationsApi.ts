@@ -23,12 +23,16 @@ export const notificationsExtendedApi = baseApi.injectEndpoints({
 				try {
 					await queryFulfilled;
 					dispatch(
-						baseApi.util.updateQueryData("getNotifications", { token }, (notifications) => {
-							const notification = notifications.find((n) => n.id === id);
-							if (!notification) return;
+						notificationsExtendedApi.util.updateQueryData(
+							"getNotifications",
+							{ token },
+							(notifications) => {
+								const notification = notifications.find((n) => n.id === id);
+								if (!notification) return;
 
-							notification.viewed = true;
-						})
+								notification.viewed = true;
+							}
+						)
 					);
 				} catch {}
 			},

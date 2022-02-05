@@ -1,10 +1,11 @@
 import baseApi from "features/baseApi";
+import { pageExtendedApi } from "features/page/pagesApi";
 
 import { PageMember } from "models";
 
 export const membersExtendedApi = baseApi.injectEndpoints({
 	endpoints: (build) => ({
-		addMemberToPage: build.mutation<void, { token: string; pageId: string; email: string }>({
+		addMemberToPage: build.mutation<PageMember[], { token: string; pageId: string; email: string }>({
 			query: ({ token, pageId, email }) => ({
 				url: `/pages/${pageId}/members`,
 				method: "POST",
@@ -18,7 +19,7 @@ export const membersExtendedApi = baseApi.injectEndpoints({
 					const { data: updatedMembers } = await queryFulfilled;
 
 					dispatch(
-						baseApi.util.updateQueryData("getSinglePage", { token, pageId }, (page) => {
+						pageExtendedApi.util.updateQueryData("getSinglePage", { token, pageId }, (page) => {
 							page.members = updatedMembers;
 						})
 					);
@@ -38,7 +39,7 @@ export const membersExtendedApi = baseApi.injectEndpoints({
 					const { data: updatedMembers } = await queryFulfilled;
 
 					dispatch(
-						baseApi.util.updateQueryData("getSinglePage", { token, pageId }, (page) => {
+						pageExtendedApi.util.updateQueryData("getSinglePage", { token, pageId }, (page) => {
 							page.members = updatedMembers;
 						})
 					);
