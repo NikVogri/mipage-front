@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useAppSelector } from "./redux-hooks";
 
-const useWithAuth = () => {
+const useWithAuth = (forceRedirect = true) => {
 	const isAuth = useAppSelector((state) => state.auth.isAuth);
 	const loading = useAppSelector((state) => state.auth.loading);
 	const token = useAppSelector((state) => state.auth.token);
@@ -11,10 +11,10 @@ const useWithAuth = () => {
 	const router = useRouter();
 
 	useEffect(() => {
-		if (!isAuth && !loading) {
+		if (!isAuth && !loading && forceRedirect) {
 			router.push("/login");
 		}
-	}, [isAuth, loading, router]);
+	}, [isAuth, loading, router, forceRedirect]);
 
 	return {
 		id: id as string,

@@ -3,7 +3,7 @@ import Notifications from "../NavNotifications";
 import styles from "./Header.module.scss";
 
 const Header: React.FC = () => {
-	const { token } = useWithAuth();
+	const { token } = useWithAuth(false);
 
 	return (
 		<nav className={styles.header}>
