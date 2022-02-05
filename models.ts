@@ -98,3 +98,21 @@ export interface SearchedUser {
 	createdAt: Date;
 	updatedAt: Date;
 }
+
+export enum NotificationType {
+	ADDED_TO_PAGE = "ADDED_TO_PAGE",
+	REMOVED_FROM_PAGE = "REMOVED_FROM_PAGE",
+}
+
+export interface Notification {
+	body: string;
+	createdAt: Date;
+	expiresAt: Date | null;
+	id: string;
+	title: string;
+	type: NotificationType;
+	userId: string;
+	viewed: boolean;
+	viewedAt: Date | null;
+	additionalData?: Record<string, unknown>;
+}

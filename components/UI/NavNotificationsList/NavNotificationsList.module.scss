@@ -1,0 +1,52 @@
+@import "../../../styles/partial/components/scrollbar";
+.notifications__list {
+	position: absolute;
+	z-index: 99999;
+	bottom: -30rem;
+	right: 0;
+
+	width: 35rem;
+	height: 30rem;
+	padding: 1rem 0;
+
+	overflow-y: auto;
+
+	@include scrollbar;
+
+	background-color: var(--background-card);
+	border-radius: 0.5rem;
+
+	border: solid 1px var(--outline);
+
+	display: none;
+
+	box-shadow: 0.5rem 0.5rem 1rem var(--shadow-block);
+
+	&.active {
+		display: block;
+	}
+
+	h3 {
+		font-weight: 700;
+		font-size: 2rem;
+		border-bottom: solid 2px var(--outline);
+		padding: 0 0 0.5rem 1rem;
+	}
+}
+
+.notifications__container {
+	& li {
+		padding: 1rem 1rem;
+		&:not(:last-child) {
+			border-bottom: solid 1px var(--outline);
+		}
+	}
+}
+
+.no__notifs {
+	text-align: center;
+	margin-top: 5rem;
+	color: var(--text-secondary);
+	font-weight: 700;
+	opacity: 0.5;
+}

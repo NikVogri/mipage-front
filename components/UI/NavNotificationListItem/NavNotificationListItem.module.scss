@@ -1,0 +1,37 @@
+.notif__item {
+	padding: 0 1rem;
+
+	button {
+		text-align: left;
+	}
+
+	&:hover {
+		cursor: pointer;
+	}
+
+	&.viewed {
+		opacity: 0.35;
+	}
+
+	h4 {
+		font-weight: 700;
+		font-size: 1.6rem;
+		margin-bottom: 0.25rem;
+
+		display: flex;
+		align-items: center;
+		color: var(--text-primary);
+
+		svg {
+			margin-right: 1rem;
+			fill: var(--text-primary);
+		}
+	}
+
+	p {
+		font-weight: 500;
+		font-size: 1.4rem;
+		color: var(--text-secondary);
+		margin-left: 2.8rem;
+	}
+}
