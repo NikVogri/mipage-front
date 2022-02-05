@@ -51,7 +51,7 @@ const AddNotebookModal: React.FC<AddNotebookModalProps> = ({
 
 	return (
 		<Modal isOpen={isOpen} setIsOpen={setIsOpen} contentLabel="Add a new todo block">
-			<Modal.Head title="Add a new todo block" closeModal={setIsClosed} />
+			<Modal.Head title="Add a new notebook" closeModal={setIsClosed} />
 
 			<Formik
 				initialValues={{
