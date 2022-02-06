@@ -4,12 +4,9 @@ import { SearchedUser } from "models";
 
 export const userExtendedApi = baseApi.injectEndpoints({
 	endpoints: (build) => ({
-		getUsers: build.query<SearchedUser[], { token: string; query: string }>({
-			query: ({ token, query }) => ({
+		getUsers: build.query<SearchedUser[], { query: string }>({
+			query: ({ query }) => ({
 				url: `users/find?q=${query}`,
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
 			}),
 		}),
 	}),

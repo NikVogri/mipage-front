@@ -4,43 +4,31 @@ import { Page, SidebarPage } from "models";
 
 export const pageExtendedApi = baseApi.injectEndpoints({
 	endpoints: (build) => ({
-		getUserPages: build.query<Page[], string>({
-			query: (token) => {
+		getUserPages: build.query<Page[], null>({
+			query: () => {
 				return {
 					url: "pages",
-					headers: {
-						Authorization: `Bearer ${token}`,
-					},
 				};
 			},
 			providesTags: ["UserPages"],
 		}),
-		getSinglePage: build.query<Page, { token: string; pageId: string }>({
-			query: ({ token, pageId }) => ({
+		getSinglePage: build.query<Page, { pageId: string }>({
+			query: ({ pageId }) => ({
 				url: `pages/${pageId}`,
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
 			}),
 		}),
-		getSidebarPages: build.query<SidebarPage[], string>({
-			query: (token) => ({
+		getSidebarPages: build.query<SidebarPage[], null>({
+			query: () => ({
 				url: `pages/minimal`,
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
 			}),
 			providesTags: ["SidebarPages"],
 		}),
-		createPage: build.mutation<Page, { token: string; pageData: Partial<Page> }>({
-			query: ({ pageData, token }) => {
+		createPage: build.mutation<Page, { pageData: Partial<Page> }>({
+			query: ({ pageData }) => {
 				return {
 					url: "pages",
 					body: pageData,
 					method: "POST",
-					headers: {
-						Authorization: `Bearer ${token}`,
-					},
 				};
 			},
 			invalidatesTags: ["UserPages", "SidebarPages"],

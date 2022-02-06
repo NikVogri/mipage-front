@@ -3,30 +3,24 @@ import { Todo, TodoItem } from "models";
 
 export const todoExtendedApi = baseApi.injectEndpoints({
 	endpoints: (build) => ({
-		getPageTodos: build.query<Todo[], { pageId: string; token: string }>({
-			query: ({ token, pageId }) => ({
+		getPageTodos: build.query<Todo[], { pageId: string }>({
+			query: ({ pageId }) => ({
 				url: `pages/${pageId}/todos`,
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
 			}),
 		}),
-		createTodoItem: build.mutation<TodoItem, { token: string; pageId: string; todoId: string; title: string }>({
-			query: ({ title, token, pageId, todoId }) => {
+		createTodoItem: build.mutation<TodoItem, { pageId: string; todoId: string; title: string }>({
+			query: ({ title, pageId, todoId }) => {
 				return {
 					url: `pages/${pageId}/todos/${todoId}/todo-items`,
 					body: { title },
 					method: "POST",
-					headers: {
-						Authorization: `Bearer ${token}`,
-					},
 				};
 			},
-			async onQueryStarted({ pageId, token }, { dispatch, queryFulfilled }) {
+			async onQueryStarted({ pageId }, { dispatch, queryFulfilled }) {
 				try {
 					const { data: createdTodoItem } = await queryFulfilled;
 					dispatch(
-						todoExtendedApi.util.updateQueryData("getPageTodos", { pageId, token }, (todoBlocks) => {
+						todoExtendedApi.util.updateQueryData("getPageTodos", { pageId }, (todoBlocks) => {
 							const todoBlockToUpdate = todoBlocks.find((todo) => todo.id === createdTodoItem.todoId);
 							if (!todoBlockToUpdate) return;
 
@@ -38,23 +32,20 @@ export const todoExtendedApi = baseApi.injectEndpoints({
 		}),
 		updateTodoItem: build.mutation<
 			TodoItem,
-			{ token: string; title: string; pageId: string; todoId: string; completed: boolean; todoItemId: string }
+			{ title: string; pageId: string; todoId: string; completed: boolean; todoItemId: string }
 		>({
-			query: ({ completed, title, token, pageId, todoId, todoItemId }) => {
+			query: ({ completed, title, pageId, todoId, todoItemId }) => {
 				return {
 					url: `pages/${pageId}/todos/${todoId}/todo-items/${todoItemId}`,
 					body: { completed, title },
 					method: "PATCH",
-					headers: {
-						Authorization: `Bearer ${token}`,
-					},
 				};
 			},
-			async onQueryStarted({ pageId, token, todoId }, { dispatch, queryFulfilled }) {
+			async onQueryStarted({ pageId, todoId }, { dispatch, queryFulfilled }) {
 				try {
 					const { data: updatedTodoItem } = await queryFulfilled;
 					dispatch(
-						todoExtendedApi.util.updateQueryData("getPageTodos", { pageId, token }, (todoBlocks) => {
+						todoExtendedApi.util.updateQueryData("getPageTodos", { pageId }, (todoBlocks) => {
 							const todoBlockToUpdate = todoBlocks.find((todo) => todo.id === todoId);
 							if (!todoBlockToUpdate) return;
 
@@ -70,47 +61,39 @@ export const todoExtendedApi = baseApi.injectEndpoints({
 				} catch {}
 			},
 		}),
-		removeTodoItem: build.mutation<TodoItem, { token: string; pageId: string; todoId: string; todoItemId: string }>(
-			{
-				query: ({ token, pageId, todoId, todoItemId }) => {
-					return {
-						url: `pages/${pageId}/todos/${todoId}/todo-items/${todoItemId}`,
-						method: "DELETE",
-						headers: {
-							Authorization: `Bearer ${token}`,
-						},
-					};
-				},
-				async onQueryStarted({ todoItemId, todoId, pageId, token }, { dispatch, queryFulfilled }) {
-					try {
-						await queryFulfilled;
-						dispatch(
-							todoExtendedApi.util.updateQueryData("getPageTodos", { pageId, token }, (todoBlocks) => {
-								const todoBlockToUpdate = todoBlocks.find((todo) => todo.id === todoId);
-								if (!todoBlockToUpdate) return;
-
-								todoBlockToUpdate.items = todoBlockToUpdate.items?.filter((i) => i.id !== todoItemId);
-							})
-						);
-					} catch {}
-				},
-			}
-		),
-		removeTodoBlock: build.mutation<Todo, { token: string; pageId: string; todoId: string }>({
-			query: ({ token, pageId, todoId }) => {
+		removeTodoItem: build.mutation<TodoItem, { pageId: string; todoId: string; todoItemId: string }>({
+			query: ({ pageId, todoId, todoItemId }) => {
 				return {
-					url: `pages/${pageId}/todos/${todoId}`,
+					url: `pages/${pageId}/todos/${todoId}/todo-items/${todoItemId}`,
 					method: "DELETE",
-					headers: {
-						Authorization: `Bearer ${token}`,
-					},
 				};
 			},
-			async onQueryStarted({ todoId, pageId, token }, { dispatch, queryFulfilled }) {
+			async onQueryStarted({ todoItemId, todoId, pageId }, { dispatch, queryFulfilled }) {
 				try {
 					await queryFulfilled;
 					dispatch(
-						todoExtendedApi.util.updateQueryData("getPageTodos", { pageId, token }, (todoBlocks) => {
+						todoExtendedApi.util.updateQueryData("getPageTodos", { pageId }, (todoBlocks) => {
+							const todoBlockToUpdate = todoBlocks.find((todo) => todo.id === todoId);
+							if (!todoBlockToUpdate) return;
+
+							todoBlockToUpdate.items = todoBlockToUpdate.items?.filter((i) => i.id !== todoItemId);
+						})
+					);
+				} catch {}
+			},
+		}),
+		removeTodoBlock: build.mutation<Todo, { pageId: string; todoId: string }>({
+			query: ({ pageId, todoId }) => {
+				return {
+					url: `pages/${pageId}/todos/${todoId}`,
+					method: "DELETE",
+				};
+			},
+			async onQueryStarted({ todoId, pageId }, { dispatch, queryFulfilled }) {
+				try {
+					await queryFulfilled;
+					dispatch(
+						todoExtendedApi.util.updateQueryData("getPageTodos", { pageId }, (todoBlocks) => {
 							const todoBlockToRemove = todoBlocks.findIndex((todo) => todo.id === todoId);
 							todoBlocks.splice(todoBlockToRemove, 1);
 						})
@@ -118,47 +101,38 @@ export const todoExtendedApi = baseApi.injectEndpoints({
 				} catch {}
 			},
 		}),
-		createTodoBlock: build.mutation<Todo, { token: string; pageId: string; title: string; color: string }>({
-			query: ({ title, color, token, pageId }) => {
+		createTodoBlock: build.mutation<Todo, { pageId: string; title: string; color: string }>({
+			query: ({ title, color, pageId }) => {
 				return {
 					url: `pages/${pageId}/todos`,
 					body: { title, color },
 					method: "POST",
-					headers: {
-						Authorization: `Bearer ${token}`,
-					},
 				};
 			},
-			async onQueryStarted({ pageId, token }, { dispatch, queryFulfilled }) {
+			async onQueryStarted({ pageId }, { dispatch, queryFulfilled }) {
 				try {
 					const { data: createdTodoBlock } = await queryFulfilled;
 					dispatch(
-						todoExtendedApi.util.updateQueryData("getPageTodos", { pageId, token }, (todoBlocks) => {
+						todoExtendedApi.util.updateQueryData("getPageTodos", { pageId }, (todoBlocks) => {
 							todoBlocks.unshift(createdTodoBlock);
 						})
 					);
 				} catch {}
 			},
 		}),
-		updateTodoBlock: build.mutation<
-			Todo,
-			{ token: string; pageId: string; todoId: string; title: string; color: string }
-		>({
-			query: ({ title, color, token, pageId, todoId }) => {
+		updateTodoBlock: build.mutation<Todo, { pageId: string; todoId: string; title: string; color: string }>({
+			query: ({ title, color, pageId, todoId }) => {
 				return {
 					url: `pages/${pageId}/todos/${todoId}`,
 					body: { title, color },
 					method: "PATCH",
-					headers: {
-						Authorization: `Bearer ${token}`,
-					},
 				};
 			},
-			async onQueryStarted({ todoId, pageId, token }, { dispatch, queryFulfilled }) {
+			async onQueryStarted({ todoId, pageId }, { dispatch, queryFulfilled }) {
 				try {
 					const { data: updatedTodoBlock } = await queryFulfilled;
 					dispatch(
-						todoExtendedApi.util.updateQueryData("getPageTodos", { pageId, token }, (todoBlocks) => {
+						todoExtendedApi.util.updateQueryData("getPageTodos", { pageId }, (todoBlocks) => {
 							const todoBlockIndex = todoBlocks.findIndex((todo) => todo.id === todoId);
 							if (todoBlockIndex < 0) return;
 

@@ -1,20 +1,15 @@
 import axios from "config/axios";
 import { User } from "models";
 
-export const fetchMe = async (jwt: string): Promise<User | void> => {
+export const fetchMe = async (): Promise<User | void> => {
 	try {
-		const res = await axios.get("/users/me", { headers: { Authorization: `Bearer ${jwt}` } });
+		const res = await axios.get("/users/me", { withCredentials: true });
 		return res.data;
-	} catch (err: any) {
-		if (err.response?.status === 401) {
-			localStorage.removeItem("token");
-		}
-	}
+	} catch (err: any) {}
 };
 
-export const postLogin = async (loginData: { email: string; password: string }): Promise<string> => {
-	const res = await axios.post("/auth/login", loginData);
-	return res.data.token;
+export const postLogin = async (loginData: { email: string; password: string }): Promise<void> => {
+	await axios.post("/auth/login", loginData, { withCredentials: true });
 };
 
 export const postSignup = async (signupData: { email: string; username: string; password: string }): Promise<void> => {

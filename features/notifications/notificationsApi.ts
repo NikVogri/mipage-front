@@ -3,36 +3,26 @@ import { Notification } from "models";
 
 export const notificationsExtendedApi = baseApi.injectEndpoints({
 	endpoints: (build) => ({
-		getNotifications: build.query<Notification[], { token: string }>({
-			query: ({ token }) => ({
+		getNotifications: build.query<Notification[], null>({
+			query: () => ({
 				url: `/notifications`,
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
 			}),
 		}),
-		markNotificationCompleted: build.mutation<Notification, { id: string; token: string }>({
-			query: ({ token, id }) => ({
+		markNotificationCompleted: build.mutation<Notification, { id: string }>({
+			query: ({ id }) => ({
 				url: `notifications/${id}`,
 				method: "PATCH",
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
 			}),
-			async onQueryStarted({ token, id }, { dispatch, queryFulfilled }) {
+			async onQueryStarted({ id }, { dispatch, queryFulfilled }) {
 				try {
 					await queryFulfilled;
 					dispatch(
-						notificationsExtendedApi.util.updateQueryData(
-							"getNotifications",
-							{ token },
-							(notifications) => {
-								const notification = notifications.find((n) => n.id === id);
-								if (!notification) return;
+						notificationsExtendedApi.util.updateQueryData("getNotifications", null, (notifications) => {
+							const notification = notifications.find((n) => n.id === id);
+							if (!notification) return;
 
-								notification.viewed = true;
-							}
-						)
+							notification.viewed = true;
+						})
 					);
 				} catch {}
 			},
