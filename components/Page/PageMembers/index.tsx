@@ -9,7 +9,7 @@ import Modal from "components/UI/Modal";
 import Avatar from "components/Avatar";
 
 import styles from "./PageMembers.module.scss";
-import useWithAuth from "hooks/useWithAuth";
+import useAuth from "hooks/useAuth";
 interface PageMembersProps {
 	owner: PageOwner;
 	members: PageMember[];
@@ -17,7 +17,6 @@ interface PageMembersProps {
 }
 interface AddMembersModalProps {
 	isOpen: boolean;
-	token: string;
 	pageId: string;
 	members: PageMember[];
 	owner: PageOwner;
@@ -29,7 +28,6 @@ const AddMembersModal: React.FC<AddMembersModalProps> = ({
 	isOpen,
 	setIsOpen,
 	setIsClosed,
-	token,
 	pageId,
 	members,
 	owner,
@@ -43,18 +41,18 @@ const AddMembersModal: React.FC<AddMembersModalProps> = ({
 
 	const handleSearchUser = async (e: ChangeEvent<HTMLInputElement>) => {
 		if (!e.target.value.length) return;
-		await fetchUserList({ query: e.target.value, token });
+		await fetchUserList({ query: e.target.value });
 	};
 
 	const handleAddUserToPage = async (email: string) => {
 		setToInviteUserEmail(email);
-		await addMemberToPage({ email, token, pageId });
+		await addMemberToPage({ email, pageId });
 		setToInviteUserEmail("");
 	};
 
 	const handleRemoveUserFromPage = async (id: string) => {
 		setToRemoveUser(id);
-		await removeMemberFromPage({ id, token, pageId });
+		await removeMemberFromPage({ id, pageId });
 		setToRemoveUser("");
 	};
 
@@ -154,7 +152,7 @@ const AddMembersModal: React.FC<AddMembersModalProps> = ({
 
 export const PageMembers: React.FC<PageMembersProps> = ({ owner, members, pageId }) => {
 	const [showInviteMembersModal, setShowInviteMembersModal] = useState(false);
-	const { id, token } = useWithAuth();
+	const { user } = useAuth();
 
 	return (
 		<>
@@ -188,7 +186,7 @@ export const PageMembers: React.FC<PageMembersProps> = ({ owner, members, pageId
 					)}
 				</ul>
 
-				{owner.id === id && (
+				{owner.id === user?.id && (
 					<div className={styles.button_container}>
 						<button
 							className="form-button btn-md"
@@ -201,7 +199,6 @@ export const PageMembers: React.FC<PageMembersProps> = ({ owner, members, pageId
 				)}
 			</div>
 			<AddMembersModal
-				token={token}
 				owner={owner}
 				isOpen={showInviteMembersModal}
 				setIsClosed={() => setShowInviteMembersModal(false)}

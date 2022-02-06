@@ -16,7 +16,6 @@ interface NotebooksLinkDropdownProps {
 	pageId: string;
 	notebooks: SidebarNotebook[];
 	title: string;
-	token: string;
 	active: boolean;
 	activeNotebookId?: string;
 }
@@ -26,7 +25,6 @@ interface AddNotebookModalProps {
 	isOpen: boolean;
 	setIsOpen: Dispatch<SetStateAction<boolean>>;
 	setIsClosed: () => void;
-	token: string;
 	pageId: string;
 }
 
@@ -39,13 +37,12 @@ const AddNotebookModal: React.FC<AddNotebookModalProps> = ({
 	setIsOpen,
 	setIsClosed,
 	notebooksCount,
-	token,
 	pageId,
 }) => {
 	const [createNotebook, { isLoading }] = useCreateNotebookMutation();
 
 	const handleCreateNotebook = async (fv: FormikValues) => {
-		await createNotebook({ title: fv.title, pageId, token });
+		await createNotebook({ title: fv.title, pageId });
 		setIsClosed();
 	};
 
@@ -99,7 +96,6 @@ const NotebooksLinkDropdown: React.FC<NotebooksLinkDropdownProps> = ({
 	title,
 	active,
 	activeNotebookId,
-	token,
 }) => {
 	const [showDropdown, setShowDropdown] = useState(false);
 	const [showAddNotebookModal, setShowAddNotebookModal] = useState(false);
@@ -142,7 +138,6 @@ const NotebooksLinkDropdown: React.FC<NotebooksLinkDropdownProps> = ({
 			</div>
 			<AddNotebookModal
 				pageId={pageId}
-				token={token}
 				notebooksCount={notebooks.length}
 				isOpen={showAddNotebookModal}
 				setIsClosed={() => setShowAddNotebookModal(false)}

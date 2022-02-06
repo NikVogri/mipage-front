@@ -9,16 +9,15 @@ import styles from "./CreateNotebookBlockDevider.module.scss";
 interface CreateNotebookBlockDeviderProps {
 	notebookId: string;
 	pageId: string;
-	token: string;
 }
 
-const CreateNotebookBlockDevider: React.FC<CreateNotebookBlockDeviderProps> = ({ pageId, notebookId, token }) => {
+const CreateNotebookBlockDevider: React.FC<CreateNotebookBlockDeviderProps> = ({ pageId, notebookId }) => {
 	const [createNotebookBlock] = useCreateNotebookBlockMutation();
 	const [showMenu, setShowMenu] = useState(false);
 	const wrapperRef = useRef<HTMLDivElement>(null);
 
 	const handleAddNotebookBlock = async (type: NotebookBlockType) => {
-		await createNotebookBlock({ pageId, notebookId, token, type });
+		await createNotebookBlock({ pageId, notebookId, type });
 		setShowMenu(false);
 	};
 

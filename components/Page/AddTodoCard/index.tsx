@@ -12,7 +12,6 @@ import * as Yup from "yup";
 import styles from "./AddTodoCard.module.scss";
 
 interface AddTodoCardProps {
-	token: string;
 	pageId: string;
 	todosCount: number | undefined;
 }
@@ -21,14 +20,14 @@ const createTodoBlockValidationSchema = Yup.object().shape({
 	title: Yup.string().min(3, "Title must be at least 3 characters long").required("Title is required"),
 });
 
-const AddTodoCard: React.FC<AddTodoCardProps> = ({ token, pageId, todosCount }) => {
+const AddTodoCard: React.FC<AddTodoCardProps> = ({ pageId, todosCount }) => {
 	const [createdTodoBlock, { isLoading }] = useCreateTodoBlockMutation();
 	const [modalIsOpen, setIsOpen] = useState(false);
 	const [selectedColor, setSelectedColor] = useState("#000000");
 
 	const handleSubmit = async (e: FormikValues) => {
 		if (selectedColor && e.title) {
-			await createdTodoBlock({ title: e.title, color: selectedColor, token, pageId });
+			await createdTodoBlock({ title: e.title, color: selectedColor, pageId });
 			setIsOpen(false);
 		}
 	};

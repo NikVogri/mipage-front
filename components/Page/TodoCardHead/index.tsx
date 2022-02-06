@@ -18,14 +18,13 @@ interface TodoCardHeadProps {
 	title: string;
 	pageId: string;
 	todoId: string;
-	token: string;
 }
 
 const createTodoBlockValidationSchema = Yup.object().shape({
 	title: Yup.string().min(3, "Title must be at least 3 characters long").required("Title is required"),
 });
 
-const TodoCardHead: React.FC<TodoCardHeadProps> = ({ color, title, pageId, todoId, token }) => {
+const TodoCardHead: React.FC<TodoCardHeadProps> = ({ color, title, pageId, todoId }) => {
 	const [removeTodoBlock, {}] = useRemoveTodoBlockMutation();
 	const [updateTodoBlock, { isLoading }] = useUpdateTodoBlockMutation();
 
@@ -34,7 +33,7 @@ const TodoCardHead: React.FC<TodoCardHeadProps> = ({ color, title, pageId, todoI
 
 	const handleUpdateSubmit = async (e: FormikValues) => {
 		if (selectedColor && e.title) {
-			await updateTodoBlock({ title: e.title, color: selectedColor, token, pageId, todoId });
+			await updateTodoBlock({ title: e.title, color: selectedColor, pageId, todoId });
 			setIsOpen(false);
 		}
 	};
@@ -43,7 +42,7 @@ const TodoCardHead: React.FC<TodoCardHeadProps> = ({ color, title, pageId, todoI
 		const confirmed = confirm(`Are you sure you want to delete: ${title}?`);
 
 		if (confirmed) {
-			await removeTodoBlock({ token, pageId, todoId });
+			await removeTodoBlock({ pageId, todoId });
 		}
 	};
 

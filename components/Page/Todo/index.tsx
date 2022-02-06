@@ -8,11 +8,10 @@ import AddTodoCard from "../AddTodoCard";
 
 interface TodoProps {
 	pageId: string;
-	token: string;
 }
 
-const Todo: React.FC<TodoProps> = ({ pageId, token }) => {
-	const { data, isLoading, isError } = useGetPageTodosQuery({ pageId, token }, { skip: false });
+const Todo: React.FC<TodoProps> = ({ pageId }) => {
+	const { data, isLoading, isError } = useGetPageTodosQuery({ pageId }, { skip: false });
 
 	if (isLoading) {
 		return (
@@ -41,10 +40,9 @@ const Todo: React.FC<TodoProps> = ({ pageId, token }) => {
 						items={tb.items!}
 						id={tb.id}
 						pageId={tb.pageId}
-						token={token}
 					/>
 				))}
-			<AddTodoCard pageId={pageId} token={token} todosCount={data?.length} />
+			<AddTodoCard pageId={pageId} todosCount={data?.length} />
 		</div>
 	);
 };

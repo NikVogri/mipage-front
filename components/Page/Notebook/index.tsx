@@ -7,13 +7,12 @@ import CreateNotebookBlockDevider from "../CreateNotebookBlockDevider";
 
 interface NotebookProps {
 	pageId: string;
-	token: string;
 }
 
-const Notebook: React.FC<NotebookProps> = ({ pageId, token }) => {
+const Notebook: React.FC<NotebookProps> = ({ pageId }) => {
 	const router = useRouter();
 	const { data, isError, error, isLoading } = useGetNotebookQuery(
-		{ pageId, token, notebookId: router.query.n as string },
+		{ pageId, notebookId: router.query.n as string },
 		{ skip: !router.query.n }
 	);
 
@@ -37,13 +36,12 @@ const Notebook: React.FC<NotebookProps> = ({ pageId, token }) => {
 					type={block.type}
 					content={block.content}
 					pageId={pageId}
-					token={token}
 					notebookId={router.query.n as string}
 					id={block.id}
 				/>
 			))}
 
-			<CreateNotebookBlockDevider notebookId={router.query.n as string} token={token} pageId={pageId} />
+			<CreateNotebookBlockDevider notebookId={router.query.n as string} pageId={pageId} />
 		</div>
 	);
 };

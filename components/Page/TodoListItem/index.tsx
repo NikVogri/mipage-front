@@ -11,10 +11,9 @@ interface TodoListItemProps {
 	todoId: string;
 	pageId: string;
 	todoItemId: string;
-	token: string;
 }
 
-const TodoListItem: React.FC<TodoListItemProps> = ({ completed, title, todoId, pageId, todoItemId, token }) => {
+const TodoListItem: React.FC<TodoListItemProps> = ({ completed, title, todoId, pageId, todoItemId }) => {
 	const [updateTodoItem, { isLoading: updateItemReqLoading }] = useUpdateTodoItemMutation();
 	const [removeTodoItem] = useRemoveTodoItemMutation();
 
@@ -24,7 +23,7 @@ const TodoListItem: React.FC<TodoListItemProps> = ({ completed, title, todoId, p
 				className={styles.todo__content}
 				title={`Mark as ${completed ? "uncomplete" : "complete"}`}
 				type="button"
-				onClick={() => updateTodoItem({ completed: !completed, title, todoId, pageId, todoItemId, token })}
+				onClick={() => updateTodoItem({ completed: !completed, title, todoId, pageId, todoItemId })}
 			>
 				<LoadingWrapper
 					SpinnerSize={16}
@@ -41,7 +40,7 @@ const TodoListItem: React.FC<TodoListItemProps> = ({ completed, title, todoId, p
 				title="Remove"
 				className={styles.todo__remove}
 				type="button"
-				onClick={() => removeTodoItem({ todoId, pageId, todoItemId, token })}
+				onClick={() => removeTodoItem({ todoId, pageId, todoItemId })}
 			>
 				<FaTrash size={15} />
 			</button>

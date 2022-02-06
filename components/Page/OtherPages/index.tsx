@@ -10,13 +10,11 @@ import NotebooksLinkDropdown from "../NotebooksLinkDropdown";
 import TodoPageLink from "../TodoPageLink";
 import { BsPlus } from "react-icons/bs";
 
-interface OtherPagesProps {
-	token: string;
-}
+interface OtherPagesProps {}
 
-const OtherPages: React.FC<OtherPagesProps> = ({ token }) => {
+const OtherPages: React.FC<OtherPagesProps> = () => {
 	const router = useRouter();
-	const { data, isLoading, isError } = useGetSidebarPagesQuery(token, { skip: false });
+	const { data, isLoading, isError } = useGetSidebarPagesQuery(null, { skip: false });
 
 	if (isLoading) {
 		return (
@@ -57,7 +55,6 @@ const OtherPages: React.FC<OtherPagesProps> = ({ token }) => {
 					if (page.type === PageType.notebook) {
 						return (
 							<NotebooksLinkDropdown
-								token={token}
 								pageId={page.id}
 								notebooks={page.notebooks!}
 								title={page.title}

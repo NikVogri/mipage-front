@@ -8,10 +8,9 @@ import styles from "./TodoCardInput.module.scss";
 interface TodoCardInput {
 	pageId: string;
 	todoId: string;
-	token: string;
 }
 
-const TodoCardInput: React.FC<TodoCardInput> = ({ pageId, todoId, token }) => {
+const TodoCardInput: React.FC<TodoCardInput> = ({ pageId, todoId }) => {
 	const [createTodoItem, { isLoading }] = useCreateTodoItemMutation();
 
 	const [input, setInput] = useState("");
@@ -24,7 +23,7 @@ const TodoCardInput: React.FC<TodoCardInput> = ({ pageId, todoId, token }) => {
 		e.preventDefault();
 
 		if (isInputValid) {
-			await createTodoItem({ title: input, pageId, todoId, token });
+			await createTodoItem({ title: input, pageId, todoId });
 			setIsInputValid(false);
 			setInput("");
 			setFocused(false);

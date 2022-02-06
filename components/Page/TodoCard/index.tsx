@@ -14,11 +14,10 @@ interface TodoCardProps {
 	color: string;
 	title: string;
 	pageId: string;
-	token: string;
 	items: TodoItem[];
 }
 
-const TodoCard: React.FC<TodoCardProps> = ({ id, color, title, items = [], pageId, token }) => {
+const TodoCard: React.FC<TodoCardProps> = ({ id, color, title, items = [], pageId }) => {
 	const sortedTasks = useMemo((): TodoItem[] => {
 		const completedTasks = items?.filter((todo: TodoItem) => todo.completed);
 		const uncompletedTasks = items?.filter((todo: TodoItem) => !todo.completed);
@@ -36,17 +35,16 @@ const TodoCard: React.FC<TodoCardProps> = ({ id, color, title, items = [], pageI
 
 	return (
 		<div className={styles.todo__card}>
-			<TodoCardHead color={color} title={title} pageId={pageId} todoId={id} token={token} />
+			<TodoCardHead color={color} title={title} pageId={pageId} todoId={id} />
 			<div className={styles.card}>
 				<TodoCardInfo items={items} title={title} />
-				<TodoCardInput pageId={pageId} todoId={id} token={token} />
+				<TodoCardInput pageId={pageId} todoId={id} />
 				{!items.length && <span className={styles.no__tasks}>No tasks yet!</span>}
 				<ul>
 					{sortedTasks.map((item: TodoItem) => (
 						<TodoListItem
 							key={item.id}
 							todoId={item.todoId}
-							token={token}
 							completed={item.completed}
 							pageId={pageId}
 							title={item.title}

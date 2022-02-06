@@ -12,7 +12,6 @@ import useWarnBeforePathChange from "hooks/useWarnBeforePathChange";
 
 interface RichTextBlockProps {
 	content: string;
-	token: string;
 	pageId: string;
 	notebookId: string;
 	id: string;
@@ -31,7 +30,7 @@ const getInitEditorState = (rawContentString: any): EditorState => {
 	return EditorState.createEmpty();
 };
 
-const RichTextBlock: React.FC<RichTextBlockProps> = ({ content, token, pageId, notebookId, id }) => {
+const RichTextBlock: React.FC<RichTextBlockProps> = ({ content, pageId, notebookId, id }) => {
 	const initialEditorState = useMemo(() => getInitEditorState(content), [content]);
 	const editorStateRef = useRef(initialEditorState);
 	const [updateNotebookBlock, { isError, error }] = useUpdateNotebookBlockMutation();
@@ -41,7 +40,6 @@ const RichTextBlock: React.FC<RichTextBlockProps> = ({ content, token, pageId, n
 		const stringifiedRawContent = editorContentToRawString(editorStateRef.current);
 		await updateNotebookBlock({
 			content: stringifiedRawContent,
-			token,
 			pageId,
 			notebookId,
 			notebookBlockId: id,

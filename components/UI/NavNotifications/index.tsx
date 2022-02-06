@@ -1,19 +1,21 @@
 import { useGetNotificationsQuery } from "features/notifications/notificationsApi";
+import useAuth from "hooks/useAuth";
 import { useMemo, useState } from "react";
 import { IoMdNotifications, IoMdNotificationsOutline } from "react-icons/io";
-import NavNotificationListItem from "../NavNotificationListItem";
 import NavNotificationsList from "../NavNotificationsList";
 import styles from "./NavNotifications.module.scss";
 
-interface NavNotificationsProps {
-	token: string;
-}
+interface NavNotificationsProps {}
 
-const NavNotifications: React.FC<NavNotificationsProps> = ({ token }) => {
-	const { data } = useGetNotificationsQuery(
-		{ token },
-		{ pollingInterval: 60000, refetchOnReconnect: true, skip: !token }
-	);
+const NavNotifications: React.FC<NavNotificationsProps> = () => {
+	const { isAuth } = useAuth();
+
+	const { data } = useGetNotificationsQuery(null, {
+		pollingInterval: 60000,
+		refetchOnReconnect: true,
+		skip: !isAuth,
+	});
+
 	const [showNotifications, setShowNotifications] = useState(false);
 	const notifAvailable = useMemo(() => data && data.some((n) => !n.viewed), [data]);
 
@@ -26,9 +28,7 @@ const NavNotifications: React.FC<NavNotificationsProps> = ({ token }) => {
 				</div>
 			</button>
 
-			{showNotifications && (
-				<NavNotificationsList notifs={data} onClose={() => setShowNotifications(false)} token={token} />
-			)}
+			{showNotifications && <NavNotificationsList notifs={data} onClose={() => setShowNotifications(false)} />}
 		</div>
 	);
 };

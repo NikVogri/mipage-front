@@ -9,11 +9,10 @@ import styles from "./NavNotificationsList.module.scss";
 
 interface NavNotificationsListProps {
 	notifs?: Notification[];
-	token: string;
 	onClose: () => void;
 }
 
-const NavNotificationsList: React.FC<NavNotificationsListProps> = ({ notifs, token, onClose }) => {
+const NavNotificationsList: React.FC<NavNotificationsListProps> = ({ notifs, onClose }) => {
 	const [markNotificationComplete] = useMarkNotificationCompletedMutation();
 	const router = useRouter();
 
@@ -36,7 +35,7 @@ const NavNotificationsList: React.FC<NavNotificationsListProps> = ({ notifs, tok
 		type: NotificationType,
 		additionalInfo?: Record<string, unknown>
 	): Promise<void> => {
-		await markNotificationComplete({ id, token });
+		await markNotificationComplete({ id });
 
 		if (type === NotificationType.ADDED_TO_PAGE && additionalInfo?.pageId) {
 			router.push(`/pages/${additionalInfo.pageId}`);
