@@ -1,33 +1,21 @@
-import {
-	createAsyncThunk,
-	createSlice,
-	isAnyOf,
-	isFulfilled,
-	isPending,
-	isRejected,
-	PayloadAction,
-} from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, isFulfilled, isPending, isRejected, PayloadAction } from "@reduxjs/toolkit";
 import { User } from "models";
-import { AppThunk, RootState } from "store";
+import { RootState } from "store";
 import { fetchMe, postLogin, postSignup } from "features/auth/authApi";
 
 export interface AuthState {
 	isAuth: boolean;
-	id: string;
-	username: string;
-	avatar: string | null;
-	error: string | null;
+	user: User | null;
+	checked: boolean;
+	errorMessage: string;
 	loading: boolean;
-	token: string | null;
 }
 
 const initialState: AuthState = {
 	isAuth: false,
-	id: "",
-	username: "",
-	avatar: null,
-	error: null,
-	token: null,
+	checked: false,
+	user: null,
+	errorMessage: "",
 	loading: false,
 };
 
@@ -49,9 +37,8 @@ export const login = createAsyncThunk(
 	"/auth/login",
 	async (loginData: { email: string; password: string }, thunkAPI) => {
 		try {
-			const token = await postLogin(loginData);
-			localStorage.setItem("token", token);
-			await thunkAPI.dispatch(getMe(token));
+			await postLogin(loginData);
+			await thunkAPI.dispatch(getMe());
 		} catch (err: any) {
 			return thunkAPI.rejectWithValue(
 				err?.response?.data?.message || "Something went wrong, please try again later."
@@ -60,15 +47,12 @@ export const login = createAsyncThunk(
 	}
 );
 
-export const getMe = createAsyncThunk("/user/me", async (token: string, thunkAPI) => {
+export const getMe = createAsyncThunk("/user/me", async ({}, thunkAPI) => {
 	try {
-		const user = await fetchMe(token);
+		const user = await fetchMe();
 
 		if (user) {
 			thunkAPI.dispatch(setUser(user));
-			thunkAPI.dispatch(setToken(token));
-		} else {
-			thunkAPI.dispatch(clearUser());
 		}
 	} catch (err: any) {
 		return thunkAPI.rejectWithValue(
@@ -81,37 +65,30 @@ const authSlice = createSlice({
 	name: "auth",
 	initialState,
 	reducers: {
-		setLoading: (state, action: PayloadAction<boolean>) => {
-			state.loading = action.payload;
-		},
-
 		setUser: (state, action: PayloadAction<User>) => {
 			const payload = action.payload;
-			const { id, username, avatar } = payload;
+			const { id, username, avatar, createdAt, email, updatedAt } = payload;
 
 			state.isAuth = true;
-			state.id = id;
-			state.username = username;
-			state.avatar = avatar;
-		},
-
-		setToken(state, action: PayloadAction<string>) {
-			state.token = action.payload;
+			state.checked = true;
+			state.user = { id, username, avatar, email, createdAt, updatedAt };
 		},
 
 		clearUser: (state) => {
 			state.isAuth = false;
-			state.id = "";
-			state.username = "";
-			state.avatar = null;
+			state.user = null;
+		},
+
+		setAuthChecked: (state) => {
+			state.checked = true;
 		},
 
 		setAuthError: (state, action: PayloadAction<string>) => {
-			state.error = action.payload;
+			state.errorMessage = action.payload;
 		},
 
 		clearAuthError: (state) => {
-			state.error = null;
+			state.errorMessage = "";
 		},
 	},
 	extraReducers: (builder) => {
@@ -121,20 +98,24 @@ const authSlice = createSlice({
 
 		builder.addMatcher(isFulfilled(), (state) => {
 			state.loading = false;
-			state.error = null;
+			state.errorMessage = "";
 		});
 
 		builder.addMatcher(isRejected(), (state, { payload }) => {
-			state.error = payload as string;
+			state.errorMessage = payload as string;
 			state.loading = false;
 		});
 	},
 });
 
-export const { setUser, clearUser, setLoading, setAuthError, clearAuthError, setToken } = authSlice.actions;
+export const { setUser, clearUser, setAuthChecked, clearAuthError } = authSlice.actions;
 
 // selects
-export const selectAuth = (state: RootState) => state.auth;
-export const selectAuthError = (state: RootState) => state.auth.error;
+export const selectIsAuth = (state: RootState) => state.auth.isAuth;
+export const selectUser = (state: RootState) => state.auth.user;
+export const selectAuthChecked = (state: RootState) => state.auth.checked;
+
+export const selectErrorMessage = (state: RootState) => state.auth.errorMessage;
+export const selectLoading = (state: RootState) => state.auth.loading;
 
 export default authSlice.reducer;

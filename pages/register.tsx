@@ -4,13 +4,14 @@ import * as Yup from "yup";
 
 import { Formik, Form, Field, FormikValues } from "formik";
 import { useAppDispatch, useAppSelector } from "hooks/redux-hooks";
-import { clearAuthError, selectAuth, signup } from "features/auth/authSlice";
-import { useRouter } from "next/router";
+import { clearAuthError, selectErrorMessage, selectIsAuth, selectLoading, signup } from "features/auth/authSlice";
+import router, { useRouter } from "next/router";
 
 import LoadingButton from "components/UI/LoadingButton";
 
 import styles from "../styles/pages/Register.module.scss";
 import ErrorFormMessage from "components/Form/ErrorFormMessage";
+import usePush from "hooks/usePush";
 
 const signupValidationSchema = Yup.object().shape({
 	email: Yup.string().email("Please enter a correct email address").required("Email is required"),
@@ -23,26 +24,26 @@ const signupValidationSchema = Yup.object().shape({
 });
 
 const Register = () => {
-	const { isAuth, loading } = useAppSelector(selectAuth);
+	const isAuth = useAppSelector(selectIsAuth);
+	const errorMessage = useAppSelector(selectErrorMessage);
+	const loading = useAppSelector(selectLoading);
+
 	const dispatch = useAppDispatch();
-	const authError = useAppSelector((state) => state.auth.error);
-	const router = useRouter();
+	const push = usePush();
 
 	useEffect(() => {
-		if (isAuth) {
-			router.push("/pages");
-		}
+		dispatch(clearAuthError());
 
-		return () => {
-			dispatch(clearAuthError());
-		};
-	}, [dispatch, isAuth, router]);
+		if (isAuth) {
+			push("/pages");
+		}
+	}, [isAuth, push, dispatch]);
 
 	const handleSubmit = async (fv: { email: string; username: string; password: string }) => {
 		const res = await dispatch(signup(fv));
 
-		if (!res.error) {
-			router.push("/login");
+		if (res.meta.requestStatus === "fulfilled") {
+			push("/login");
 		}
 	};
 
@@ -61,7 +62,7 @@ const Register = () => {
 				>
 					<Form>
 						<h1 className="heading__primary">Create your account</h1>
-						{authError && <ErrorFormMessage message={authError} />}
+						{errorMessage && <ErrorFormMessage message={errorMessage} />}
 						<Field name="email">
 							{({ field, form }: { field: string; form: FormikValues }) => (
 								<div className="form-group">

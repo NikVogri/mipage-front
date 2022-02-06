@@ -3,13 +3,14 @@ import Link from "next/link";
 import { Formik, Field, Form, FormikValues } from "formik";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { clearAuthError, login, selectAuth, selectAuthError } from "features/auth/authSlice";
+import { clearAuthError, login, selectErrorMessage, selectIsAuth, selectLoading } from "features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "hooks/redux-hooks";
 
 import LoadingButton from "components/UI/LoadingButton";
 
 import styles from "styles/pages/Login.module.scss";
 import ErrorFormMessage from "components/Form/ErrorFormMessage";
+import usePush from "hooks/usePush";
 
 const loginValidationSchema = Yup.object().shape({
 	email: Yup.string().email("Email needs to be an email address").required("Email is required"),
@@ -17,28 +18,24 @@ const loginValidationSchema = Yup.object().shape({
 });
 
 const Login = () => {
-	const { isAuth, loading } = useAppSelector(selectAuth);
-	const authError = useAppSelector(selectAuthError);
+	const isAuth = useAppSelector(selectIsAuth);
+	const errorMessage = useAppSelector(selectErrorMessage);
+	const loading = useAppSelector(selectLoading);
+
 	const dispatch = useAppDispatch();
-	const router = useRouter();
-
-	useEffect(() => {
-		if (isAuth) {
-			router.push("/pages");
-		}
-
-		return () => {
-			dispatch(clearAuthError());
-		};
-	}, [dispatch, isAuth, router]);
+	const push = usePush();
 
 	const handleSubmit = async (fv: FormikValues) => {
-		const res = await dispatch(login({ email: fv.email, password: fv.password }));
-
-		if (!res.error) {
-			router.push("/pages");
-		}
+		await dispatch(login({ email: fv.email, password: fv.password }));
 	};
+
+	useEffect(() => {
+		dispatch(clearAuthError());
+
+		if (isAuth) {
+			push("/pages");
+		}
+	}, [isAuth, push, dispatch]);
 
 	return (
 		<main className={styles.login}>
@@ -53,7 +50,7 @@ const Login = () => {
 				>
 					<Form>
 						<h1 className="heading__primary">Login to your account</h1>
-						{authError && <ErrorFormMessage message={authError} />}
+						{errorMessage && <ErrorFormMessage message={errorMessage} />}
 						<Field name="email">
 							{({ field, form }: { field: string; form: FormikValues }) => (
 								<div className="form-group">
