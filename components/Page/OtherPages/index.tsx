@@ -41,10 +41,11 @@ const OtherPages: React.FC<OtherPagesProps> = () => {
 				</Link>
 			</div>
 			<ul className={styles.other__pages_list}>
-				{data!.map((page: SidebarPage) => {
+				{data!.map((page: SidebarPage, index) => {
 					if (page.type === PageType.todo) {
 						return (
 							<TodoPageLink
+								key={index}
 								pageId={page.id}
 								title={page.title}
 								active={router.query.pageId === page.id}
@@ -55,6 +56,7 @@ const OtherPages: React.FC<OtherPagesProps> = () => {
 					if (page.type === PageType.notebook) {
 						return (
 							<NotebooksLinkDropdown
+								key={index}
 								pageId={page.id}
 								notebooks={page.notebooks!}
 								title={page.title}
