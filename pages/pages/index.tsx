@@ -7,14 +7,16 @@ import AddPageCard from "components/Page/AddPageCard";
 
 import { useGetUserPagesQuery } from "features/page/pagesApi";
 
-import styles from "styles/pages/Pages.module.scss";
 import PageCardSkeleton from "components/UI/PageCardSkeleton";
-import useWithAuth from "hooks/useWithAuth";
 import StickyAddPageButton from "components/StickyAddPageButton";
+import useAuth from "hooks/useAuth";
+import onlyAuth from "components/HOC/withAuth";
+
+import styles from "styles/pages/Pages.module.scss";
 
 const Home = () => {
-	const { token } = useWithAuth();
-	const { data: pages, isLoading } = useGetUserPagesQuery(token, { skip: !token });
+	const { isAuth } = useAuth();
+	const { data: pages, isLoading } = useGetUserPagesQuery(null, { skip: !isAuth });
 
 	if (isLoading) {
 		return (
@@ -59,4 +61,4 @@ const Home = () => {
 	);
 };
 
-export default Home;
+export default onlyAuth(Home, { forceRedirect: true });
