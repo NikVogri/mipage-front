@@ -1,15 +1,26 @@
 @import "../../../styles/partial/components/scrollbar";
 
 .page__members {
+	padding: 2rem 1.5rem;
+	border-bottom: solid 1px var(--outline);
+	max-height: 50vh;
+
 	h3 {
 		font-size: 2rem;
-		font-weight: 500;
+		font-weight: 700;
 	}
+}
+
+.card_head_container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	margin-bottom: 1rem;
 }
 
 .members__container {
 	padding-top: 1.5rem;
-
 	display: flex;
 
 	li {
@@ -19,7 +30,19 @@
 }
 
 .button_container {
-	width: 50%;
+	transition: all 0.2s ease-in-out;
+	border-radius: 0.5rem;
+
+	button {
+		padding: 0.75rem;
+		opacity: 0.65;
+		border-radius: 0.5rem;
+	}
+
+	&:hover {
+		background: var(--outline);
+		opacity: 1;
+	}
 }
 
 .btn__container {

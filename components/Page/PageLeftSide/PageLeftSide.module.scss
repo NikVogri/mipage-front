@@ -1,6 +1,9 @@
 @import "../../../styles/partial/components/scrollbar";
 .left__side {
 	max-height: calc(100vh - var(--nav-height));
+	border-right: solid 1px var(--outline);
+	background: var(--background-card);
 	overflow-y: auto;
-    @include scrollbar
+
+	@include scrollbar;
 }

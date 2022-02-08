@@ -8,7 +8,7 @@ import LoadingSpinner from "components/LoadingSpinner";
 import styles from "./OtherPages.module.scss";
 import NotebooksLinkDropdown from "../NotebooksLinkDropdown";
 import TodoPageLink from "../TodoPageLink";
-import { BsPlus } from "react-icons/bs";
+import { HiPlus } from "react-icons/hi";
 
 interface OtherPagesProps {}
 
@@ -31,12 +31,12 @@ const OtherPages: React.FC<OtherPagesProps> = () => {
 	}
 
 	return (
-		<aside className={`card ${styles.other__pages}`}>
+		<aside className={`${styles.other__pages}`}>
 			<div className={styles.card_head_container}>
-				<h3>Other Pages</h3>
+				<h3>Your Pages</h3>
 				<Link href="/pages/new">
-					<a className={styles.create_page_btn} title="Create a new page">
-						<BsPlus size={32} />
+					<a className={styles.create_page_url} title="Create a new page">
+						<HiPlus size={16} />
 					</a>
 				</Link>
 			</div>

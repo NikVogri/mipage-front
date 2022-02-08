@@ -1,20 +1,16 @@
-.container {
-	background: var(--background-primary);
-	border-radius: 0.5rem;
-	box-shadow: 0.25rem 0.25rem 0.5rem var(--shadow-block);
-	margin-right: 1rem;
-	margin-bottom: 1rem;
-}
-
 .todo_link {
 	display: flex !important;
 	align-items: center;
 	justify-content: flex-start;
+	color: var(--text-secondary);
+	padding: 0.2rem 1rem;
+
+	text-decoration: none !important;
 
 	h4 {
 		font-size: 1.8rem;
 		margin: 0;
-		padding: 0.5rem 0;
+		padding: 0.25rem 0rem;
 		margin-bottom: 0;
 	}
 
@@ -29,7 +25,10 @@
 			opacity: 1;
 		}
 
+		transition: background 0.3s ease-out;
+
 		font-weight: bold;
-		background-color: var(--color-secondary-700);
+		background: var(--shadow-block);
+		color: var(--text-primary);
 	}
 }

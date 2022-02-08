@@ -11,6 +11,7 @@ import LoadingButton from "components/UI/LoadingButton";
 import * as Yup from "yup";
 import { Field, FieldConfig, Form, Formik, FormikValues } from "formik";
 import { useCreateNotebookMutation } from "features/notebook/notebookApi";
+import { truncate } from "helpers/truncateText";
 
 interface NotebooksLinkDropdownProps {
 	pageId: string;
@@ -104,17 +105,18 @@ const NotebooksLinkDropdown: React.FC<NotebooksLinkDropdownProps> = ({
 		<>
 			<div className={`${styles.container} ${active ? styles.active : null}`}>
 				<div className={styles.head}>
-					<div className={styles.title}>
-						<BsBook size={18} />
-						<h4>{title}</h4>
-						<button title="Add a Notebook" onClick={() => setShowAddNotebookModal(true)}>
-							<HiPlus size={18} />
-						</button>
-					</div>
-					{notebooks.length > 0 && (
-						<button onClick={() => setShowDropdown(!showDropdown)}>
-							<HiChevronDown size={22} />
-						</button>
+					<button onClick={() => setShowDropdown(!showDropdown)}>
+						<div className={styles.title}>
+							<BsBook size={18} />
+							<h4>{truncate(title, 32)}</h4>
+						</div>
+					</button>
+					{showDropdown && (
+						<div className={styles.btn__settings__container}>
+							<button title="Add a Notebook" onClick={() => setShowAddNotebookModal(true)}>
+								<HiPlus size={16} />
+							</button>
+						</div>
 					)}
 				</div>
 

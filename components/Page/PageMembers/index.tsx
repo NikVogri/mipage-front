@@ -3,6 +3,7 @@ import { ChangeEvent, Dispatch, SetStateAction, useCallback, useMemo, useState }
 import { DebounceInput } from "react-debounce-input";
 import { useAddMemberToPageMutation, useRemoveMemberFromPageMutation } from "features/member/memberApi";
 import { useLazyGetUsersQuery } from "features/user/userApi";
+import { HiDotsHorizontal } from "react-icons/hi";
 
 import LoadingWrapper from "components/UI/LoadingWrapper";
 import Modal from "components/UI/Modal";
@@ -10,6 +11,7 @@ import Avatar from "components/Avatar";
 
 import styles from "./PageMembers.module.scss";
 import useAuth from "hooks/useAuth";
+
 interface PageMembersProps {
 	owner: PageOwner;
 	members: PageMember[];
@@ -156,8 +158,17 @@ export const PageMembers: React.FC<PageMembersProps> = ({ owner, members, pageId
 
 	return (
 		<>
-			<div className={`card ${styles.page__members}`}>
-				<h3>Members ({members.length + 1})</h3>
+			<div className={`${styles.page__members}`}>
+				<div className={styles.card_head_container}>
+					<h3>Members ({members.length + 1})</h3>
+					{owner.id === user?.id && (
+						<div className={styles.button_container}>
+							<button title="Add new members" onClick={() => setShowInviteMembersModal(true)}>
+								<HiDotsHorizontal size={16} />
+							</button>
+						</div>
+					)}
+				</div>
 
 				<ul className={styles.members__container}>
 					<li style={{ transform: `translateX(-${0 * 20}px)`, zIndex: `30` }}>
@@ -185,18 +196,6 @@ export const PageMembers: React.FC<PageMembersProps> = ({ owner, members, pageId
 						</li>
 					)}
 				</ul>
-
-				{owner.id === user?.id && (
-					<div className={styles.button_container}>
-						<button
-							className="form-button btn-md"
-							title="Add new members"
-							onClick={() => setShowInviteMembersModal(true)}
-						>
-							Manage members
-						</button>
-					</div>
-				)}
 			</div>
 			<AddMembersModal
 				owner={owner}

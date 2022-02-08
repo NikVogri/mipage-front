@@ -1,13 +1,25 @@
 .container {
-	background: var(--background-primary);
-	padding: 0.5rem 1rem;
-	margin-right: 1rem;
+	padding: 0.2rem 1rem;
+	color: var(--text-secondary);
 	border-radius: 0.5rem;
-	margin-bottom: 1rem;
-	box-shadow: 0.25rem 0.25rem 0.5rem var(--shadow-block);
+	transition: background 0.3s ease-out;
+
+	cursor: pointer;
+
+	svg {
+		opacity: 0.5;
+		min-height: 1.8rem;
+		min-width: 1.8rem;
+	}
 
 	&.active {
-		background-color: var(--color-secondary-700);
+		svg {
+			opacity: 1;
+		}
+
+		font-weight: bold;
+		background: var(--shadow-block);
+		color: var(--text-primary);
 	}
 }
 
@@ -15,13 +27,56 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+
+	button {
+		border-radius: 0.2rem 0 0 0.2rem;
+		flex: 1;
+		text-align: left;
+	}
+}
+
+.btn__settings__container {
+	display: flex;
+	align-items: center;
+
+	svg {
+		opacity: 0.5;
+	}
+
+	button {
+		transition: all 0.2s ease-in-out;
+		padding: 0.5rem;
+		opacity: 0.65;
+		border-radius: 0.5rem;
+
+		&:hover {
+			background: var(--outline);
+			opacity: 1;
+		}
+	}
 }
 
 .dropdown_list {
 	display: none;
+	margin-left: 1.25rem;
 
 	&.open {
 		display: block;
+	}
+
+	li {
+		position: relative;
+		padding: 0.1rem 0 0.1rem 1rem;
+
+		&::before {
+			content: "L";
+			position: absolute;
+			left: -1rem;
+			top: 25%;
+			font-size: 2rem;
+			transform: translateY(-50%);
+			font-weight: 300;
+		}
 	}
 
 	li.active a {
@@ -33,14 +88,15 @@
 .title {
 	display: flex;
 	align-items: center;
-	justify-content: center;
+	justify-content: flex-start;
+	padding: 0.4rem 0rem;
 
 	h4 {
-		font-size: 1.8rem;
+		font-size: 1.6rem;
+		margin: 0;
 	}
 
 	svg {
-		margin-left: 0.1rem;
 		margin-right: 1rem;
 		opacity: 0.5;
 		margin-bottom: 0.4rem;
@@ -49,7 +105,7 @@
 	}
 
 	button {
-		margin-left: 0.5rem;
+		margin-left: 1rem;
 
 		&:hover svg {
 			fill: var(--color-pop);

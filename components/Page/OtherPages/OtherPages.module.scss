@@ -1,6 +1,8 @@
 @import "../../../styles/partial/components/scrollbar";
 
 .other__pages {
+	padding: 2rem 1.5rem;
+	border-bottom: solid 1px var(--outline);
 	max-height: 50vh;
 
 	& .other__pages_list {
@@ -15,13 +17,11 @@
 		li {
 			font-size: 1.4rem;
 		}
-
-		padding-bottom: 1rem;
 	}
 
 	h3 {
 		font-size: 2rem;
-		font-weight: 500;
+		font-weight: 700;
 	}
 
 	h4 {
@@ -38,8 +38,6 @@
 	a {
 		display: block;
 		font-size: 1.4rem;
-		padding: 0.2rem 1rem;
-		width: 100%;
 		border-radius: 0.5rem;
 	}
 }
@@ -49,16 +47,16 @@
 	justify-content: space-between;
 	align-items: center;
 
-	margin-bottom: 2rem;
+	margin-bottom: 1rem;
 }
 
-.create_page_btn {
-	background: var(--color-pop);
-	border-radius: 0.5rem;
-	transition: background 0.2s ease-in-out;
-	width: inherit !important;
+.create_page_url {
+	transition: all 0.2s ease-in-out;
+	padding: 0.75rem;
+	opacity: 0.65;
 
 	&:hover {
-		background: var(--color-pop-hover);
+		background: var(--outline);
+		opacity: 1;
 	}
 }

@@ -3,5 +3,9 @@
 .page__center {
 	height: calc(100vh - var(--nav-height));
 	overflow-y: scroll;
+
+	box-shadow: none;
+	border-radius: 0;
+
 	@include scrollbar;
 }

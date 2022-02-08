@@ -1,6 +1,10 @@
 .page__settings {
+	padding: 2rem 1.5rem;
+	border-bottom: solid 1px var(--outline);
+	max-height: 50vh;
+
 	h3 {
 		font-size: 2rem;
-		font-weight: 500;
+		font-weight: 700;
 	}
 }
