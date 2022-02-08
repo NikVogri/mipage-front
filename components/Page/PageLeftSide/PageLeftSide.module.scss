@@ -1,9 +1,29 @@
 @import "../../../styles/partial/components/scrollbar";
 .left__side {
+	position: relative;
+
 	max-height: calc(100vh - var(--nav-height));
 	border-right: solid 1px var(--outline);
 	background: var(--background-card);
 	overflow-y: auto;
 
 	@include scrollbar;
+}
+
+.copyright__container {
+	color: var(--text-secondary);
+
+	font-family: inherit;
+	width: 100%;
+
+	font-size: 1.6rem;
+
+	position: absolute;
+	bottom: 2rem;
+	left: 50%;
+	transform: translateX(-50%);
+
+	text-align: center;
+
+	font-weight: 500;
 }

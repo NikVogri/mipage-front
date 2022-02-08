@@ -20,6 +20,10 @@ export const PageLeftSide: React.FC<PageLeftSideProps> = ({ members, owner }) =>
 			<PageSettings />
 			<PageMembers members={members} owner={owner} pageId={router.query.pageId as string} />
 			<OtherPages />
+			<div className={styles.copyright__container}>
+				<p>Created with {"❤️"} in Slovenia</p>
+				<p>Mipage &#169; {new Date().getFullYear()}</p>
+			</div>
 		</aside>
 	);
 };
