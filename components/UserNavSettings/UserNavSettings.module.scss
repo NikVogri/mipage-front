@@ -1,6 +1,14 @@
 .user__nav__icon {
 	position: relative;
-	margin-left: 2rem;
+	margin-left: 0.5rem;
+
+	transition: all 0.2s ease-in-out;
+	padding: 0.25rem;
+	border-radius: 0.5rem;
+
+	&:hover {
+		background: var(--outline);
+	}
 
 	div {
 		cursor: pointer;

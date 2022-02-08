@@ -16,3 +16,15 @@
 	top: 45%;
 	right: 0.25rem;
 }
+
+.notifications__btn {
+	transition: all 0.2s ease-in-out;
+	padding: 0.5rem;
+	opacity: 0.65;
+	border-radius: 0.5rem;
+
+	&:hover {
+		background: var(--outline);
+		opacity: 1;
+	}
+}
