@@ -14,9 +14,10 @@ import useAuth from "hooks/useAuth";
 import onlyAuth from "components/HOC/withAuth";
 
 import styles from "styles/pages/Pages.module.scss";
+import { getGreetingMessage } from "helpers/getGreetingMessage";
 
 const Home = () => {
-	const { isAuth } = useAuth();
+	const { isAuth, user } = useAuth();
 	const { data: pages, isLoading } = useGetUserPagesQuery(null, { skip: !isAuth });
 
 	if (isLoading) {
@@ -37,10 +38,18 @@ const Home = () => {
 			<Head>
 				<title>Your pages | Mipage</title>
 			</Head>
-			<h5 className={styles.heading}>My Pages</h5>
+			{/* <h5 className={styles.heading}>My Pages</h5> */}
+			<div className={styles.welcome__msg}>
+				<h1>
+					{getGreetingMessage()}, {user?.username}!
+				</h1>
+				<p>Visit your pages or pages you are a member of now!</p>
+			</div>
+
 			{pages && !pages.length && (
 				<p className={styles.no__found}>You {"don't"} have any pages yet, create one now!</p>
 			)}
+
 			<div className={styles.pages__container}>
 				{pages &&
 					pages.map((page: Page) => (
