@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { Page } from "models";
 
 import PageCard from "components/Page/PageCard";
@@ -33,6 +34,9 @@ const Home = () => {
 
 	return (
 		<Container>
+			<Head>
+				<title>Your pages | Mipage</title>
+			</Head>
 			<h5 className={styles.heading}>My Pages</h5>
 			{pages && !pages.length && (
 				<p className={styles.no__found}>You {"don't"} have any pages yet, create one now!</p>

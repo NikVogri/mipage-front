@@ -1,4 +1,5 @@
 import * as Yup from "yup";
+import Head from "next/head";
 import { useState } from "react";
 import { PageType } from "models";
 import { useRouter } from "next/router";
@@ -47,6 +48,9 @@ const CreateNewPage = () => {
 
 	return (
 		<Container>
+			<Head>
+				<title>Create your page | Mipage</title>
+			</Head>
 			<h1 className="heading__primary">Create a new page</h1>
 			<Formik
 				initialValues={{ title: "" }}

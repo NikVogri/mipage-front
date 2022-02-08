@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import Link from "next/link";
+import Head from "next/head";
 import * as Yup from "yup";
 
 import { Formik, Form, Field, FormikValues } from "formik";
 import { useAppDispatch, useAppSelector } from "hooks/redux-hooks";
 import { clearAuthError, selectErrorMessage, selectIsAuth, selectLoading, signup } from "features/auth/authSlice";
-import router, { useRouter } from "next/router";
 
 import LoadingButton from "components/UI/LoadingButton";
 
@@ -49,6 +49,9 @@ const Register = () => {
 
 	return (
 		<main className={styles.register}>
+			<Head>
+				<title>Register | Mipage</title>
+			</Head>
 			<div className={styles.register__container}>
 				<Formik
 					initialValues={{

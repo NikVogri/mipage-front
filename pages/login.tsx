@@ -1,8 +1,8 @@
 import * as Yup from "yup";
+import Head from "next/head";
 import Link from "next/link";
 import { Formik, Field, Form, FormikValues } from "formik";
 import { useEffect } from "react";
-import { useRouter } from "next/router";
 import { clearAuthError, login, selectErrorMessage, selectIsAuth, selectLoading } from "features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "hooks/redux-hooks";
 
@@ -39,6 +39,9 @@ const Login = () => {
 
 	return (
 		<main className={styles.login}>
+			<Head>
+				<title>Login | Mipage</title>
+			</Head>
 			<div className={styles.login__container}>
 				<Formik
 					initialValues={{

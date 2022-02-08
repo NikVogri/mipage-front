@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useGetSinglePageQuery } from "features/page/pagesApi";
 import { useRouter } from "next/router";
 
@@ -27,6 +28,9 @@ const Page = () => {
 
 	return (
 		<main className={styles.page}>
+			<Head>
+				<title>{data.title} | Mipage</title>
+			</Head>
 			<PageLeftSide members={data!.members} owner={data!.owner} />
 			<PageCenter pageType={data!.type} pageId={data!.id} />
 		</main>
