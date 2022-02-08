@@ -34,6 +34,8 @@
 
 	.menu {
 		background: var(--background-card);
+		border: solid 1px var(--outline);
+
 		border-radius: 0.5rem;
 		color: var(--text-primary);
 		font-size: 1.4rem;
@@ -44,6 +46,13 @@
 		}
 	}
 	.menu_item {
+		&:not(:last-of-type) {
+			border-bottom: solid 1px var(--outline);
+		}
+
+		padding-top: 0.5rem;
+		padding-bottom: 0.5rem;
+
 		&:hover {
 			background-color: var(--outline);
 		}

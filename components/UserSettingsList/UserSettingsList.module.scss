@@ -27,13 +27,18 @@
 	h3 {
 		font-weight: 700;
 		font-size: 2rem;
-		border-bottom: solid 2px var(--outline);
+		border-bottom: solid 1px var(--outline);
 		padding: 0 0 0.5rem 1rem;
+	}
+
+	hr {
+		border-top: solid 1px var(--outline);
+		margin: 0.5rem 0;
 	}
 }
 
 .settings__container {
-	padding: 1rem 0;
+	padding: 0.5rem 0 0.5rem 0;
 }
 
 .setttings__list__item {

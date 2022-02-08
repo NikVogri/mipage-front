@@ -47,6 +47,8 @@ const UserSettingsList: React.FC<UserSettingsListProps> = ({ onClose, show, user
 						<h4>Create a page</h4>
 					</button>
 				</li>
+
+				<hr />
 				<li className={styles.setttings__list__item}>
 					<button onClick={handleUserLogout}>
 						<h4>Logout</h4>
