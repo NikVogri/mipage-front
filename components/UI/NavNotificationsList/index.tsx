@@ -1,4 +1,5 @@
 import { useMarkNotificationCompletedMutation } from "features/notifications/notificationsApi";
+import useDetectClickOutside from "hooks/useDetectClickOutside";
 import { Notification, NotificationType } from "models";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useRef } from "react";
@@ -18,17 +19,7 @@ const NavNotificationsList: React.FC<NavNotificationsListProps> = ({ notifs, onC
 
 	const notViewedNotifsCount = useMemo(() => (notifs ? notifs.filter((n) => !n.viewed).length : 0), [notifs]);
 	const notifListRef = useRef<HTMLDivElement>(null);
-
-	useEffect(() => {
-		const handleClickOutside = (event: Event) => {
-			if (notifListRef.current && !notifListRef.current.contains(event.target as Node)) {
-				onClose();
-			}
-		};
-
-		document.addEventListener("click", handleClickOutside);
-		return () => document.removeEventListener("click", handleClickOutside);
-	}, [onClose]);
+	useDetectClickOutside(notifListRef, () => onClose());
 
 	const handleMarkNotificationViewed = async (
 		id: string,

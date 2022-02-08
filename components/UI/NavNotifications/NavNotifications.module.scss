@@ -1,6 +1,9 @@
 .notifications {
 	position: relative;
 	margin-left: auto;
+
+	display: flex;
+	align-items: center;
 }
 
 .unread__notif__reminder {

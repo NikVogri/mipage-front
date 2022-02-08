@@ -1,0 +1,54 @@
+@import "../../styles/partial/components/scrollbar";
+
+.user__nav__settings__list {
+	position: absolute;
+	z-index: 99999;
+	bottom: -17rem;
+	right: 0.5rem;
+
+	width: 20rem;
+	padding-top: 1rem;
+
+	overflow-y: auto;
+
+	background-color: var(--background-card);
+	border-radius: 0.5rem;
+
+	border: solid 1px var(--outline);
+
+	display: none;
+
+	box-shadow: 0.5rem 0.5rem 1rem var(--shadow-block);
+
+	&.active {
+		display: block;
+	}
+
+	h3 {
+		font-weight: 700;
+		font-size: 2rem;
+		border-bottom: solid 2px var(--outline);
+		padding: 0 0 0.5rem 1rem;
+	}
+}
+
+.settings__container {
+	padding: 1rem 0;
+}
+
+.setttings__list__item {
+	padding: 0.5rem 2rem;
+	text-align: left;
+	font-size: 1.5rem;
+	font-weight: 500;
+
+	cursor: pointer;
+
+	&:hover {
+		background-color: var(--shadow-block);
+	}
+
+	&:last-of-type {
+		color: var(--color-pop);
+	}
+}

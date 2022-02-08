@@ -7,6 +7,7 @@ export interface AvatarProps {
 	username: string;
 	outline?: string;
 	size?: "md";
+	tooltip: boolean;
 }
 export interface AvatarAdditionalProps {
 	additionalCount: number;
@@ -27,7 +28,7 @@ function getRandomColor(string: string): string {
 	return `rgb(${r}, ${g}, ${b}, 0.5)`;
 }
 
-const Avatar = ({ avatar, username, outline, size }: AvatarProps) => {
+const Avatar = ({ avatar, username, outline, size, tooltip = true }: AvatarProps) => {
 	if (!avatar) {
 		return (
 			<div
@@ -39,7 +40,7 @@ const Avatar = ({ avatar, username, outline, size }: AvatarProps) => {
 			>
 				<span>{username[0].toUpperCase()}</span>
 
-				<div className={styles.additional__info}>{username}</div>
+				{tooltip && <div className={styles.additional__info}>{username}</div>}
 			</div>
 		);
 	}
@@ -58,7 +59,7 @@ const Avatar = ({ avatar, username, outline, size }: AvatarProps) => {
 				width="100%"
 				height="100%"
 			/>
-			<div className={styles.additional__info}>{username}</div>
+			{tooltip && <div className={styles.additional__info}>{username}</div>}
 		</div>
 	);
 };
