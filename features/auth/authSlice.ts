@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, isFulfilled, isPending, isRejected, PayloadAction } from "@reduxjs/toolkit";
 import { User } from "models";
 import { RootState } from "store";
-import { fetchMe, postLogin, postSignup } from "features/auth/authApi";
+import { fetchMe, postLogin, postLogout, postSignup } from "features/auth/authApi";
 
 export interface AuthState {
 	isAuth: boolean;
@@ -46,6 +46,17 @@ export const login = createAsyncThunk(
 		}
 	}
 );
+
+export const logout = createAsyncThunk("/auth/logout", async ({}, thunkAPI) => {
+	try {
+		await postLogout();
+		thunkAPI.dispatch(clearUser());
+	} catch (err: any) {
+		return thunkAPI.rejectWithValue(
+			err?.response?.data?.message || "Something went wrong, please try again later."
+		);
+	}
+});
 
 export const getMe = createAsyncThunk("/user/me", async ({}, thunkAPI) => {
 	try {

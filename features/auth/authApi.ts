@@ -15,3 +15,7 @@ export const postLogin = async (loginData: { email: string; password: string }):
 export const postSignup = async (signupData: { email: string; username: string; password: string }): Promise<void> => {
 	await axios.post("/auth/register", signupData);
 };
+
+export const postLogout = async () => {
+	await axios.post("auth/logout", null, { withCredentials: true });
+};
