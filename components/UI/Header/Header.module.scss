@@ -21,4 +21,37 @@
 
 	display: flex;
 	align-items: center;
+	justify-content: flex-end;
+
+	a {
+		text-decoration: none !important;
+	}
+}
+
+.auth__btn {
+	padding: 0.75rem 2.5rem;
+	text-align: center;
+
+	font-weight: 700;
+
+	border-radius: 0.5rem;
+	display: block;
+
+	transition: all 0.3s ease-in-out;
+
+	&_login {
+		&:hover {
+			background: var(--horizontal-ruling);
+		}
+
+		margin-right: 1rem;
+	}
+
+	&_register {
+		&:hover {
+			filter: brightness(2);
+		}
+
+		background: var(--background-primary);
+	}
 }
