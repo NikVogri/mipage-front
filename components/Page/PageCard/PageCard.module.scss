@@ -5,6 +5,8 @@
 	position: relative;
 	word-break: break-all;
 
+	border: solid 1px var(--outline);
+
 	&:hover {
 		text-decoration: none;
 	}
