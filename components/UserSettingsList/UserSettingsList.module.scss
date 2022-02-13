@@ -3,11 +3,11 @@
 .user__nav__settings__list {
 	position: absolute;
 	z-index: 99999;
-	bottom: -17rem;
+	bottom: -12.5rem;
 	right: 0.5rem;
 
 	width: 20rem;
-	padding-top: 1rem;
+	padding-top: 0.5rem;
 
 	overflow-y: auto;
 
@@ -24,13 +24,6 @@
 		display: block;
 	}
 
-	h3 {
-		font-weight: 700;
-		font-size: 2rem;
-		border-bottom: solid 1px var(--outline);
-		padding: 0 0 0.5rem 1rem;
-	}
-
 	hr {
 		border-top: solid 1px var(--outline);
 		margin: 0.5rem 0;
@@ -42,10 +35,15 @@
 }
 
 .setttings__list__item {
-	padding: 0.5rem 2rem;
 	text-align: left;
 	font-size: 1.5rem;
 	font-weight: 500;
+
+	button {
+		width: 100%;
+		text-align: left;
+		padding: 0.5rem 2rem;
+	}
 
 	cursor: pointer;
 

@@ -6,7 +6,7 @@ export interface AvatarProps {
 	avatar?: string | null;
 	username: string;
 	outline?: string;
-	size?: "md";
+	size?: "md" | "lg";
 	tooltip: boolean;
 }
 export interface AvatarAdditionalProps {
