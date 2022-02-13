@@ -4,18 +4,17 @@
 	background-color: var(--background-primary);
 	box-shadow: 0rem 0.4rem 0.4rem var(--shadow-block);
 	border-radius: 1rem;
-	overflow: hidden;
 
 	position: relative;
 
-	// padding-bottom: 2rem;
+	min-width: 40rem;
+	max-height: 100%;
+
+	overflow-x: auto;
+	@include scrollbar;
 
 	ul {
 		list-style: none;
-		max-height: 10rem;
-		overflow: auto;
-		// transition: all .3s ease-out;
-		@include scrollbar;
 	}
 
 	.card {

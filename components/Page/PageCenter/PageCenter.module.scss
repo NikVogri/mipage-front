@@ -1,8 +1,9 @@
 @import "../../../styles/partial/components/scrollbar";
 
 .page__center {
+	position: relative;
+
 	height: calc(100vh - var(--nav-height));
-	overflow-y: scroll;
 
 	box-shadow: none;
 	border-radius: 0;
