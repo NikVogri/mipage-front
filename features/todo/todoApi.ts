@@ -24,7 +24,7 @@ export const todoExtendedApi = baseApi.injectEndpoints({
 							const todoBlockToUpdate = todoBlocks.find((todo) => todo.id === createdTodoItem.todoId);
 							if (!todoBlockToUpdate) return;
 
-							todoBlockToUpdate.items?.unshift(createdTodoItem);
+							todoBlockToUpdate.items?.push(createdTodoItem);
 						})
 					);
 				} catch {}
@@ -114,7 +114,7 @@ export const todoExtendedApi = baseApi.injectEndpoints({
 					const { data: createdTodoBlock } = await queryFulfilled;
 					dispatch(
 						todoExtendedApi.util.updateQueryData("getPageTodos", { pageId }, (todoBlocks) => {
-							todoBlocks.unshift(createdTodoBlock);
+							todoBlocks.push(createdTodoBlock);
 						})
 					);
 				} catch {}

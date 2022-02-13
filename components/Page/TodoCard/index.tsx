@@ -18,21 +18,6 @@ interface TodoCardProps {
 }
 
 const TodoCard: React.FC<TodoCardProps> = ({ id, color, title, items = [], pageId }) => {
-	const sortedTasks = useMemo((): TodoItem[] => {
-		const completedTasks = items?.filter((todo: TodoItem) => todo.completed);
-		const uncompletedTasks = items?.filter((todo: TodoItem) => !todo.completed);
-
-		completedTasks.sort(
-			(a: TodoItem, b: TodoItem) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-		);
-
-		uncompletedTasks.sort(
-			(a: TodoItem, b: TodoItem) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-		);
-
-		return [...uncompletedTasks, ...completedTasks];
-	}, [items]);
-
 	return (
 		<div className={styles.todo__card}>
 			<TodoCardHead color={color} title={title} pageId={pageId} todoId={id} />
@@ -41,7 +26,7 @@ const TodoCard: React.FC<TodoCardProps> = ({ id, color, title, items = [], pageI
 				<TodoCardInput pageId={pageId} todoId={id} />
 				{!items.length && <span className={styles.no__tasks}>No tasks yet!</span>}
 				<ul>
-					{sortedTasks.map((item: TodoItem) => (
+					{items.map((item: TodoItem) => (
 						<TodoListItem
 							key={item.id}
 							todoId={item.todoId}
