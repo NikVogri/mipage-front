@@ -1,11 +1,11 @@
 @import "../../../styles/partial/components/scrollbar";
 
-.other__pages {
+.your__pages__sidebar {
 	padding: 2rem 1.5rem;
 	border-bottom: solid 1px var(--outline);
 	max-height: 50vh;
 
-	& .other__pages_list {
+	& .your__pages__sidebar_list {
 		max-height: 45vh;
 		overflow-y: auto;
 		padding-right: 1rem;

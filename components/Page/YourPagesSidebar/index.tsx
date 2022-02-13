@@ -5,33 +5,33 @@ import { useGetSidebarPagesQuery } from "features/page/pagesApi";
 import Link from "next/link";
 import LoadingSpinner from "components/LoadingSpinner";
 
-import styles from "./OtherPages.module.scss";
+import styles from "./YourPagesSidebar.module.scss";
 import NotebooksLinkDropdown from "../NotebooksLinkDropdown";
 import TodoPageLink from "../TodoPageLink";
 import { HiPlus } from "react-icons/hi";
 
-interface OtherPagesProps {}
+interface YourPagesSidebarProps {}
 
-const OtherPages: React.FC<OtherPagesProps> = () => {
+const YourPagesSidebar: React.FC<YourPagesSidebarProps> = () => {
 	const router = useRouter();
 	const { data, isLoading, isError } = useGetSidebarPagesQuery(null, { skip: false });
 
 	if (isLoading) {
 		return (
-			<aside className={`card ${styles.other__pages}`}>
+			<aside className={`card ${styles.your__pages__sidebar}`}>
 				<LoadingSpinner />
 			</aside>
 		);
 	}
 
 	if (isError) {
-		<aside className={`card ${styles.other__pages}`}>
+		<aside className={`card ${styles.your__pages__sidebar}`}>
 			<p>Could not load</p>
 		</aside>;
 	}
 
 	return (
-		<aside className={`${styles.other__pages}`}>
+		<aside className={`${styles.your__pages__sidebar}`}>
 			<div className={styles.card_head_container}>
 				<h3>Your Pages</h3>
 				<Link href="/pages/new">
@@ -40,7 +40,7 @@ const OtherPages: React.FC<OtherPagesProps> = () => {
 					</a>
 				</Link>
 			</div>
-			<ul className={styles.other__pages_list}>
+			<ul className={styles.your__pages__sidebar_list}>
 				{data!.map((page: SidebarPage, index) => {
 					if (page.type === PageType.todo) {
 						return (
@@ -73,4 +73,4 @@ const OtherPages: React.FC<OtherPagesProps> = () => {
 	);
 };
 
-export default OtherPages;
+export default YourPagesSidebar;

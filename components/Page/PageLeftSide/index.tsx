@@ -1,7 +1,6 @@
 import { PageMember } from "models";
 import { useRouter } from "next/router";
-
-import OtherPages from "../OtherPages";
+import YourPagesSidebar from "../YourPagesSidebar";
 import PageMembers from "../PageMembers";
 import PageSettings from "../PageSettings";
 
@@ -19,7 +18,7 @@ export const PageLeftSide: React.FC<PageLeftSideProps> = ({ members, owner }) =>
 		<aside className={styles.left__side}>
 			<PageSettings />
 			<PageMembers members={members} owner={owner} pageId={router.query.pageId as string} />
-			<OtherPages />
+			<YourPagesSidebar />
 			<div className={styles.copyright__container}>
 				<p>Created with {"❤️"} in Slovenia</p>
 				<p>Mipage &#169; {new Date().getFullYear()}</p>
