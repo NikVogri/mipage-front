@@ -16,6 +16,22 @@
 	h4 {
 		font-size: 1.6rem;
 		font-weight: bold;
-		padding: 1rem 0;
+	}
+}
+
+.save__btn__container {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.modal__section {
+	padding: 2rem 0;
+
+	&:not(:last-of-type) {
+		border-bottom: solid 1px var(--outline);
+	}
+
+	button {
+		width: 30%;
 	}
 }
