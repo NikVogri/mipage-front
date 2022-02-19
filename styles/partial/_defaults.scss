@@ -35,6 +35,7 @@ a {
 }
 
 input,
+textarea,
 .form-control {
 	padding: 1.25rem 1rem;
 	font-size: 1.7rem;
@@ -48,12 +49,17 @@ input,
 
 	box-shadow: 0.2rem 0.2rem 0.2rem var(--shadow-block);
 
-	color: #fff;
+	color: var(--primary-text);
+	font-weight: normal;
 	// @include outline();
 
 	&.invalid {
 		border: solid 2px var(--color-pop-hover);
 	}
+}
+
+input:disabled {
+	opacity: 0.5;
 }
 
 label {
@@ -97,7 +103,8 @@ label {
 	}
 
 	&:disabled {
-		background-color: var(--button-primary-disabled);
+		background-color: var(--button-primary-disabled) !important;
+		opacity: 0.5;
 		cursor: not-allowed;
 	}
 
