@@ -7,6 +7,7 @@ import useDetectClickOutside from "hooks/useDetectClickOutside";
 
 import styles from "./UserSettingsList.module.scss";
 import UserProfileModal from "components/UI/modals/UserProfile";
+import UserSettingsModal from "components/UI/modals/UserSettingsModal";
 
 interface UserSettingsListProps {
 	onClose: () => void;
@@ -15,6 +16,7 @@ interface UserSettingsListProps {
 }
 
 const UserSettingsList: React.FC<UserSettingsListProps> = ({ onClose, show }) => {
+	const [showUserProfileModal, setShowUserProfileModal] = useState(false);
 	const [showUserSettingsModal, setShowUserSettingsModal] = useState(false);
 
 	const dispatch = useAppDispatch();
@@ -25,8 +27,11 @@ const UserSettingsList: React.FC<UserSettingsListProps> = ({ onClose, show }) =>
 	};
 
 	const handleOpenProfile = () => {
+		setShowUserProfileModal(true);
+	};
+
+	const handleOpenSettings = () => {
 		setShowUserSettingsModal(true);
-		console.log("here");
 	};
 
 	const handleCreatePage = () => {
@@ -47,6 +52,11 @@ const UserSettingsList: React.FC<UserSettingsListProps> = ({ onClose, show }) =>
 						</button>
 					</li>
 					<li className={styles.setttings__list__item}>
+						<button onClick={handleOpenSettings}>
+							<h4>Settings</h4>
+						</button>
+					</li>
+					<li className={styles.setttings__list__item}>
 						<button onClick={handleCreatePage}>
 							<h4>Create a page</h4>
 						</button>
@@ -62,6 +72,12 @@ const UserSettingsList: React.FC<UserSettingsListProps> = ({ onClose, show }) =>
 			</div>
 
 			<UserProfileModal
+				isOpen={showUserProfileModal}
+				setIsClosed={() => setShowUserProfileModal(false)}
+				setIsOpen={setShowUserProfileModal}
+			/>
+
+			<UserSettingsModal
 				isOpen={showUserSettingsModal}
 				setIsClosed={() => setShowUserSettingsModal(false)}
 				setIsOpen={setShowUserSettingsModal}

@@ -1,0 +1,28 @@
+.modal__section {
+	padding: 2rem 0;
+
+	h4 {
+		font-size: 1.6rem;
+		font-weight: bold;
+
+		color: var(--text-primary);
+	}
+
+	p {
+		color: var(--text-secondary);
+	}
+
+	&:not(:last-of-type) {
+		border-bottom: solid 1px var(--outline);
+	}
+
+	hr {
+		border-color: var(--outline);
+		margin: 2rem 0;
+	}
+
+	button {
+		width: 30%;
+        margin-top: 1rem;
+	}
+}
