@@ -10,25 +10,14 @@
 	color: var(--text-secondary);
 }
 
-.pages__container {
-	width: 100%;
-	padding: 2rem 0;
-	display: grid;
-	grid-template-columns: repeat(auto-fit, 18rem);
-
-	@media only screen and (max-width: 478px) {
-		grid-template-columns: repeat(auto-fit, 100%);
-	}
-
-	gap: 2rem;
-}
-
 .welcome__msg {
 	margin: 5rem 0 3rem 0;
 	border-radius: 1rem;
 	padding: 2rem;
 
 	text-align: center;
+
+	border: solid 1px var(--outline);
 
 	h1 {
 		font-size: 3rem;

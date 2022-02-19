@@ -13,4 +13,22 @@
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-} ;
+}
+
+@mixin btn_hover_background {
+	padding: 0.5rem;
+		border-radius: 0.5rem;
+
+		transition: background-color 0.2s ease-in-out;
+
+		svg {
+			opacity: 0.5;
+		}
+
+		&:hover {
+			background-color: var(--outline);
+			svg {
+				opacity: 1;
+			}
+		}
+}

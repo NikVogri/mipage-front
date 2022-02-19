@@ -1,0 +1,55 @@
+@import "../../../styles/partial/mixins";
+
+.items__controlls {
+	margin-top: 2rem;
+
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	color: var(--text-secondary);
+	fill: var(--outline);
+
+	h5 {
+		font-size: 1.8rem;
+		font-weight: 600;
+		position: relative;
+	}
+
+	button {
+		@include btn_hover_background;
+	}
+
+	hr {
+		border-color: var(--outline);
+		height: 2px;
+		margin: 0 2rem;
+		flex: 1;
+	}
+}
+
+.pages__cards__list {
+	width: 100%;
+	padding: 2rem 0;
+	grid-template-columns: repeat(auto-fit, minmax(18.5rem, 1fr));
+
+	display: none;
+
+	@media only screen and (max-width: 478px) {
+		grid-template-columns: repeat(auto-fit, 100%);
+		margin: 0 auto;
+	}
+
+	&.active {
+		display: grid;
+	}
+
+	span {
+		font-weight: 700;
+		font-size: 1.5rem;
+		color: var(--text-secondary);
+		text-align: center;
+	}
+
+	gap: 2rem;
+}

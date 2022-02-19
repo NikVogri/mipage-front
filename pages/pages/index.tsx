@@ -15,10 +15,26 @@ import onlyAuth from "components/HOC/withAuth";
 
 import styles from "styles/pages/Pages.module.scss";
 import { getGreetingMessage } from "helpers/getGreetingMessage";
+import PagesCardsList from "components/Page/PagesCardsList";
+import { useMemo } from "react";
 
 const Home = () => {
 	const { isAuth, user } = useAuth();
 	const { data: pages, isLoading } = useGetUserPagesQuery(null, { skip: !isAuth });
+
+	const sortedPages = useMemo(() => {
+		const output: {
+			yourPages: Page[];
+			allPages: Page[];
+			memberOfPages: Page[];
+		} = { yourPages: [], allPages: [], memberOfPages: [] };
+
+		output.allPages = pages || [];
+		output.memberOfPages = pages?.filter((page: Page) => page.members.some((member) => member.id === user?.id))!;
+		output.yourPages = pages?.filter((page: Page) => page.owner.id === user?.id)!;
+
+		return output;
+	}, [pages, user?.id]);
 
 	if (isLoading) {
 		return (
@@ -38,7 +54,6 @@ const Home = () => {
 			<Head>
 				<title>Your pages | Mipage</title>
 			</Head>
-			{/* <h5 className={styles.heading}>My Pages</h5> */}
 			<div className={styles.welcome__msg}>
 				<h1>
 					{getGreetingMessage()}, {user?.username}!
@@ -50,22 +65,10 @@ const Home = () => {
 				<p className={styles.no__found}>You {"don't"} have any pages yet, create one now!</p>
 			)}
 
-			<div className={styles.pages__container}>
-				{pages &&
-					pages.map((page: Page) => (
-						<PageCard
-							key={page.id}
-							title={page.title}
-							id={page.id}
-							type={page.type}
-							isPrivate={false}
-							owner={page.owner}
-							members={page.members}
-							notebooks={page.notebooks}
-						/>
-					))}
-				<AddPageCard />
-			</div>
+			<PagesCardsList pages={sortedPages.yourPages} title="Your pages" showItemsInit />
+			<PagesCardsList pages={sortedPages.memberOfPages} title="Pages you are a member of" />
+			<PagesCardsList pages={sortedPages.allPages} title="All pages" />
+
 			<StickyAddPageButton />
 			<Link href="/">
 				<a>back</a>
