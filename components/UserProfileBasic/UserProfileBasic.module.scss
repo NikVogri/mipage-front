@@ -1,0 +1,19 @@
+.profile__about {
+	padding: 2rem 0;
+
+	display: flex;
+	align-items: center;
+
+	.profile__about__info {
+		margin-left: 2rem;
+	}
+
+	h5 {
+		color: var(--text-primary);
+		font-size: 1.8rem;
+	}
+
+	span {
+		color: var(--text-secondary);
+	}
+}

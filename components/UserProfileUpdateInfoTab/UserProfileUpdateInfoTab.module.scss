@@ -1,0 +1,17 @@
+.form__body {
+	align-items: center;
+
+	label {
+		color: var(--text-secondary);
+		font-weight: 600;
+	}
+
+	button {
+		margin-left: auto;
+	}
+}
+
+.save__btn__container {
+	display: flex;
+	justify-content: flex-end;
+}
