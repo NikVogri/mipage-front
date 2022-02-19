@@ -1,0 +1,19 @@
+.delete__confirmation {
+	padding: 2rem 0;
+	font-size: 1.4rem;
+
+	input {
+		font-family: inherit;
+	}
+
+	.btn__container {
+		margin-top: 1rem;
+
+		button {
+			width: 35%;
+		}
+
+		display: flex;
+		justify-content: space-between;
+	}
+}
