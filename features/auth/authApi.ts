@@ -24,3 +24,7 @@ export const postPersonalInfo = async (personalInfo: PersonalInfoPayload): Promi
 	const res = await axios.post("users/me/personal-info", personalInfo, { withCredentials: true });
 	return res.data;
 };
+
+export const deleteUser = async (): Promise<void> => {
+	await axios.delete("users/me", { withCredentials: true });
+};

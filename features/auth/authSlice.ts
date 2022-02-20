@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, isFulfilled, isPending, isRejected, PayloadAction } from "@reduxjs/toolkit";
 import { PersonalInfoPayload, User } from "models";
 import { RootState } from "store";
-import { fetchMe, postLogin, postLogout, postSignup, postPersonalInfo } from "features/auth/authApi";
+import { fetchMe, postLogin, postLogout, postSignup, postPersonalInfo, deleteUser } from "features/auth/authApi";
 import { toast } from "react-toastify";
 
 export interface AuthState {
@@ -89,6 +89,17 @@ export const updatePersonalInfo = createAsyncThunk(
 		}
 	}
 );
+
+export const deleteUserAndLogout = createAsyncThunk("/users/me/personal-info", async ({}, thunkAPI) => {
+	try {
+		await deleteUser();
+		thunkAPI.dispatch(clearUser());
+	} catch (err: any) {
+		return thunkAPI.rejectWithValue(
+			err?.response?.data?.message || "Something went wrong, please try again later."
+		);
+	}
+});
 
 const authSlice = createSlice({
 	name: "auth",

@@ -1,4 +1,6 @@
 import { Dispatch, SetStateAction, useState } from "react";
+import { deleteUserAndLogout } from "features/auth/authSlice";
+import { useAppDispatch } from "hooks/redux-hooks";
 
 import UserProfileBasic from "components/UserProfileBasic";
 import DeleteConfirmation from "components/DeleteConfirmation";
@@ -14,8 +16,11 @@ interface UserSettingsModalProps {
 
 const UserSettingsModal: React.FC<UserSettingsModalProps> = ({ isOpen, setIsClosed, setIsOpen }) => {
 	const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+	const dispatch = useAppDispatch();
 
-	const handleDeleteAccount = () => {};
+	const handleDeleteAccount = async () => {
+		await dispatch(deleteUserAndLogout());
+	};
 
 	return (
 		<Modal isOpen={isOpen} setIsOpen={setIsOpen} contentLabel="Account settings">
