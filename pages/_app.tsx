@@ -9,11 +9,13 @@ import { useEffect } from "react";
 import Layout from "../components/UI/Layout";
 import App from "next/app";
 
+import { ToastContainer } from "react-toastify";
 import axios from "config/axios";
 
 import "styles/globals.css";
 import "styles/main.scss";
 import "../styles/globals.css";
+import "react-toastify/dist/ReactToastify.css";
 function MyApp({ Component, pageProps, user }: AppProps & { user: User }) {
 	useEffect(() => {
 		if (user) {
@@ -27,6 +29,16 @@ function MyApp({ Component, pageProps, user }: AppProps & { user: User }) {
 		<Provider store={store}>
 			<Layout>
 				<Component {...pageProps} />
+				<ToastContainer
+					position="top-center"
+					autoClose={1500}
+					newestOnTop
+					closeOnClick
+					rtl={false}
+					pauseOnFocusLoss
+					pauseOnHover
+					className={`toast-container`}
+				/>
 			</Layout>
 		</Provider>
 	);

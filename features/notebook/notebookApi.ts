@@ -1,6 +1,7 @@
 import baseApi from "features/baseApi";
 import { pageExtendedApi } from "features/page/pagesApi";
 import { Notebook, NotebookBlock, NotebookBlockType } from "models";
+import { toast } from "react-toastify";
 
 export const notebookExtendedApi = baseApi.injectEndpoints({
 	endpoints: (build) => ({
@@ -56,7 +57,11 @@ export const notebookExtendedApi = baseApi.injectEndpoints({
 							});
 						})
 					);
-				} catch {}
+
+					toast.success("Successfully created a new notebook");
+				} catch {
+					toast.error("Could not create notebook");
+				}
 			},
 		}),
 		createNotebookBlock: build.mutation<
@@ -76,7 +81,9 @@ export const notebookExtendedApi = baseApi.injectEndpoints({
 							notebook.blocks.push(updatedNotebookBlock);
 						})
 					);
-				} catch {}
+				} catch {
+					toast.error("Could not create notebook block");
+				}
 			},
 		}),
 	}),

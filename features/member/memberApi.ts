@@ -1,6 +1,6 @@
 import baseApi from "features/baseApi";
 import { pageExtendedApi } from "features/page/pagesApi";
-
+import { toast } from "react-toastify";
 import { PageMember } from "models";
 
 export const membersExtendedApi = baseApi.injectEndpoints({
@@ -20,7 +20,11 @@ export const membersExtendedApi = baseApi.injectEndpoints({
 							page.members = updatedMembers;
 						})
 					);
-				} catch {}
+
+					toast.success(`Successfully added user to your page`);
+				} catch {
+					toast.error(`Could not add user to this page`);
+				}
 			},
 		}),
 		removeMemberFromPage: build.mutation<PageMember[], { pageId: string; id: string }>({
@@ -37,7 +41,11 @@ export const membersExtendedApi = baseApi.injectEndpoints({
 							page.members = updatedMembers;
 						})
 					);
-				} catch {}
+
+					toast.success(`Successfully removed user from your page`);
+				} catch {
+					toast.error(`Could not remove user from this page`);
+				}
 			},
 		}),
 	}),

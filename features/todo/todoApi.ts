@@ -1,5 +1,6 @@
 import baseApi from "features/baseApi";
 import { Todo, TodoItem } from "models";
+import { toast } from "react-toastify";
 
 export const todoExtendedApi = baseApi.injectEndpoints({
 	endpoints: (build) => ({
@@ -27,7 +28,9 @@ export const todoExtendedApi = baseApi.injectEndpoints({
 							todoBlockToUpdate.items?.push(createdTodoItem);
 						})
 					);
-				} catch {}
+				} catch {
+					toast.error("Could not update todo item");
+				}
 			},
 		}),
 		updateTodoItem: build.mutation<
@@ -58,7 +61,9 @@ export const todoExtendedApi = baseApi.injectEndpoints({
 							todoItemToUpdate.title = updatedTodoItem.title;
 						})
 					);
-				} catch {}
+				} catch {
+					toast.error("Could not update todo item");
+				}
 			},
 		}),
 		removeTodoItem: build.mutation<TodoItem, { pageId: string; todoId: string; todoItemId: string }>({
@@ -79,7 +84,11 @@ export const todoExtendedApi = baseApi.injectEndpoints({
 							todoBlockToUpdate.items = todoBlockToUpdate.items?.filter((i) => i.id !== todoItemId);
 						})
 					);
-				} catch {}
+
+					toast.success("Successfully removed todo item");
+				} catch {
+					toast.error("Could not remove todo item");
+				}
 			},
 		}),
 		removeTodoBlock: build.mutation<Todo, { pageId: string; todoId: string }>({
@@ -98,7 +107,11 @@ export const todoExtendedApi = baseApi.injectEndpoints({
 							todoBlocks.splice(todoBlockToRemove, 1);
 						})
 					);
-				} catch {}
+
+					toast.success("Successfully removed todo block");
+				} catch {
+					toast.error("Could not remove todo block");
+				}
 			},
 		}),
 		createTodoBlock: build.mutation<Todo, { pageId: string; title: string; color: string }>({
@@ -117,7 +130,11 @@ export const todoExtendedApi = baseApi.injectEndpoints({
 							todoBlocks.push(createdTodoBlock);
 						})
 					);
-				} catch {}
+
+					toast.success("Successfully created todo block");
+				} catch {
+					toast.error("Could not create todo block");
+				}
 			},
 		}),
 		updateTodoBlock: build.mutation<Todo, { pageId: string; todoId: string; title: string; color: string }>({
@@ -140,9 +157,13 @@ export const todoExtendedApi = baseApi.injectEndpoints({
 								...updatedTodoBlock,
 								items: todoBlocks[todoBlockIndex].items,
 							};
+
+							toast.success("Successfully updated todo block");
 						})
 					);
-				} catch {}
+				} catch {
+					toast.error("Could not update todo block");
+				}
 			},
 		}),
 	}),

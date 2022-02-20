@@ -1,0 +1,17 @@
+.Toastify__toast--success,
+.Toastify__toast--info,
+.Toastify__toast--warning,
+.Toastify__toast--error {
+	background-color: var(--background-card) !important;
+	box-shadow: 0rem 0.4rem 0.4rem var(--shadow-block);
+	border: solid 1px var(--outline);
+
+	color: var(--text-secondary) !important;
+	font-size: 1.45rem;
+}
+
+.Toastify__close-button {
+	svg {
+		fill: var(--text-secondary) !important;
+	}
+}

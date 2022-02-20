@@ -26,6 +26,7 @@ export const signup = createAsyncThunk(
 	async (signupData: { email: string; username: string; password: string }, thunkAPI) => {
 		try {
 			await postSignup(signupData);
+			toast.success(`Successfully registered, log in now!`);
 		} catch (err: any) {
 			return thunkAPI.rejectWithValue(
 				err?.response?.data?.message || "Something went wrong, please try again later."
@@ -40,6 +41,7 @@ export const login = createAsyncThunk(
 		try {
 			await postLogin(loginData);
 			await thunkAPI.dispatch(getMe());
+			toast.success(`Successfully logged in`);
 		} catch (err: any) {
 			return thunkAPI.rejectWithValue(
 				err?.response?.data?.message || "Something went wrong, please try again later."
@@ -79,6 +81,7 @@ export const updatePersonalInfo = createAsyncThunk(
 		try {
 			const res = await postPersonalInfo(personalInfo);
 			thunkAPI.dispatch(updateUser(res));
+			toast.success("Successfully updated personal information");
 		} catch (err: any) {
 			return thunkAPI.rejectWithValue(
 				err?.response?.data?.message || "Something went wrong, please try again later."
@@ -134,6 +137,7 @@ const authSlice = createSlice({
 		builder.addMatcher(isRejected(), (state, { payload }) => {
 			state.errorMessage = payload as string;
 			state.loading = false;
+			toast.error(payload as string);
 		});
 	},
 });
