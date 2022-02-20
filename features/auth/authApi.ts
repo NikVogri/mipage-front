@@ -1,5 +1,5 @@
 import axios from "config/axios";
-import { User } from "models";
+import { PersonalInfoPayload, User } from "models";
 
 export const fetchMe = async (): Promise<User | void> => {
 	try {
@@ -18,4 +18,9 @@ export const postSignup = async (signupData: { email: string; username: string; 
 
 export const postLogout = async () => {
 	await axios.post("auth/logout", null, { withCredentials: true });
+};
+
+export const postPersonalInfo = async (personalInfo: PersonalInfoPayload): Promise<PersonalInfoPayload> => {
+	const res = await axios.post("users/me/personal-info", personalInfo, { withCredentials: true });
+	return res.data;
 };

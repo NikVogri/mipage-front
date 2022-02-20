@@ -1,14 +1,24 @@
 import useAuth from "hooks/useAuth";
-import { useFormik } from "formik";
+import { FormikValues, useFormik } from "formik";
 
 import * as Yup from "yup";
 
 import styles from "./UserProfileUpdateInfoTab.module.scss";
+import { updatePersonalInfo } from "features/auth/authSlice";
+import { useAppDispatch } from "hooks/redux-hooks";
 
 const UserProfileUpdateInfoTab: React.FC = () => {
 	const { user } = useAuth();
+	const dispatch = useAppDispatch();
 
-	const handleUpdateSubmit = () => {};
+	const handleUpdateSubmit = async (fv: FormikValues) => {
+		const { username, bio } = fv;
+
+		if (username && bio) {
+			await dispatch(updatePersonalInfo({ username, bio }));
+			formik.resetForm({ values: { username, bio } });
+		}
+	};
 
 	const formik = useFormik({
 		initialValues: {

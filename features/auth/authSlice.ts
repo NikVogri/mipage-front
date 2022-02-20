@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice, isFulfilled, isPending, isRejected, PayloadAction } from "@reduxjs/toolkit";
-import { User } from "models";
+import { PersonalInfoPayload, User } from "models";
 import { RootState } from "store";
-import { fetchMe, postLogin, postLogout, postSignup } from "features/auth/authApi";
+import { fetchMe, postLogin, postLogout, postSignup, postPersonalInfo } from "features/auth/authApi";
+import { toast } from "react-toastify";
 
 export interface AuthState {
 	isAuth: boolean;
@@ -72,17 +73,35 @@ export const getMe = createAsyncThunk("/user/me", async ({}, thunkAPI) => {
 	}
 });
 
+export const updatePersonalInfo = createAsyncThunk(
+	"/users/me/personal-info",
+	async (personalInfo: PersonalInfoPayload, thunkAPI) => {
+		try {
+			const res = await postPersonalInfo(personalInfo);
+			thunkAPI.dispatch(updateUser(res));
+		} catch (err: any) {
+			return thunkAPI.rejectWithValue(
+				err?.response?.data?.message || "Something went wrong, please try again later."
+			);
+		}
+	}
+);
+
 const authSlice = createSlice({
 	name: "auth",
 	initialState,
 	reducers: {
 		setUser: (state, action: PayloadAction<User>) => {
 			const payload = action.payload;
-			const { id, username, avatar, createdAt, email, updatedAt } = payload;
+			const { id, username, avatar, createdAt, email, updatedAt, bio } = payload;
 
 			state.isAuth = true;
 			state.checked = true;
-			state.user = { id, username, avatar, email, createdAt, updatedAt };
+			state.user = { id, username, avatar, email, createdAt, updatedAt, bio };
+		},
+
+		updateUser: (state, action: PayloadAction<PersonalInfoPayload>) => {
+			state.user = Object.assign(state.user, action.payload);
 		},
 
 		clearUser: (state) => {
@@ -119,7 +138,7 @@ const authSlice = createSlice({
 	},
 });
 
-export const { setUser, clearUser, setAuthChecked, clearAuthError } = authSlice.actions;
+export const { setUser, clearUser, setAuthChecked, clearAuthError, updateUser } = authSlice.actions;
 
 // selects
 export const selectIsAuth = (state: RootState) => state.auth.isAuth;

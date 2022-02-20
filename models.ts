@@ -5,6 +5,7 @@ export interface User {
 	avatar: string | null;
 	createdAt?: Date;
 	updatedAt?: Date;
+	bio?: string;
 }
 
 export enum PageType {
@@ -115,4 +116,9 @@ export interface Notification {
 	viewed: boolean;
 	viewedAt: Date | null;
 	additionalData?: Record<string, unknown>;
+}
+
+export interface PersonalInfoPayload {
+	bio: string;
+	username: string;
 }
