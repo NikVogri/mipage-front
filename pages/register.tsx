@@ -1,17 +1,17 @@
 import React, { useEffect } from "react";
-import Link from "next/link";
-import Head from "next/head";
-import * as Yup from "yup";
 
-import { Formik, Form, Field, FormikValues } from "formik";
+import { useFormik } from "formik";
 import { useAppDispatch, useAppSelector } from "hooks/redux-hooks";
 import { clearAuthError, selectErrorMessage, selectIsAuth, selectLoading, signup } from "features/auth/authSlice";
+import usePush from "hooks/usePush";
 
+import Link from "next/link";
+import Head from "next/head";
 import LoadingButton from "components/UI/LoadingButton";
 
+import * as Yup from "yup";
+
 import styles from "../styles/pages/Register.module.scss";
-import ErrorFormMessage from "components/Form/ErrorFormMessage";
-import usePush from "hooks/usePush";
 
 const signupValidationSchema = Yup.object().shape({
 	email: Yup.string().email("Please enter a correct email address").required("Email is required"),
@@ -20,12 +20,13 @@ const signupValidationSchema = Yup.object().shape({
 		.max(50, "Max 50 characters")
 		.required("Username is required"),
 	password: Yup.string().min(6, "Password must be more than 6 characters long").required("Password is required"),
-	passwordConfirm: Yup.string().oneOf([Yup.ref("password"), null], "Passwords don't match"),
+	passwordConfirm: Yup.string()
+		.oneOf([Yup.ref("password"), null], "Passwords don't match")
+		.required("Password confirmation is required"),
 });
 
 const Register = () => {
 	const isAuth = useAppSelector(selectIsAuth);
-	const errorMessage = useAppSelector(selectErrorMessage);
 	const loading = useAppSelector(selectLoading);
 
 	const dispatch = useAppDispatch();
@@ -47,106 +48,107 @@ const Register = () => {
 		}
 	};
 
+	const formik = useFormik({
+		initialValues: {
+			email: "",
+			username: "",
+			password: "",
+			passwordConfirm: "",
+		},
+		validationSchema: signupValidationSchema,
+		onSubmit: handleSubmit,
+	});
+
+	console.log(formik.isValid);
+
 	return (
 		<main className={styles.register}>
 			<Head>
 				<title>Register | Mipage</title>
 			</Head>
 			<div className={styles.register__container}>
-				<Formik
-					initialValues={{
-						email: "",
-						username: "",
-						password: "",
-						passwordConfirm: "",
-					}}
-					validationSchema={signupValidationSchema}
-					onSubmit={handleSubmit}
-				>
-					<Form>
-						<h1 className="heading__primary">Create your account</h1>
-						{errorMessage && <ErrorFormMessage message={errorMessage} />}
-						<Field name="email">
-							{({ field, form }: { field: string; form: FormikValues }) => (
-								<div className="form-group">
-									<label className="label">Email</label>
-									<input
-										className={`form-control ${
-											form.errors.email && form.touched.email ? "invalid" : ""
-										}`}
-										type="email"
-										required
-										{...field}
-									/>
-									{form.errors.email && form.touched.email && (
-										<span className="form-error">{form.errors.email}</span>
-									)}
-								</div>
-							)}
-						</Field>
+				<form onSubmit={formik.handleSubmit}>
+					<h1 className="heading__primary">Create your account</h1>
 
-						<Field name="username">
-							{({ field, form }: { field: string; form: FormikValues }) => (
-								<div className="form-group">
-									<label className="label">Username</label>
-									<input
-										className={`form-control ${
-											form.errors.username && form.touched.username ? "invalid" : ""
-										}`}
-										type="text"
-										required
-										{...field}
-									/>
-									{form.errors.username && form.touched.username && (
-										<span className="form-error">{form.errors.username}</span>
-									)}
-								</div>
-							)}
-						</Field>
+					<div className="form-group">
+						<label className="label">Email</label>
+						<input
+							className={`form-control ${formik.errors.email && formik.touched.email ? "invalid" : ""}`}
+							type="email"
+							name="email"
+							id="email"
+							value={formik.values.email}
+							onChange={formik.handleChange}
+							required
+						/>
+						{formik.errors.email && formik.touched.email && (
+							<span className="form-error">{formik.errors.email}</span>
+						)}
+					</div>
 
-						<Field name="password">
-							{({ field, form }: { field: string; form: FormikValues }) => (
-								<div className="form-group">
-									<label className="label">Password</label>
-									<input
-										className={`form-control ${
-											form.errors.password && form.touched.password ? "invalid" : ""
-										}`}
-										type="password"
-										required
-										{...field}
-									/>
-									{form.errors.password && form.touched.password && (
-										<span className="form-error">{form.errors.password}</span>
-									)}
-								</div>
-							)}
-						</Field>
+					<div className="form-group">
+						<label className="label">Username</label>
+						<input
+							className={`form-control ${
+								formik.errors.username && formik.touched.username ? "invalid" : ""
+							}`}
+							type="text"
+							name="username"
+							id="username"
+							value={formik.values.username}
+							onChange={formik.handleChange}
+							required
+						/>
+						{formik.errors.username && formik.touched.username && (
+							<span className="form-error">{formik.errors.username}</span>
+						)}
+					</div>
 
-						<Field name="passwordConfirm">
-							{({ field, form }: { field: string; form: FormikValues }) => (
-								<div className="form-group">
-									<label className="label">Confirm password</label>
-									<input
-										className={`form-control ${
-											form.errors.password && form.touched.passwordConfirm ? "invalid" : ""
-										}`}
-										type="password"
-										required
-										{...field}
-									/>
-									{form.errors.password && form.touched.passwordConfirm && (
-										<span className="form-error">{form.errors.passwordConfirm}</span>
-									)}
-								</div>
-							)}
-						</Field>
+					<div className="form-group">
+						<label className="label">Password</label>
+						<input
+							className={`form-control ${
+								formik.errors.password && formik.touched.password ? "invalid" : ""
+							}`}
+							type="password"
+							required
+							name="password"
+							id="password"
+							value={formik.values.password}
+							onChange={formik.handleChange}
+						/>
+						{formik.errors.password && formik.touched.password && (
+							<span className="form-error">{formik.errors.password}</span>
+						)}
+					</div>
 
-						<LoadingButton className="form-button" isLoading={loading} disabled={loading}>
-							Submit
-						</LoadingButton>
-					</Form>
-				</Formik>
+					<div className="form-group">
+						<label className="label">Confirm password</label>
+						<input
+							className={`form-control ${
+								formik.errors.password && formik.touched.passwordConfirm ? "invalid" : ""
+							}`}
+							type="password"
+							required
+							name="passwordConfirm"
+							id="passwordConfirm"
+							value={formik.values.passwordConfirm}
+							onChange={formik.handleChange}
+						/>
+						{formik.errors.password && formik.touched.passwordConfirm && (
+							<span className="form-error">{formik.errors.passwordConfirm}</span>
+						)}
+					</div>
+
+					<LoadingButton
+						className="form-button"
+						isLoading={loading}
+						disabled={loading || !formik.dirty || !formik.isValid}
+					>
+						Submit
+					</LoadingButton>
+				</form>
+
 				<Link href="/login">
 					<a className={`${styles.secondary__btn} block mt-5`}>Already have an account? Login</a>
 				</Link>

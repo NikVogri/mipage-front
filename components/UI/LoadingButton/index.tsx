@@ -6,10 +6,18 @@ interface LoadingButtonProps {
 	isLoading: boolean;
 	size?: number;
 	className?: string;
+	disabled?: boolean;
 	[props: string]: any;
 }
 
-const LoadingButton = ({ children, isLoading, size, className, ...props }: LoadingButtonProps): JSX.Element => {
+const LoadingButton = ({
+	children,
+	isLoading,
+	size,
+	className,
+	disabled = false,
+	...props
+}: LoadingButtonProps): JSX.Element => {
 	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
@@ -24,7 +32,7 @@ const LoadingButton = ({ children, isLoading, size, className, ...props }: Loadi
 	}, [isLoading]);
 
 	return (
-		<button {...props} className={`${className} form-button`} disabled={isLoading}>
+		<button {...props} className={`${className} form-button`} disabled={disabled || isLoading}>
 			{loading ? <LoadingSpinner size={size ? size : 16} className="mx-auto" /> : children}
 		</button>
 	);

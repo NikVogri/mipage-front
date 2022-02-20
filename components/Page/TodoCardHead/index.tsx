@@ -11,7 +11,7 @@ import * as Yup from "yup";
 import styles from "./TodoCardHead.module.scss";
 import "@szhsin/react-menu/dist/index.css";
 import "@szhsin/react-menu/dist/transitions/slide.css";
-import { Field, FieldConfig, Form, Formik, FormikValues } from "formik";
+import { FormikValues, useFormik } from "formik";
 import { CirclePicker } from "react-color";
 interface TodoCardHeadProps {
 	color: string;
@@ -20,8 +20,9 @@ interface TodoCardHeadProps {
 	todoId: string;
 }
 
-const createTodoBlockValidationSchema = Yup.object().shape({
+const updateTodoBlockValidationSchema = Yup.object().shape({
 	title: Yup.string().min(3, "Title must be at least 3 characters long").required("Title is required"),
+	color: Yup.string().required("Color is required"),
 });
 
 const TodoCardHead: React.FC<TodoCardHeadProps> = ({ color, title, pageId, todoId }) => {
@@ -29,13 +30,10 @@ const TodoCardHead: React.FC<TodoCardHeadProps> = ({ color, title, pageId, todoI
 	const [updateTodoBlock, { isLoading }] = useUpdateTodoBlockMutation();
 
 	const [modalIsOpen, setIsOpen] = useState(false);
-	const [selectedColor, setSelectedColor] = useState(color);
 
 	const handleUpdateSubmit = async (e: FormikValues) => {
-		if (selectedColor && e.title) {
-			await updateTodoBlock({ title: e.title, color: selectedColor, pageId, todoId });
-			setIsOpen(false);
-		}
+		await updateTodoBlock({ title: e.title, color: e.color, pageId, todoId });
+		setIsOpen(false);
 	};
 
 	const handleDeleteTodoList = async () => {
@@ -45,6 +43,15 @@ const TodoCardHead: React.FC<TodoCardHeadProps> = ({ color, title, pageId, todoI
 			await removeTodoBlock({ pageId, todoId });
 		}
 	};
+
+	const formik = useFormik({
+		initialValues: {
+			title,
+			color,
+		},
+		validationSchema: updateTodoBlockValidationSchema,
+		onSubmit: handleUpdateSubmit,
+	});
 
 	return (
 		<div className={styles.card__top} style={{ backgroundColor: color }}>
@@ -69,47 +76,47 @@ const TodoCardHead: React.FC<TodoCardHeadProps> = ({ color, title, pageId, todoI
 			<Modal isOpen={modalIsOpen} setIsOpen={setIsOpen} contentLabel="Update todo block">
 				<Modal.Head title="Update todo block" closeModal={() => setIsOpen(false)} />
 
-				<Formik
-					initialValues={{
-						title,
-					}}
-					validationSchema={createTodoBlockValidationSchema}
-					onSubmit={handleUpdateSubmit}
-				>
-					<Form>
-						<Field name="title">
-							{({ field, form }: { field: FieldConfig; form: FormikValues }) => (
-								<div className="form-group">
-									<label className="label">Title</label>
-									<input
-										className={`form-control form-control-modal ${
-											form.errors.title && form.touched.title ? "invalid" : ""
-										}`}
-										type="string"
-										required
-										{...field}
-									/>
-									{form.errors.title && form.touched.title && (
-										<span className="form-error">{form.errors.title}</span>
-									)}
-								</div>
-							)}
-						</Field>
+				<form onSubmit={formik.handleSubmit}>
+					<div className="form-group">
+						<label className="label">Title</label>
+						<input
+							className={`form-control form-control-modal ${
+								formik.errors.title && formik.touched.title ? "invalid" : ""
+							}`}
+							type="string"
+							name="title"
+							value={formik.values.title}
+							onChange={formik.handleChange}
+							required
+						/>
+						{formik.errors.title && formik.touched.title && (
+							<span className="form-error">{formik.errors.title}</span>
+						)}
+					</div>
 
-						<div className={`form-group ${styles.color__picker}`}>
-							<label className="label">Header color</label>
-							<CirclePicker width="100%" onChange={({ hex }) => setSelectedColor(hex)} />
+					<div className={`form-group ${styles.color__picker}`}>
+						<label className="label">Header color</label>
+						<CirclePicker
+							width="100%"
+							onChange={({ hex }) => formik.setFieldValue("color", hex)}
+							key={formik.values.color}
+							color={formik.values.color}
+						/>
+					</div>
+
+					<Modal.Footer>
+						<div className={styles.btn__container}>
+							<LoadingButton
+								isLoading={isLoading}
+								disabled={!formik.dirty || !formik.isValid}
+								className="btn-create btn-md"
+								type="submit"
+							>
+								Save
+							</LoadingButton>
 						</div>
-
-						<Modal.Footer>
-							<div className={styles.btn__container}>
-								<LoadingButton isLoading={isLoading} className="btn-create btn-md" type="submit">
-									Save
-								</LoadingButton>
-							</div>
-						</Modal.Footer>
-					</Form>
-				</Formik>
+					</Modal.Footer>
+				</form>
 			</Modal>
 		</div>
 	);
