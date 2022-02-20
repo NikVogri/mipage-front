@@ -7,7 +7,7 @@ export interface AvatarProps {
 	username: string;
 	outline?: string;
 	size?: "md" | "lg";
-	tooltip: boolean;
+	tooltip?: boolean;
 }
 export interface AvatarAdditionalProps {
 	additionalCount: number;

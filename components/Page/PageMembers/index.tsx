@@ -71,7 +71,7 @@ const AddMembersModal: React.FC<AddMembersModalProps> = ({
 			<form className={styles.search__for_users__form}>
 				<div className="form-group">
 					<label className="label" htmlFor="search-for-users">
-						Search for users by their username or email
+						Search for users by their username
 					</label>
 					<DebounceInput
 						id="search-for-users"
