@@ -65,9 +65,17 @@ const Home = () => {
 				<p className={styles.no__found}>You {"don't"} have any pages yet, create one now!</p>
 			)}
 
-			<PagesCardsList pages={sortedPages.yourPages} title="Your pages" showItemsInit />
-			<PagesCardsList pages={sortedPages.memberOfPages} title="Pages you are a member of" />
-			<PagesCardsList pages={sortedPages.allPages} title="All pages" />
+			<PagesCardsList
+				pages={sortedPages.yourPages}
+				title="Your pages"
+				showItemsInit={!!sortedPages.yourPages.length}
+			/>
+			<PagesCardsList
+				pages={sortedPages.memberOfPages}
+				title="Pages you are a member of"
+				showItemsInit={!!sortedPages.memberOfPages.length}
+			/>
+			<PagesCardsList pages={sortedPages.allPages} title="All pages" showItemsInit />
 
 			<StickyAddPageButton />
 			<Link href="/">
