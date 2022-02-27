@@ -1,0 +1,19 @@
+@import "../../../styles/partial/components/basic_button";
+
+.textarea__with__controls {
+	textarea {
+		min-height: 15rem;
+		border: solid 1px var(--outline);
+		color: var(--text-primary);
+		font-size: 1.4rem;
+	}
+
+	.btn__container {
+		display: flex;
+		align-items: center;
+
+		button {
+			@include btn_basic;
+		}
+	}
+}
