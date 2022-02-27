@@ -23,11 +23,18 @@
 		max-height: 100%;
 	}
 
+	&.sm {
+		height: 2.8rem;
+		width: 2.8rem;
+		font-size: 1.35rem;
+	}
+
 	&.md {
 		height: 4rem;
 		width: 4rem;
 		font-size: 1.8rem;
 	}
+
 	&.lg {
 		height: 5rem;
 		width: 5rem;

@@ -6,7 +6,7 @@ export interface AvatarProps {
 	avatar?: string | null;
 	username: string;
 	outline?: string;
-	size?: "md" | "lg";
+	size?: "md" | "lg" | "sm";
 	tooltip?: boolean;
 }
 export interface AvatarAdditionalProps {
@@ -53,6 +53,7 @@ const Avatar = ({ avatar, username, outline, size, tooltip = true }: AvatarProps
 			}}
 		>
 			<Image
+				unoptimized // TODO: remove this line
 				src={avatar}
 				alt={username}
 				className={`${styles.avatar} ${styles.image}`}
