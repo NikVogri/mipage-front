@@ -1,0 +1,31 @@
+@import "../../../styles/partial/components/basic_button";
+
+.add__new__comment {
+	display: flex;
+	flex-direction: column;
+
+	form {
+		width: 100%;
+
+		.btn__container {
+			margin-top: 1rem;
+			display: flex;
+			justify-content: flex-end;
+
+			button {
+				@include btn_basic;
+			}
+		}
+	}
+}
+
+.comment__input {
+	display: flex;
+	align-items: center;
+
+	input {
+		margin-left: 2rem;
+		border: solid 1px var(--outline);
+		font-family: inherit;
+	}
+}

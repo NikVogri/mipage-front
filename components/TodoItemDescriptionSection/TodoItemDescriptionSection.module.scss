@@ -1,0 +1,17 @@
+@import "../../styles/partial/components/basic_button";
+
+.add__description__btn {
+	@include btn_basic;
+
+	display: flex;
+	align-items: center;
+
+	span {
+		margin-left: 0.5rem;
+	}
+}
+
+.loading {
+	opacity: 0.5;
+	cursor: not-allowed;
+}

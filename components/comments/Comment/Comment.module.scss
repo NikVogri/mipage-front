@@ -1,0 +1,27 @@
+.comment {
+	display: flex;
+	align-items: flex-start;
+
+	margin-bottom: 2rem;
+}
+
+.comment__poster__avatar {
+	display: block;
+	margin-right: 2rem;
+}
+
+.comment__right {
+	display: flex;
+	flex-direction: column;
+
+	.comment__poster {
+		span {
+			font-size: 1.2rem;
+			font-weight: bold;
+		}
+	}
+
+	.comment__content {
+		margin-top: 0.5rem;
+	}
+}

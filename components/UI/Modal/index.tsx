@@ -8,6 +8,7 @@ interface ModalProps {
 	setIsOpen: (isOpen: boolean) => void;
 	children: React.ReactNode;
 	contentLabel: string;
+	className?: string;
 }
 
 interface FooterModalProps {
@@ -20,13 +21,13 @@ interface HeadModalProps {
 	closeModal?: () => void;
 }
 
-const Modal = ({ isOpen, setIsOpen, children, contentLabel }: ModalProps) => {
+const Modal = ({ isOpen, setIsOpen, children, contentLabel, className }: ModalProps) => {
 	return (
 		<BaseModal
 			ariaHideApp={false}
 			isOpen={isOpen}
 			contentLabel={contentLabel}
-			className={styles.modal}
+			className={`${styles.modal} ${className ?? className}`}
 			overlayClassName={styles.modal__background}
 			onRequestClose={() => setIsOpen(false)}
 		>
@@ -37,7 +38,7 @@ const Modal = ({ isOpen, setIsOpen, children, contentLabel }: ModalProps) => {
 
 const Head: React.FC<HeadModalProps> = ({ children, title, closeModal }) => {
 	return (
-		<div className={styles.modal__head}>
+		<div className={`${styles.modal__head} modal__head`}>
 			<button onClick={closeModal} className={styles.close__btn} title="Close modal">
 				<IoMdClose />
 			</button>
@@ -49,7 +50,7 @@ const Head: React.FC<HeadModalProps> = ({ children, title, closeModal }) => {
 };
 
 const Footer: React.FC<FooterModalProps> = ({ children }) => {
-	return <div className={styles.modal__footer}>{children}</div>;
+	return <div className={`${styles.modal__footer} modal__footer`}>{children}</div>;
 };
 
 Modal.Head = Head;

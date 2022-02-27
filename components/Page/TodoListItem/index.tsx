@@ -1,49 +1,18 @@
-import { useRemoveTodoItemMutation, useUpdateTodoItemMutation } from "features/todo/todoApi";
-import { FaCheck, FaTrash } from "react-icons/fa";
-
-import LoadingWrapper from "components/UI/LoadingWrapper";
+import { truncate } from "helpers/truncateText";
 
 import styles from "./TodoListItem.module.scss";
 
 interface TodoListItemProps {
 	completed: boolean;
 	title: string;
-	todoId: string;
-	pageId: string;
+	onOpenModal: (todoItemId: string) => void;
 	todoItemId: string;
 }
 
-const TodoListItem: React.FC<TodoListItemProps> = ({ completed, title, todoId, pageId, todoItemId }) => {
-	const [updateTodoItem, { isLoading: updateItemReqLoading }] = useUpdateTodoItemMutation();
-	const [removeTodoItem] = useRemoveTodoItemMutation();
-
+const TodoListItem: React.FC<TodoListItemProps> = ({ completed, title, todoItemId, onOpenModal }) => {
 	return (
-		<li className={styles.todo__card}>
-			<button
-				className={styles.todo__content}
-				title={`Mark as ${completed ? "uncomplete" : "complete"}`}
-				type="button"
-				onClick={() => updateTodoItem({ completed: !completed, title, todoId, pageId, todoItemId })}
-			>
-				<LoadingWrapper
-					SpinnerSize={16}
-					isLoading={updateItemReqLoading}
-					className={`${styles.checkmark} ${styles.spinner}`}
-				>
-					<FaCheck size={16} className={`${styles.checkmark} ${completed ? styles.active : ""}`} />
-				</LoadingWrapper>
-
-				<span>{title}</span>
-			</button>
-
-			<button
-				title="Remove"
-				className={styles.todo__remove}
-				type="button"
-				onClick={() => removeTodoItem({ todoId, pageId, todoItemId })}
-			>
-				<FaTrash size={15} />
-			</button>
+		<li className={`${styles.todo__card} ${completed ? styles.complete : ""}`}>
+			<button onClick={() => onOpenModal(todoItemId)}>{truncate(title, 500)}</button>
 		</li>
 	);
 };

@@ -70,9 +70,11 @@ export interface TodoItem {
 	id: string;
 	completed: false;
 	title: string;
+	description: string;
 	todoId: string;
 	createdAt: Date;
 	completedAt?: Date;
+	creator: Pick<User, "id" | "username" | "avatar">;
 }
 
 export interface Todo {

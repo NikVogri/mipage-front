@@ -1,0 +1,30 @@
+.about__item__details {
+	li {
+		display: flex;
+		align-items: center;
+		margin-bottom: 1.5rem;
+	}
+
+	.about__title {
+		color: var(--text-secondary);
+		font-weight: 700;
+		font-size: 1.45rem;
+		width: 10rem;
+	}
+
+	div {
+		display: flex;
+		align-items: center;
+		color: var(--text-primary);
+		font-weight: 300;
+
+		span {
+			font-size: 1.4rem;
+			font-weight: 500;
+		}
+
+		.creator__name {
+			margin-left: 0.5rem;
+		}
+	}
+}

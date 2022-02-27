@@ -35,31 +35,41 @@ export const todoExtendedApi = baseApi.injectEndpoints({
 		}),
 		updateTodoItem: build.mutation<
 			TodoItem,
-			{ title: string; pageId: string; todoId: string; completed: boolean; todoItemId: string }
+			{ title?: string; description?: string; pageId: string; todoId: string; todoItemId: string }
 		>({
-			query: ({ completed, title, pageId, todoId, todoItemId }) => {
+			query: ({ title, description, pageId, todoId, todoItemId }) => {
 				return {
 					url: `pages/${pageId}/todos/${todoId}/todo-items/${todoItemId}`,
-					body: { completed, title },
+					body: { title, description },
 					method: "PATCH",
 				};
 			},
-			async onQueryStarted({ pageId, todoId }, { dispatch, queryFulfilled }) {
+			async onQueryStarted({ pageId, todoId, todoItemId }, { dispatch, queryFulfilled }) {
 				try {
 					const { data: updatedTodoItem } = await queryFulfilled;
-					dispatch(
-						todoExtendedApi.util.updateQueryData("getPageTodos", { pageId }, (todoBlocks) => {
-							const todoBlockToUpdate = todoBlocks.find((todo) => todo.id === todoId);
-							if (!todoBlockToUpdate) return;
 
-							const todoItemToUpdate = todoBlockToUpdate.items?.find(
-								(todoItem) => todoItem.id === updatedTodoItem.id
-							);
+					dispatch(
+						todoExtendedApi.util.updateQueryData("getPageTodos", { pageId }, (pageTodos) => {
+							const todoToUpdate = pageTodos.find((pt) => pt.id === todoId);
+							if (!todoToUpdate) return;
+
+							const todoItemToUpdate = todoToUpdate?.items?.find((tI) => tI.id === todoItemId);
 							if (!todoItemToUpdate) return;
 
-							todoItemToUpdate.completed = updatedTodoItem.completed;
+							todoItemToUpdate.description = updatedTodoItem.description;
 							todoItemToUpdate.title = updatedTodoItem.title;
 						})
+					);
+
+					dispatch(
+						todoExtendedApi.util.updateQueryData(
+							"getSingleTodoItem",
+							{ pageId, todoId, todoItemId },
+							(todoItem) => {
+								todoItem.description = updatedTodoItem.description;
+								todoItem.title = updatedTodoItem.title;
+							}
+						)
 					);
 				} catch {
 					toast.error("Could not update todo item");
@@ -166,11 +176,17 @@ export const todoExtendedApi = baseApi.injectEndpoints({
 				}
 			},
 		}),
+		getSingleTodoItem: build.query<TodoItem, { pageId: string; todoId: string; todoItemId: string }>({
+			query: ({ pageId, todoId, todoItemId }) => ({
+				url: `pages/${pageId}/todos/${todoId}/todo-items/${todoItemId}`,
+			}),
+		}),
 	}),
 });
 
 export const {
 	useGetPageTodosQuery,
+	useGetSingleTodoItemQuery,
 	useCreateTodoItemMutation,
 	useUpdateTodoItemMutation,
 	useRemoveTodoItemMutation,

@@ -1,0 +1,20 @@
+@mixin btn_basic {
+	margin-top: 0.5rem;
+	text-align: center;
+	color: var(--text-secondary);
+	padding: 0.25rem 1rem;
+	border-radius: 0.25rem;
+
+	transition: all 0.3s ease-out;
+
+	&:hover {
+		background-color: var(--outline);
+		color: var(--text-primaryg);
+	}
+
+	&:disabled {
+		cursor: not-allowed;
+		opacity: 0.25;
+		background-color: var(--secondary-gray-200);
+	}
+}

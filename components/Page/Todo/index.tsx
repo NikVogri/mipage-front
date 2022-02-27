@@ -40,6 +40,7 @@ const Todo: React.FC<TodoProps> = ({ pageId }) => {
 						items={tb.items!}
 						id={tb.id}
 						pageId={tb.pageId}
+						todoId={tb.id}
 					/>
 				))}
 			<AddTodoCard pageId={pageId} todosCount={data?.length} />
