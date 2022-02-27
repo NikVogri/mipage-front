@@ -1,10 +1,14 @@
 import LoadingSpinner from "components/LoadingSpinner";
 import { useEffect, useState } from "react";
+import { FaLaptopHouse } from "react-icons/fa";
+
+import styles from "./LoadingWrapper.module.scss";
 
 interface LoadingWrapperProps {
 	children: any;
 	isLoading: boolean;
 	SpinnerSize?: number;
+	spinnerCenter?: boolean;
 	delay?: number;
 	className?: string;
 	[props: string]: any;
@@ -16,6 +20,7 @@ const LoadingWrapper = ({
 	SpinnerSize,
 	delay,
 	className,
+	spinnerCenter = true,
 	...props
 }: LoadingWrapperProps): JSX.Element => {
 	const [loading, setLoading] = useState(false);
@@ -23,7 +28,7 @@ const LoadingWrapper = ({
 	useEffect(() => {
 		let loader: NodeJS.Timeout;
 		if (isLoading) {
-			loader = setTimeout(() => setLoading(true), delay || 350);
+			loader = setTimeout(() => setLoading(true), typeof delay === "number" ? delay : 350);
 		} else {
 			setLoading(false);
 		}
@@ -32,7 +37,15 @@ const LoadingWrapper = ({
 	}, [isLoading, delay]);
 
 	return (
-		<div className={className}>{loading ? <LoadingSpinner size={SpinnerSize || 16} {...props} /> : children}</div>
+		<div
+			className={`${className ? className : ""} ${styles.loading__wrapper} ${spinnerCenter ? styles.center : ""}`}
+		>
+			{loading ? (
+				<LoadingSpinner className={styles.loadingSpinner} size={SpinnerSize || 16} {...props} />
+			) : (
+				children
+			)}
+		</div>
 	);
 };
 
