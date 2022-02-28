@@ -125,3 +125,12 @@ export interface PersonalInfoPayload {
 	bio: string;
 	username: string;
 }
+
+export interface TodoItemComment {
+	body: string;
+	id: string;
+	createdAt: Date;
+	updatedAt: Date;
+	todoItemId: string;
+	author: Pick<User, "id" | "username" | "avatar">;
+}

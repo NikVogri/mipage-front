@@ -58,7 +58,7 @@ const TodoItemModal: React.FC<TodoItemModalProps> = ({ isOpen, setIsOpen, todoIt
 						pageId={pageId}
 						todoId={todoId}
 					/>
-					<TodoItemCommentSection />
+					<TodoItemCommentSection pageId={pageId} todoItemId={todoItemId} />
 				</div>
 			</LoadingWrapper>
 		</BaseModal>
