@@ -18,10 +18,23 @@
 		span {
 			font-size: 1.2rem;
 			font-weight: bold;
+			color: var(--text-secondary);
 		}
 	}
 
 	.comment__content {
 		margin-top: 0.5rem;
+		font-size: 1.45rem;
+		color: Var(--text-primary);
 	}
+}
+
+.show__more {
+	display: block;
+	margin-top: 0.5rem;
+	text-align: center;
+	font-size: 1.2rem;
+	font-weight: bold;
+	color: var(--color-pop);
+	cursor: pointer;
 }
