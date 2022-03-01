@@ -4,11 +4,14 @@
 	max-height: 50rem;
 	overflow-y: auto;
 
+	padding-right: 2rem;
+
 	@include scrollbar;
 
 	.no__comments {
 		font-weight: 700;
 		color: var(--text-secondary);
 		text-align: center;
+		margin-bottom: 2rem;
 	}
 }

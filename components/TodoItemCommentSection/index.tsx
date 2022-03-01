@@ -25,7 +25,7 @@ const TodoItemCommentSection: React.FC<TodoItemCommentSectionProps> = ({ pageId,
 				<MdComment size={22} />
 				Comments
 			</h3>
-			<section>
+			<section className={styles.comment__section}>
 				<CreateCommentForm username={user?.username!} avatar={user?.avatar!} onSubmit={handleCreateComment} />
 				<hr />
 				<LoadingWrapper isLoading={isLoading} delay={0}>
