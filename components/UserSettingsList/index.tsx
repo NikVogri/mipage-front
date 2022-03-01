@@ -39,6 +39,11 @@ const UserSettingsList: React.FC<UserSettingsListProps> = ({ onClose, show }) =>
 		onClose();
 	};
 
+	const handleVisitMyPages = () => {
+		router.push("/pages");
+		onClose();
+	};
+
 	const settingsListRef = useRef(null);
 	useDetectClickOutside(settingsListRef, () => show && onClose());
 
@@ -46,6 +51,11 @@ const UserSettingsList: React.FC<UserSettingsListProps> = ({ onClose, show }) =>
 		<>
 			<div className={`${styles.user__nav__settings__list} ${show ? styles.active : ""}`} ref={settingsListRef}>
 				<ul className={styles.settings__container}>
+					<li className={styles.setttings__list__item}>
+						<button onClick={handleVisitMyPages}>
+							<h4>My pages</h4>
+						</button>
+					</li>
 					<li className={styles.setttings__list__item}>
 						<button onClick={handleOpenProfile}>
 							<h4>Profile</h4>
