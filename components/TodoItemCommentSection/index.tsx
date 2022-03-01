@@ -16,8 +16,6 @@ const TodoItemCommentSection: React.FC<TodoItemCommentSectionProps> = ({ pageId,
 	const { user } = useAuth();
 	const { data, isLoading } = useGetTodoItemCommentsQuery({ pageId, todoItemId });
 
-	const handleCreateComment = () => {};
-
 	return (
 		<div>
 			{isLoading ? <div>Loading...</div> : null}
@@ -26,7 +24,12 @@ const TodoItemCommentSection: React.FC<TodoItemCommentSectionProps> = ({ pageId,
 				Comments
 			</h3>
 			<section className={styles.comment__section}>
-				<CreateCommentForm username={user?.username!} avatar={user?.avatar!} onSubmit={handleCreateComment} />
+				<CreateCommentForm
+					username={user?.username!}
+					avatar={user?.avatar!}
+					todoItemId={todoItemId}
+					pageId={pageId}
+				/>
 				<hr />
 				<LoadingWrapper isLoading={isLoading} delay={0}>
 					<CommentListList comments={data!} />
