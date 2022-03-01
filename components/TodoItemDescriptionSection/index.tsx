@@ -75,7 +75,7 @@ const TodoItemDescriptionSection: React.FC<TodoItemDescriptionSectionProps> = ({
 			<h3>
 				<MdDescription size={22} /> Description
 			</h3>
-			<section>{content}</section>
+			<section className={styles.description__section}>{content}</section>
 		</div>
 	);
 };
