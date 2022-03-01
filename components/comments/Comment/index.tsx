@@ -14,7 +14,8 @@ interface CommentProps {
 
 const Comment: React.FC<CommentProps> = ({ user, body, createdAt }) => {
 	const [showMore, setShowMore] = useState(false);
-	const [isLongText, setIsLongText] = useState(body.length > 300);
+
+	const isLongText = body.length > 300;
 
 	const formattedFullDate = useMemo(() => {
 		const date = new Date(createdAt);
