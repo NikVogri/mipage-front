@@ -1,7 +1,7 @@
-import { Formik, Form, Field, FormikValues, FieldConfig } from "formik";
+import { Formik, Form, Field, FormikValues, FieldConfig, useFormik } from "formik";
 import { useCreateTodoBlockMutation } from "features/todo/todoApi";
 import { FaPlus } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CirclePicker } from "react-color";
 
 import LoadingButton from "components/UI/LoadingButton";
@@ -23,14 +23,24 @@ const createTodoBlockValidationSchema = Yup.object().shape({
 const AddTodoCard: React.FC<AddTodoCardProps> = ({ pageId, todosCount }) => {
 	const [createdTodoBlock, { isLoading }] = useCreateTodoBlockMutation();
 	const [modalIsOpen, setIsOpen] = useState(false);
-	const [selectedColor, setSelectedColor] = useState("#000000");
 
 	const handleSubmit = async (e: FormikValues) => {
-		if (selectedColor && e.title) {
-			await createdTodoBlock({ title: e.title, color: selectedColor, pageId });
-			setIsOpen(false);
-		}
+		await createdTodoBlock({ title: e.title, color: e.color, pageId });
+		setIsOpen(false);
 	};
+
+	const formik = useFormik({
+		initialValues: {
+			title: ``,
+			color: "#000000",
+		},
+		validationSchema: createTodoBlockValidationSchema,
+		onSubmit: handleSubmit,
+	});
+
+	useEffect(() => {
+		formik.setFieldValue("title", `Todo #${(todosCount || 0) + 1}`);
+	}, [todosCount]);
 
 	return (
 		<>
@@ -41,47 +51,43 @@ const AddTodoCard: React.FC<AddTodoCardProps> = ({ pageId, todosCount }) => {
 			<Modal isOpen={modalIsOpen} setIsOpen={setIsOpen} contentLabel="Add a new todo block">
 				<Modal.Head title="Add a new todo block" closeModal={() => setIsOpen(false)} />
 
-				<Formik
-					initialValues={{
-						title: `Todo #${(todosCount || 0) + 1}`,
-					}}
-					validationSchema={createTodoBlockValidationSchema}
-					onSubmit={handleSubmit}
-				>
-					<Form>
-						<Field name="title">
-							{({ field, form }: { field: FieldConfig; form: FormikValues }) => (
-								<div className="form-group">
-									<label className="label">Title</label>
-									<input
-										className={`form-control form-control-modal ${
-											form.errors.title && form.touched.title ? "invalid" : ""
-										}`}
-										type="string"
-										required
-										{...field}
-									/>
-									{form.errors.title && form.touched.title && (
-										<span className="form-error">{form.errors.title}</span>
-									)}
-								</div>
-							)}
-						</Field>
+				<form onSubmit={formik.handleSubmit}>
+					<div className="form-group">
+						<label className="label">Title</label>
+						<input
+							className={`form-control form-control-modal ${
+								formik.errors.title && formik.touched.title ? "invalid" : ""
+							}`}
+							type="string"
+							required
+							name="title"
+							id="title"
+							value={formik.values.title}
+							onChange={formik.handleChange}
+						/>
+						{formik.errors.title && formik.touched.title && (
+							<span className="form-error">{formik.errors.title}</span>
+						)}
+					</div>
 
-						<div className={`form-group ${styles.color__picker}`}>
-							<label className="label">Header color</label>
-							<CirclePicker width="100%" onChange={({ hex }) => setSelectedColor(hex)} />
+					<div className={`form-group ${styles.color__picker}`}>
+						<label className="label">Header color</label>
+						<CirclePicker
+							width="100%"
+							onChange={({ hex }) => formik.setFieldValue("color", hex)}
+							key={formik.values.color}
+							color={formik.values.color}
+						/>
+					</div>
+
+					<Modal.Footer>
+						<div className={styles.btn__container}>
+							<LoadingButton isLoading={isLoading} className="btn-create btn-md" type="submit">
+								Submit
+							</LoadingButton>
 						</div>
-
-						<Modal.Footer>
-							<div className={styles.btn__container}>
-								<LoadingButton isLoading={isLoading} className="btn-create btn-md" type="submit">
-									Submit
-								</LoadingButton>
-							</div>
-						</Modal.Footer>
-					</Form>
-				</Formik>
+					</Modal.Footer>
+				</form>
 			</Modal>
 		</>
 	);
