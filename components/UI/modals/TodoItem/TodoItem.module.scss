@@ -97,3 +97,13 @@
 .loading {
 	padding-top: 30rem;
 }
+
+.modal__top {
+	display: flex;
+	justify-content: space-between;
+}
+
+.about__item {
+	flex: 1;
+	margin-right: 1rem;
+}

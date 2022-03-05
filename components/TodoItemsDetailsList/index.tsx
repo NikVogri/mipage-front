@@ -5,9 +5,17 @@ interface TodoItemsDetailsListProps {
 	avatar?: string;
 	username: string;
 	createdAt: Date;
+	completed: boolean;
+	completedAt: Date;
 }
 
-const TodoItemsDetailsList: React.FC<TodoItemsDetailsListProps> = ({ avatar, username, createdAt }) => {
+const TodoItemsDetailsList: React.FC<TodoItemsDetailsListProps> = ({
+	avatar,
+	username,
+	createdAt,
+	completed,
+	completedAt,
+}) => {
 	return (
 		<ul className={styles.about__item__details}>
 			<li>
@@ -21,11 +29,23 @@ const TodoItemsDetailsList: React.FC<TodoItemsDetailsListProps> = ({ avatar, use
 			</li>
 
 			<li>
-				<span className={styles.about__title}>At:</span>
+				<span className={styles.about__title}>Created:</span>
 				<div>
-					<span>{new Date(createdAt).toLocaleDateString()}</span>
+					<span>
+						{new Date(createdAt).toLocaleDateString()} at {new Date(createdAt).toLocaleTimeString()}
+					</span>
 				</div>
 			</li>
+			{completed && (
+				<li>
+					<span className={styles.about__title}>Completed:</span>
+					<div>
+						<span>
+							{new Date(completedAt).toLocaleDateString()} at {new Date(completedAt).toLocaleTimeString()}
+						</span>
+					</div>
+				</li>
+			)}
 		</ul>
 	);
 };
