@@ -124,6 +124,17 @@ export const todoExtendedApi = baseApi.injectEndpoints({
 							todoBlockItemToUpdate.completedAt = updatedTodoItem.completedAt;
 						})
 					);
+
+					dispatch(
+						todoExtendedApi.util.updateQueryData(
+							"getSingleTodoItem",
+							{ pageId, todoId, todoItemId },
+							(todoItem) => {
+								todoItem.completed = updatedTodoItem.completed;
+								todoItem.completedAt = updatedTodoItem.completedAt;
+							}
+						)
+					);
 				} catch {
 					toast.error("Could not toggle complete todo");
 				}
