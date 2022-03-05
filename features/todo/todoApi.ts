@@ -101,6 +101,34 @@ export const todoExtendedApi = baseApi.injectEndpoints({
 				}
 			},
 		}),
+		completeTodoItem: build.mutation<TodoItem, { pageId: string; todoId: string; todoItemId: string }>({
+			query: ({ pageId, todoId, todoItemId }) => {
+				return {
+					url: `pages/${pageId}/todos/${todoId}/todo-items/${todoItemId}/complete`,
+					method: "PATCH",
+				};
+			},
+			async onQueryStarted({ todoItemId, todoId, pageId }, { dispatch, queryFulfilled }) {
+				try {
+					const { data: updatedTodoItem } = await queryFulfilled;
+
+					dispatch(
+						todoExtendedApi.util.updateQueryData("getPageTodos", { pageId }, (todoBlocks) => {
+							const todoBlockToUpdate = todoBlocks.find((todo) => todo.id === todoId);
+							if (!todoBlockToUpdate) return;
+
+							const todoBlockItemToUpdate = todoBlockToUpdate.items?.find((ti) => ti.id === todoItemId);
+							if (!todoBlockItemToUpdate) return;
+
+							todoBlockItemToUpdate.completed = updatedTodoItem.completed;
+							todoBlockItemToUpdate.completedAt = updatedTodoItem.completedAt;
+						})
+					);
+				} catch {
+					toast.error("Could not toggle complete todo");
+				}
+			},
+		}),
 		removeTodoBlock: build.mutation<Todo, { pageId: string; todoId: string }>({
 			query: ({ pageId, todoId }) => {
 				return {
@@ -193,4 +221,5 @@ export const {
 	useRemoveTodoBlockMutation,
 	useCreateTodoBlockMutation,
 	useUpdateTodoBlockMutation,
+	useCompleteTodoItemMutation,
 } = todoExtendedApi;
