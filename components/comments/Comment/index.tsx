@@ -1,8 +1,10 @@
-import Avatar from "components/Avatar";
-import HoverPopover from "components/UI/HoverPopover/HoverPopover";
+import { useMemo, useState } from "react";
+
 import { truncate } from "helpers/truncateText";
 import { User } from "models";
-import { useMemo, useState } from "react";
+
+import Avatar from "components/Avatar";
+import HoverPopover from "components/UI/HoverPopover/HoverPopover";
 
 import styles from "./Comment.module.scss";
 
