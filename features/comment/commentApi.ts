@@ -4,9 +4,12 @@ import { toast } from "react-toastify";
 
 export const commentsExtendedApi = baseApi.injectEndpoints({
 	endpoints: (build) => ({
-		getTodoItemComments: build.query<TodoItemComment[], { pageId: string; todoItemId: string }>({
-			query: ({ pageId, todoItemId }) => ({
-				url: `pages/${pageId}/todo-items/${todoItemId}/comments?size=10`,
+		getTodoItemComments: build.query<
+			{ total: number; comments: TodoItemComment[] },
+			{ pageId: string; todoItemId: string; page: number }
+		>({
+			query: ({ pageId, todoItemId, page = 0 }) => ({
+				url: `pages/${pageId}/todo-items/${todoItemId}/comments?page=${page}size=10`,
 			}),
 		}),
 		createTodoItemComment: build.mutation<TodoItemComment, { pageId: string; todoItemId: string; body: string }>({
@@ -22,9 +25,9 @@ export const commentsExtendedApi = baseApi.injectEndpoints({
 					dispatch(
 						commentsExtendedApi.util.updateQueryData(
 							"getTodoItemComments",
-							{ pageId, todoItemId },
-							(comments) => {
-								comments.unshift(newComment);
+							{ pageId, todoItemId, page: 1 },
+							(commentsRes) => {
+								commentsRes.comments.unshift(newComment);
 							}
 						)
 					);
@@ -36,4 +39,5 @@ export const commentsExtendedApi = baseApi.injectEndpoints({
 	}),
 });
 
-export const { useGetTodoItemCommentsQuery, useCreateTodoItemCommentMutation } = commentsExtendedApi;
+export const { useGetTodoItemCommentsQuery, useLazyGetTodoItemCommentsQuery, useCreateTodoItemCommentMutation } =
+	commentsExtendedApi;
