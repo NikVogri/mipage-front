@@ -3,13 +3,21 @@ import { useEffect, useState } from "react";
 import styles from "./LoadingButtonBasic.module.scss";
 
 interface LoadingButtonBasicProps {
-	disabled: boolean;
+	disabled?: boolean;
 	text: string;
 	className?: string;
 	delay: number;
 	isLoading: boolean;
+	onClick?: () => void;
 }
-const LoadingButtonBasic: React.FC<LoadingButtonBasicProps> = ({ isLoading, disabled, text, className, delay }) => {
+const LoadingButtonBasic: React.FC<LoadingButtonBasicProps> = ({
+	isLoading,
+	disabled,
+	text,
+	className,
+	delay,
+	onClick,
+}) => {
 	const [showLoader, setShowLoader] = useState(false);
 
 	useEffect(() => {
@@ -24,7 +32,7 @@ const LoadingButtonBasic: React.FC<LoadingButtonBasicProps> = ({ isLoading, disa
 	}, [isLoading, delay]);
 
 	return (
-		<button type="submit" disabled={disabled} className={`${styles.loading__btn} ${className}`}>
+		<button type="submit" disabled={disabled} className={`${styles.loading__btn} ${className}`} onClick={onClick}>
 			{showLoader && (
 				<div className={styles.loader}>
 					<LoadingSpinner size={16} />
