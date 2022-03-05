@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Popover as TinyPopover } from "react-tiny-popover";
 
 import styles from "./HoverPopover.module.scss";
 
