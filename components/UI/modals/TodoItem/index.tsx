@@ -10,6 +10,7 @@ import TodoItemUpdateTitle from "components/TodoItemUpdateTitle";
 import TodoItemControls from "components/TodoItemControls/TodoItemControls";
 
 import styles from "./TodoItem.module.scss";
+import { IoMdClose } from "react-icons/io";
 interface TodoItemModalProps {
 	isOpen: boolean;
 	setIsOpen: Dispatch<SetStateAction<boolean>>;
@@ -31,6 +32,11 @@ const TodoItemModal: React.FC<TodoItemModalProps> = ({ isOpen, setIsOpen, todoIt
 			overlayClassName={styles.modal__background}
 			onRequestClose={() => setIsOpen(false)}
 		>
+			<div className={styles.modal__close}>
+				<button onClick={() => setIsOpen(false)} className={styles.close__btn} title="Close modal">
+					<IoMdClose />
+				</button>
+			</div>
 			<LoadingWrapper
 				isLoading={isFetching}
 				SpinnerSize={24}

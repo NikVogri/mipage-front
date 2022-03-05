@@ -1,8 +1,7 @@
 @import "../../../styles/partial/components/scrollbar";
 
 .comments {
-	max-height: 50rem;
-	overflow-y: auto;
+	min-height: 35rem;
 
 	padding-right: 2rem;
 
