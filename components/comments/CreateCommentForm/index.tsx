@@ -5,15 +5,23 @@ import Avatar from "components/Avatar";
 import LoadingButtonBasic from "components/UI/LoadingButtonBasic/LoadingButtonBasic";
 
 import styles from "./CreateCommentForm.module.scss";
+import { TodoItemComment } from "models";
 
 interface CreateCommentFormProps {
 	username: string;
 	avatar?: string;
 	pageId: string;
 	todoItemId: string;
+	onCommentAdded: (comment: TodoItemComment) => void;
 }
 
-const CreateCommentForm: React.FC<CreateCommentFormProps> = ({ username, avatar, pageId, todoItemId }) => {
+const CreateCommentForm: React.FC<CreateCommentFormProps> = ({
+	username,
+	avatar,
+	pageId,
+	todoItemId,
+	onCommentAdded,
+}) => {
 	const [createComment, { isLoading }] = useCreateTodoItemCommentMutation();
 	const [inputVal, setInputVal] = useState("");
 
@@ -21,8 +29,12 @@ const CreateCommentForm: React.FC<CreateCommentFormProps> = ({ username, avatar,
 		e.preventDefault();
 
 		try {
-			await createComment({ body: inputVal, pageId, todoItemId });
+			const res = (await createComment({ body: inputVal, pageId, todoItemId })) as any;
 			setInputVal("");
+
+			if (res?.data) {
+				onCommentAdded(res.data as TodoItemComment); // Todo change to correct type
+			}
 		} catch (error) {}
 	};
 
