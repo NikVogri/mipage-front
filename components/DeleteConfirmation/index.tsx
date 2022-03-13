@@ -1,3 +1,4 @@
+import LoadingButtonPrimary from "components/UI/LoadingButtonPrimary/LoadingButtonPrimary";
 import { useState } from "react";
 
 interface DeleteConfirmationProps {
@@ -22,16 +23,17 @@ const DeleteConfirmation: React.FC<DeleteConfirmationProps> = ({ onDelete, onCan
 				onChange={(e) => setConfirmationInputVal(e.target.value)}
 			/>
 			<div className={styles.btn__container}>
-				<button
-					className={`form-button btn-md `}
-					onClick={onDelete}
+				<LoadingButtonPrimary
+					isLoading={false}
+					scheme="create"
 					disabled={confirmationInputVal !== "DELETE"}
+					onClick={onDelete}
 				>
 					Confirm
-				</button>
-				<button className={`form-button btn-md btn-create`} onClick={onCancel}>
+				</LoadingButtonPrimary>
+				<LoadingButtonPrimary isLoading={false} scheme="delete" onClick={onCancel}>
 					Cancel
-				</button>
+				</LoadingButtonPrimary>
 			</div>
 		</div>
 	);

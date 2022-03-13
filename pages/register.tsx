@@ -12,6 +12,7 @@ import LoadingButton from "components/UI/LoadingButton";
 import * as Yup from "yup";
 
 import styles from "../styles/pages/Register.module.scss";
+import LoadingButtonPrimary from "components/UI/LoadingButtonPrimary/LoadingButtonPrimary";
 
 const signupValidationSchema = Yup.object().shape({
 	email: Yup.string().email("Please enter a correct email address").required("Email is required"),
@@ -140,13 +141,9 @@ const Register = () => {
 						)}
 					</div>
 
-					<LoadingButton
-						className="form-button"
-						isLoading={loading}
-						disabled={loading || !formik.dirty || !formik.isValid}
-					>
-						Submit
-					</LoadingButton>
+					<LoadingButtonPrimary isLoading={loading} disabled={loading || !formik.dirty || !formik.isValid}>
+						Create account
+					</LoadingButtonPrimary>
 				</form>
 
 				<Link href="/login">

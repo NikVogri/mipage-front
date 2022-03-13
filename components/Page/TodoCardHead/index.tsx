@@ -2,8 +2,10 @@ import { Menu, MenuButton, MenuItem } from "@szhsin/react-menu";
 import { useRemoveTodoBlockMutation, useUpdateTodoBlockMutation } from "features/todo/todoApi";
 import { useState } from "react";
 import { FaCog, FaTrash } from "react-icons/fa";
+import { FormikValues, useFormik } from "formik";
+import { CirclePicker } from "react-color";
 
-import LoadingButton from "components/UI/LoadingButton";
+import LoadingButtonPrimary from "components/UI/LoadingButtonPrimary/LoadingButtonPrimary";
 import Modal from "components/UI/Modal";
 
 import * as Yup from "yup";
@@ -11,8 +13,7 @@ import * as Yup from "yup";
 import styles from "./TodoCardHead.module.scss";
 import "@szhsin/react-menu/dist/index.css";
 import "@szhsin/react-menu/dist/transitions/slide.css";
-import { FormikValues, useFormik } from "formik";
-import { CirclePicker } from "react-color";
+
 interface TodoCardHeadProps {
 	color: string;
 	title: string;
@@ -106,14 +107,14 @@ const TodoCardHead: React.FC<TodoCardHeadProps> = ({ color, title, pageId, todoI
 
 					<Modal.Footer>
 						<div className={styles.btn__container}>
-							<LoadingButton
+							<LoadingButtonPrimary
+								position="right"
+								scheme="create"
 								isLoading={isLoading}
 								disabled={!formik.dirty || !formik.isValid}
-								className="btn-create btn-md"
-								type="submit"
 							>
 								Save
-							</LoadingButton>
+							</LoadingButtonPrimary>
 						</div>
 					</Modal.Footer>
 				</form>

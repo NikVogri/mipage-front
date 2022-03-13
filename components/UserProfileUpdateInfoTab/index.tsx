@@ -1,22 +1,27 @@
 import useAuth from "hooks/useAuth";
 import { FormikValues, useFormik } from "formik";
-
-import * as Yup from "yup";
-
-import styles from "./UserProfileUpdateInfoTab.module.scss";
+import { useState } from "react";
 import { updatePersonalInfo } from "features/auth/authSlice";
 import { useAppDispatch } from "hooks/redux-hooks";
+import * as Yup from "yup";
+
+import LoadingButtonPrimary from "components/UI/LoadingButtonPrimary/LoadingButtonPrimary";
+
+import styles from "./UserProfileUpdateInfoTab.module.scss";
 
 const UserProfileUpdateInfoTab: React.FC = () => {
 	const { user } = useAuth();
+	const [isLoading, setIsLoading] = useState(false);
 	const dispatch = useAppDispatch();
 
 	const handleUpdateSubmit = async (fv: FormikValues) => {
 		const { username, bio } = fv;
 
 		if (username && bio) {
+			setIsLoading(true);
 			await dispatch(updatePersonalInfo({ username, bio }));
 			formik.resetForm({ values: { username, bio } });
+			setIsLoading(false);
 		}
 	};
 
@@ -84,15 +89,10 @@ const UserProfileUpdateInfoTab: React.FC = () => {
 					</div>
 				</div>
 			</div>
-			<div className={styles.save__btn__container}>
-				<button
-					className={`form-button btn-md btn-create`}
-					onClick={handleUpdateSubmit}
-					disabled={!formik.isValid || !formik.dirty}
-				>
-					Save changes
-				</button>
-			</div>
+
+			<LoadingButtonPrimary position="right" isLoading={isLoading} disabled={!formik.isValid || !formik.dirty}>
+				Save changes
+			</LoadingButtonPrimary>
 		</form>
 	);
 };
