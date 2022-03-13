@@ -8,6 +8,7 @@ interface LoadingButtonBasicProps {
 	className?: string;
 	delay: number;
 	isLoading: boolean;
+	type?: 'submit' | 'reset' | 'button';
 	onClick?: () => void;
 }
 const LoadingButtonBasic: React.FC<LoadingButtonBasicProps> = ({
@@ -16,6 +17,7 @@ const LoadingButtonBasic: React.FC<LoadingButtonBasicProps> = ({
 	text,
 	className,
 	delay,
+	type,
 	onClick,
 }) => {
 	const [showLoader, setShowLoader] = useState(false);
@@ -32,7 +34,7 @@ const LoadingButtonBasic: React.FC<LoadingButtonBasicProps> = ({
 	}, [isLoading, delay]);
 
 	return (
-		<button type="submit" disabled={disabled} className={`${styles.loading__btn} ${className}`} onClick={onClick}>
+		<button type={type} disabled={disabled} className={`${styles.loading__btn} ${className}`} onClick={onClick}>
 			{showLoader && (
 				<div className={styles.loader}>
 					<LoadingSpinner size={16} />

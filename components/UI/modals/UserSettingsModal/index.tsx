@@ -4,6 +4,7 @@ import { useAppDispatch } from "hooks/redux-hooks";
 
 import UserProfileBasic from "components/UserProfileBasic";
 import DeleteConfirmation from "components/DeleteConfirmation";
+import LoadingButtonPrimary from "components/UI/LoadingButtonPrimary/LoadingButtonPrimary";
 import Modal from "components/UI/Modal";
 
 import styles from "./UserSettingsModal.module.scss";
@@ -40,9 +41,14 @@ const UserSettingsModal: React.FC<UserSettingsModalProps> = ({ isOpen, setIsClos
 						/>
 					)}
 					{!showDeleteConfirmation && (
-						<button className={`form-button btn-md`} onClick={() => setShowDeleteConfirmation(true)}>
+						<LoadingButtonPrimary
+							scheme="delete"
+							position="center"
+							onClick={() => setShowDeleteConfirmation(true)}
+							isLoading={false}
+						>
 							Delete account
-						</button>
+						</LoadingButtonPrimary>
 					)}
 				</section>
 			</div>
