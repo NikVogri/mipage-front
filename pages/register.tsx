@@ -7,12 +7,11 @@ import usePush from "hooks/usePush";
 
 import Link from "next/link";
 import Head from "next/head";
-import LoadingButton from "components/UI/LoadingButton";
+import LoadingButtonPrimary from "components/UI/LoadingButtonPrimary/LoadingButtonPrimary";
 
 import * as Yup from "yup";
 
 import styles from "../styles/pages/Register.module.scss";
-import LoadingButtonPrimary from "components/UI/LoadingButtonPrimary/LoadingButtonPrimary";
 
 const signupValidationSchema = Yup.object().shape({
 	email: Yup.string().email("Please enter a correct email address").required("Email is required"),
