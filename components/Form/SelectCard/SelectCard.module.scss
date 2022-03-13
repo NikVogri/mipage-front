@@ -73,4 +73,25 @@
 	svg {
 		fill: var(--background-primary);
 	}
+
+	&.disabled {
+		&:hover {
+			transform: scale(1);
+			p,
+			h3 {
+				color: var(--background-primary);
+				transition: none;
+			}
+
+			svg {
+				transition: none;
+				fill: var(--background-primary);
+			}
+		}
+
+		h4 {
+			color: var(--color-pop);
+			font-size: 2rem;
+		}
+	}
 }
