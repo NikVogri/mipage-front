@@ -20,7 +20,6 @@
 
 	&:hover {
 		transform: scale(1.025);
-		background: var(--color-secondary-600);
 		transition: all 0.35s;
 	}
 
@@ -36,6 +35,30 @@
 		position: absolute;
 		bottom: 1rem;
 		right: 1.5rem;
+	}
+}
+
+.disabled__card {
+	cursor: not-allowed;
+
+	transition: none;
+	background-color: transparent;
+
+	.card__footer,
+	.card__text {
+		opacity: 0.5;
+	}
+
+	&:hover {
+		transition: none;
+		transform: scale(1);
+	}
+
+	h4 {
+		color: var(--color-pop);
+		font-weight: 700;
+		text-align: center;
+		margin-top: 2rem;
 	}
 }
 
