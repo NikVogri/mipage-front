@@ -15,6 +15,7 @@ import LoadingButton from "components/UI/LoadingButton";
 import ErrorFormMessage from "components/Form/ErrorFormMessage";
 
 import styles from "../../styles/pages/New.module.scss";
+import LoadingButtonPrimary from "components/UI/LoadingButtonPrimary/LoadingButtonPrimary";
 
 const pageCreateValidationSchema = Yup.object().shape({
 	title: Yup.string().max(255, "Title can't be longer than 255 characters").required("Title is required"),
@@ -33,7 +34,7 @@ const CreateNewPage = () => {
 	const formik = useFormik({
 		initialValues: {
 			title: "",
-			type: PageType.notebook,
+			type: PageType.todo,
 			isPrivate: false,
 		},
 		validationSchema: pageCreateValidationSchema,
@@ -83,9 +84,15 @@ const CreateNewPage = () => {
 					setPrivate={(isPrivate: boolean) => formik.setFieldValue("isPrivate", isPrivate)}
 					isPrivate={formik.values.isPrivate}
 				/>
-				<LoadingButton type="submit" isLoading={isLoading} disabled={!formik.dirty || !formik.isValid}>
+
+				<LoadingButtonPrimary
+					position="left"
+					scheme="create"
+					isLoading={isLoading}
+					disabled={!formik.dirty || !formik.isValid}
+				>
 					Create page
-				</LoadingButton>
+				</LoadingButtonPrimary>
 			</form>
 		</Container>
 	);
