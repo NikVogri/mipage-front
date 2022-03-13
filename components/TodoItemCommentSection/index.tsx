@@ -22,7 +22,10 @@ const TodoItemCommentSection: React.FC<TodoItemCommentSectionProps> = ({ pageId,
 	const [noMoreResults, setNoMoreResults] = useState(false);
 	const [page, setPage] = useState(0);
 
-	const { data, isFetching } = useGetTodoItemCommentsQuery({ pageId, todoItemId, page }, { skip: noMoreResults });
+	const { data, isFetching } = useGetTodoItemCommentsQuery(
+		{ pageId, todoItemId, page },
+		{ skip: noMoreResults, refetchOnMountOrArgChange: true }
+	);
 
 	const handleLoadMoreComments = (page: number) => {
 		setPage(page);
@@ -34,7 +37,11 @@ const TodoItemCommentSection: React.FC<TodoItemCommentSectionProps> = ({ pageId,
 
 	useEffect(() => {
 		if (data?.comments?.length) {
-			setComments((oldComments) => [...oldComments, ...data.comments]);
+			if (page === 0) {
+				setComments(data.comments);
+			} else {
+				setComments((oldComments) => [...oldComments, ...data.comments]);
+			}
 		} else if (page > 1) {
 			setNoMoreResults(comments.length >= data?.total!);
 		}
