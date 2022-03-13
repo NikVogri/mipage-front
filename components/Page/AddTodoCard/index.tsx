@@ -82,7 +82,7 @@ const AddTodoCard: React.FC<AddTodoCardProps> = ({ pageId, todosCount }) => {
 
 					<Modal.Footer>
 						<div className={styles.btn__container}>
-							<LoadingButtonPrimary scheme="create" position="right" isLoading={isLoading} type="submit">
+							<LoadingButtonPrimary scheme="create" position="right" isLoading={isLoading}>
 								Submit
 							</LoadingButtonPrimary>
 						</div>
