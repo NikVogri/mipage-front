@@ -1,0 +1,45 @@
+@import "../../../styles/partial/components/basic_button";
+
+.btn__submit {
+	@include btn_basic;
+
+	font-size: 1.6rem;
+	margin-top: 1.5rem;
+	padding: 0.7rem 2rem;
+	justify-content: center;
+
+	border: solid 1px var(--outline);
+	font-weight: 400;
+
+	&.center {
+		width: 100%;
+	}
+
+	&.left {
+		margin-right: auto;
+	}
+
+	&.right {
+		margin-left: auto;
+	}
+
+	&.create {
+		border: solid 1px var(--color-green);
+		color: var(--color-green);
+
+		&:hover {
+			background: var(--color-green);
+			color: var(--text-primary);
+		}
+	}
+
+	&.delete {
+		border: solid 1px var(--color-pop);
+		color: var(--color-pop);
+
+		&:hover {
+			background: var(--color-pop-hover);
+			color: var(--text-primary);
+		}
+	}
+}
