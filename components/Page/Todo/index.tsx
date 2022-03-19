@@ -1,19 +1,34 @@
-import { useGetPageTodosQuery } from "features/todo/todoApi";
+import { useGetPageTodosQuery, useGetPublicPageTodosQuery } from "features/todo/todoApi";
 
 import LoadingSpinner from "components/LoadingSpinner";
 import TodoCard from "../TodoCard";
 
 import styles from "./Todo.module.scss";
 import AddTodoCard from "../AddTodoCard";
+import useAuth from "hooks/useAuth";
+import { Todo } from "models";
+import PageErrorLoading from "../PageErrorLoading";
 
 interface TodoProps {
 	pageId: string;
 }
 
 const Todo: React.FC<TodoProps> = ({ pageId }) => {
-	const { data, isLoading, isError } = useGetPageTodosQuery({ pageId }, { skip: false });
+	const { isAuth } = useAuth();
 
-	if (isLoading) {
+	const {
+		data: dataPrivate,
+		isLoading: isLoadingPrivate,
+		isError: isErrorPrivate,
+	} = useGetPageTodosQuery({ pageId }, { skip: !isAuth });
+
+	const {
+		data: dataPublic,
+		isLoading: isLoadingPublic,
+		isError: isErrorPublic,
+	} = useGetPublicPageTodosQuery({ pageId }, { skip: isAuth });
+
+	if (isLoadingPrivate || isLoadingPublic) {
 		return (
 			<div className={styles.todo__container}>
 				<div className={styles.todo__loading}>
@@ -23,10 +38,15 @@ const Todo: React.FC<TodoProps> = ({ pageId }) => {
 		);
 	}
 
-	if (isError) {
+	if (isErrorPrivate || isErrorPublic) {
 		<div className={styles.todo__container}>
 			<p>Failed loading todos, please try again later</p>
 		</div>;
+	}
+
+	const data = dataPrivate ?? dataPublic;
+	if (!data) {
+		return <PageErrorLoading />;
 	}
 
 	return (
@@ -43,7 +63,7 @@ const Todo: React.FC<TodoProps> = ({ pageId }) => {
 						todoId={tb.id}
 					/>
 				))}
-			<AddTodoCard pageId={pageId} todosCount={data?.length} />
+			{isAuth && <AddTodoCard pageId={pageId} todosCount={data?.length} />}
 		</div>
 	);
 };
