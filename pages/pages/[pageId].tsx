@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useGetSinglePageQuery } from "features/page/pagesApi";
+import { useGetSinglePageQuery, useGetSinglePublicPageQuery } from "features/page/pagesApi";
 import { useRouter } from "next/router";
 
 import PageCenter from "components/Page/PageCenter";
@@ -9,27 +9,44 @@ import SpinnerCentered from "components/UI/SpinnerCentered";
 
 import styles from "../../styles/pages/Page.module.scss";
 import onlyAuth from "components/HOC/withAuth";
+import useAuth from "hooks/useAuth";
 
 const Page = () => {
 	const router = useRouter();
+	const { isAuth } = useAuth();
 
-	const { data, isError, isLoading } = useGetSinglePageQuery(
-		{ pageId: router.query.pageId as string },
-		{ skip: !process.browser || !router.query.pageId }
-	);
+	const pageId = router.query.pageId as string;
 
-	if (isError) {
+	const {
+		data: dataPublic,
+		isError: isErrorPub,
+		isLoading: isLoadingPub,
+	} = useGetSinglePublicPageQuery({ pageId }, { skip: isAuth });
+
+	const {
+		data: dataPrivate,
+		isError: isErrorPrivate,
+		isLoading: isLoadingPrivate,
+	} = useGetSinglePageQuery({ pageId }, { skip: !isAuth });
+
+	if (isErrorPrivate || isErrorPub) {
 		return <PageErrorLoading />;
 	}
 
-	if (isLoading || !data) {
+	if (isLoadingPrivate || isLoadingPub) {
 		return <SpinnerCentered />;
+	}
+
+	const data = dataPrivate ?? dataPublic;
+
+	if (!data) {
+		return <PageErrorLoading />;
 	}
 
 	return (
 		<main className={styles.page}>
 			<Head>
-				<title>{data.title} | Mipage</title>
+				<title>{data!.title} | Mipage</title>
 			</Head>
 			<PageLeftSide members={data!.members} owner={data!.owner} />
 			<PageCenter pageType={data!.type} pageId={data!.id} />
@@ -37,4 +54,4 @@ const Page = () => {
 	);
 };
 
-export default onlyAuth(Page, { forceRedirect: true });
+export default onlyAuth(Page, { forceRedirect: true, allowException: true });
