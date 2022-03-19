@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
-import { useGetSingleTodoItemQuery } from "features/todo/todoApi";
+import { useGetSinglePublicTodoItemQuery, useGetSingleTodoItemQuery } from "features/todo/todoApi";
+import useAuth from "hooks/useAuth";
 
 import BaseModal from "react-modal";
 import TodoItemCommentSection from "components/TodoItemCommentSection";
@@ -21,7 +22,20 @@ interface TodoItemModalProps {
 }
 
 const TodoItemModal: React.FC<TodoItemModalProps> = ({ isOpen, setIsOpen, todoItemId, pageId, todoId }) => {
-	let { data, isFetching } = useGetSingleTodoItemQuery({ pageId, todoId, todoItemId }, { skip: !todoItemId });
+	const { isAuth } = useAuth();
+
+	let { data: dataPrivate, isFetching: isFetchingPrivate } = useGetSingleTodoItemQuery(
+		{ pageId, todoId, todoItemId },
+		{ skip: !todoItemId || !isAuth }
+	);
+
+	let { data: dataPublic, isFetching: isFetchingPublic } = useGetSinglePublicTodoItemQuery(
+		{ pageId, todoId, todoItemId },
+		{ skip: !todoItemId || isAuth }
+	);
+
+	let isLoading = isFetchingPrivate || isFetchingPublic;
+	let data = dataPrivate || dataPublic;
 
 	return (
 		<BaseModal
@@ -38,10 +52,10 @@ const TodoItemModal: React.FC<TodoItemModalProps> = ({ isOpen, setIsOpen, todoIt
 				</button>
 			</div>
 			<LoadingWrapper
-				isLoading={isFetching}
+				isLoading={isLoading}
 				SpinnerSize={24}
 				delay={0}
-				className={isFetching ? styles.loading : ""}
+				className={isLoading ? styles.loading : ""}
 			>
 				<div className={styles.modal__body}>
 					<div className={styles.modal__top}>
@@ -60,13 +74,15 @@ const TodoItemModal: React.FC<TodoItemModalProps> = ({ isOpen, setIsOpen, todoIt
 								completedAt={data?.completedAt!}
 							/>
 						</div>
-						<TodoItemControls
-							completed={data?.completed!}
-							todoItemId={todoItemId}
-							pageId={pageId}
-							todoId={todoId}
-							onDelete={() => setIsOpen(false)}
-						/>
+						{isAuth && (
+							<TodoItemControls
+								completed={data?.completed!}
+								todoItemId={todoItemId}
+								pageId={pageId}
+								todoId={todoId}
+								onDelete={() => setIsOpen(false)}
+							/>
+						)}
 					</div>
 
 					<hr />
@@ -76,7 +92,7 @@ const TodoItemModal: React.FC<TodoItemModalProps> = ({ isOpen, setIsOpen, todoIt
 						pageId={pageId}
 						todoId={todoId}
 					/>
-					<TodoItemCommentSection pageId={pageId} todoItemId={todoItemId} />
+					{isAuth && <TodoItemCommentSection pageId={pageId} todoItemId={todoItemId} />}
 				</div>
 			</LoadingWrapper>
 		</BaseModal>

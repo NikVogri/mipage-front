@@ -9,6 +9,11 @@ export const todoExtendedApi = baseApi.injectEndpoints({
 				url: `pages/${pageId}/todos`,
 			}),
 		}),
+		getPublicPageTodos: build.query<Todo[], { pageId: string }>({
+			query: ({ pageId }) => ({
+				url: `pages/${pageId}/todos/public`,
+			}),
+		}),
 		createTodoItem: build.mutation<TodoItem, { pageId: string; todoId: string; title: string }>({
 			query: ({ title, pageId, todoId }) => {
 				return {
@@ -220,12 +225,18 @@ export const todoExtendedApi = baseApi.injectEndpoints({
 				url: `pages/${pageId}/todos/${todoId}/todo-items/${todoItemId}`,
 			}),
 		}),
+		getSinglePublicTodoItem: build.query<TodoItem, { pageId: string; todoId: string; todoItemId: string }>({
+			query: ({ pageId, todoId, todoItemId }) => ({
+				url: `pages/${pageId}/todos/${todoId}/todo-items/${todoItemId}/public`,
+			}),
+		}),
 	}),
 });
 
 export const {
 	useGetPageTodosQuery,
 	useGetSingleTodoItemQuery,
+	useGetSinglePublicTodoItemQuery,
 	useCreateTodoItemMutation,
 	useUpdateTodoItemMutation,
 	useRemoveTodoItemMutation,
@@ -233,4 +244,5 @@ export const {
 	useCreateTodoBlockMutation,
 	useUpdateTodoBlockMutation,
 	useCompleteTodoItemMutation,
+	useGetPublicPageTodosQuery,
 } = todoExtendedApi;
