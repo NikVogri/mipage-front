@@ -3,11 +3,24 @@ import React from "react";
 import { selectAuthChecked } from "features/auth/authSlice";
 import { useAppSelector } from "hooks/redux-hooks";
 import useAuth from "hooks/useAuth";
+import FullPageLoadingSpinner from "components/UI/FullPageLoadingSpinner/FullPageLoadingSpinner";
 
-const onlyAuth = (WrappedComponent: React.FC, { forceRedirect = false }: { forceRedirect?: boolean }) => {
+const onlyAuth = (
+	WrappedComponent: React.FC,
+	{ forceRedirect = false, allowException = false }: { forceRedirect?: boolean; allowException?: boolean }
+) => {
 	// eslint-disable-next-line react/display-name
 	return (props: React.ComponentProps<any>) => {
 		const authChecked = useAppSelector(selectAuthChecked);
+
+		if (!authChecked) {
+			return <FullPageLoadingSpinner />;
+		}
+
+		if (allowException) {
+			return <WrappedComponent {...props} />;
+		}
+
 		const { isAuth } = useAuth();
 
 		if (isAuth) {

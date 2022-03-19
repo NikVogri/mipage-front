@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 .heading__primary {
-    font-size: 3.5rem;
-    font-weight: 700;
+	font-size: 3.5rem;
+	font-weight: 700;
 }
 
 .heading__section {
-    font-size: 1.7rem;
-    padding: 2rem 0 0.75rem 0;
-    margin-bottom: 2rem;
-    border-bottom: solid 1px var(--horizontal-ruling);
+	font-size: 1.7rem;
+	padding: 2rem 0 0.75rem 0;
+	margin-bottom: 2rem;
+	border-bottom: solid 1px var(--horizontal-ruling);
 }
