@@ -1,0 +1,22 @@
+.background {
+	z-index: 99999;
+
+	position: absolute;
+	top: 0;
+	left: 0;
+
+	height: 100vh;
+	width: 100vw;
+
+	background-color: var(--background-primary);
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	h3 {
+		margin-top: 3rem;
+		font-size: 2rem;
+	}
+}
