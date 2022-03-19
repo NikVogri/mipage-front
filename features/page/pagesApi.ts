@@ -17,6 +17,11 @@ export const pageExtendedApi = baseApi.injectEndpoints({
 				url: `pages/${pageId}`,
 			}),
 		}),
+		getSinglePublicPage: build.query<Page, { pageId: string }>({
+			query: ({ pageId }) => ({
+				url: `pages/${pageId}/public`,
+			}),
+		}),
 		getSidebarPages: build.query<SidebarPage[], null>({
 			query: () => ({
 				url: `pages/minimal`,
@@ -36,5 +41,12 @@ export const pageExtendedApi = baseApi.injectEndpoints({
 	}),
 });
 
-export const { useGetUserPagesQuery, useCreatePageMutation, useGetSinglePageQuery, useGetSidebarPagesQuery } =
-	pageExtendedApi;
+export const {
+	useGetUserPagesQuery,
+	useCreatePageMutation,
+	useGetSinglePageQuery,
+	useLazyGetSinglePageQuery,
+	useLazyGetSinglePublicPageQuery,
+	useGetSinglePublicPageQuery,
+	useGetSidebarPagesQuery,
+} = pageExtendedApi;
