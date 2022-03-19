@@ -4,6 +4,7 @@ import { useState } from "react";
 import { FaCog, FaTrash } from "react-icons/fa";
 import { FormikValues, useFormik } from "formik";
 import { CirclePicker } from "react-color";
+import useAuth from "hooks/useAuth";
 
 import LoadingButtonPrimary from "components/UI/LoadingButtonPrimary/LoadingButtonPrimary";
 import Modal from "components/UI/Modal";
@@ -29,6 +30,7 @@ const updateTodoBlockValidationSchema = Yup.object().shape({
 const TodoCardHead: React.FC<TodoCardHeadProps> = ({ color, title, pageId, todoId }) => {
 	const [removeTodoBlock, {}] = useRemoveTodoBlockMutation();
 	const [updateTodoBlock, { isLoading }] = useUpdateTodoBlockMutation();
+	const { isAuth } = useAuth();
 
 	const [modalIsOpen, setIsOpen] = useState(false);
 
@@ -56,23 +58,25 @@ const TodoCardHead: React.FC<TodoCardHeadProps> = ({ color, title, pageId, todoI
 
 	return (
 		<div className={styles.card__top} style={{ backgroundColor: color }}>
-			<Menu
-				menuClassName={styles.menu}
-				direction="right"
-				menuButton={
-					<MenuButton>
-						<FaCog size={17} />
-					</MenuButton>
-				}
-				transition
-			>
-				<MenuItem className={styles.menu_item} onClick={() => setIsOpen(true)}>
-					<FaCog size={12} /> Settings
-				</MenuItem>
-				<MenuItem className={styles.menu_item} onClick={handleDeleteTodoList}>
-					<FaTrash size={12} /> Delete
-				</MenuItem>
-			</Menu>
+			{isAuth && (
+				<Menu
+					menuClassName={styles.menu}
+					direction="right"
+					menuButton={
+						<MenuButton>
+							<FaCog size={17} />
+						</MenuButton>
+					}
+					transition
+				>
+					<MenuItem className={styles.menu_item} onClick={() => setIsOpen(true)}>
+						<FaCog size={12} /> Settings
+					</MenuItem>
+					<MenuItem className={styles.menu_item} onClick={handleDeleteTodoList}>
+						<FaTrash size={12} /> Delete
+					</MenuItem>
+				</Menu>
+			)}
 
 			<Modal isOpen={modalIsOpen} setIsOpen={setIsOpen} contentLabel="Update todo block">
 				<Modal.Head title="Update todo block" closeModal={() => setIsOpen(false)} />

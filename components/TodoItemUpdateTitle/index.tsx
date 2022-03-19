@@ -1,9 +1,7 @@
-import LoadingSpinner from "components/LoadingSpinner";
 import TextAreaWithControls from "components/UI/TextAreaWithControls";
 import { useUpdateTodoItemMutation } from "features/todo/todoApi";
+import useAuth from "hooks/useAuth";
 import { useState } from "react";
-import { FaPen } from "react-icons/fa";
-import { MdUpdate } from "react-icons/md";
 import { toast } from "react-toastify";
 import styles from "./TodoItemUpdateTitle.module.scss";
 
@@ -17,6 +15,8 @@ interface TodoItemUpdateTitleProps {
 const TodoItemUpdateTitle: React.FC<TodoItemUpdateTitleProps> = ({ title, pageId, todoItemId, todoId }) => {
 	const [updateTodoItem, { isLoading }] = useUpdateTodoItemMutation();
 	const [showInput, setShowInput] = useState(false);
+
+	const { isAuth } = useAuth();
 
 	const handleUpdateTitle = (newTitle: string) => {
 		setShowInput(false);
@@ -50,7 +50,7 @@ const TodoItemUpdateTitle: React.FC<TodoItemUpdateTitleProps> = ({ title, pageId
 
 	return (
 		<div className={styles.title}>
-			<button onClick={() => setShowInput(true)}>
+			<button onClick={() => setShowInput(true && isAuth)}>
 				<h1>{title}</h1>
 			</button>
 		</div>

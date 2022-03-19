@@ -1,15 +1,9 @@
 import { useCompleteTodoItemMutation, useRemoveTodoItemMutation } from "features/todo/todoApi";
 import { truncate } from "helpers/truncateText";
+import useAuth from "hooks/useAuth";
 import { useState } from "react";
 import { IoMdCloseCircle } from "react-icons/io";
-import {
-	MdCheckCircle,
-	MdCompress,
-	MdOpenInFull,
-	MdOutlineRemoveCircle,
-	MdRemove,
-	MdRemoveCircle,
-} from "react-icons/md";
+import { MdCheckCircle, MdOpenInFull, MdOutlineRemoveCircle } from "react-icons/md";
 
 import styles from "./TodoListItem.module.scss";
 
@@ -26,6 +20,7 @@ const TodoListItem: React.FC<TodoListItemProps> = ({ completed, title, todoItemI
 	const [removeTodoItem, { isLoading: removeLoading }] = useRemoveTodoItemMutation();
 	const [toggleCompleteTodoItem, { isLoading: updateLoading }] = useCompleteTodoItemMutation();
 	const [showControls, setShowControls] = useState(false);
+	const { isAuth } = useAuth();
 
 	const handleDeleteTodoItem = async () => {
 		await removeTodoItem({ pageId, todoItemId, todoId });
@@ -47,31 +42,35 @@ const TodoListItem: React.FC<TodoListItemProps> = ({ completed, title, todoItemI
 				{truncate(title, 500)}
 			</button>
 			<div className={`${styles.todo__item__controls} ${showControls ? styles.active : ""}`}>
-				<hr />
-				<div className={styles.controls__btn__container}>
-					<button
-						title="Complete"
-						onClick={handleCompleteToggleTodoItem}
-						className={styles.complete}
-						disabled={isLoading}
-					>
-						{!completed ? <MdCheckCircle size={18} /> : <IoMdCloseCircle size={18} />}
-						<span>{!completed ? "Complete" : "Uncomplete"}</span>
-					</button>
-					<button
-						title="Delete"
-						className={styles.remove}
-						disabled={isLoading}
-						onClick={handleDeleteTodoItem}
-					>
-						<MdOutlineRemoveCircle size={18} />
-						<span>Remove</span>
-					</button>
-					<button title="Open" onClick={() => onOpenModal(todoItemId)}>
-						<MdOpenInFull size={18} />
-						<span>Open</span>
-					</button>
-				</div>
+				{isAuth && (
+					<>
+						<hr />
+						<div className={styles.controls__btn__container}>
+							<button
+								title="Complete"
+								onClick={handleCompleteToggleTodoItem}
+								className={styles.complete}
+								disabled={isLoading}
+							>
+								{!completed ? <MdCheckCircle size={18} /> : <IoMdCloseCircle size={18} />}
+								<span>{!completed ? "Complete" : "Uncomplete"}</span>
+							</button>
+							<button
+								title="Delete"
+								className={styles.remove}
+								disabled={isLoading}
+								onClick={handleDeleteTodoItem}
+							>
+								<MdOutlineRemoveCircle size={18} />
+								<span>Remove</span>
+							</button>
+							<button title="Open" onClick={() => onOpenModal(todoItemId)}>
+								<MdOpenInFull size={18} />
+								<span>Open</span>
+							</button>
+						</div>
+					</>
+				)}
 			</div>
 		</li>
 	);

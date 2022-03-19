@@ -2,6 +2,7 @@ import LoadingSpinner from "components/LoadingSpinner";
 import LoadingWrapper from "components/UI/LoadingWrapper";
 import TextAreaWithControls from "components/UI/TextAreaWithControls";
 import { useUpdateTodoItemMutation } from "features/todo/todoApi";
+import useAuth from "hooks/useAuth";
 import { useEffect, useState } from "react";
 import { MdAdd, MdDescription } from "react-icons/md";
 
@@ -24,6 +25,7 @@ const TodoItemDescriptionSection: React.FC<TodoItemDescriptionSectionProps> = ({
 
 	const [showDescriptionInput, setShowDescriptionInput] = useState(false);
 	const [descriptionValue, setDescriptionValue] = useState("");
+	const { isAuth } = useAuth();
 
 	const handleUpdateDescription = async (textValue: string) => {
 		updateTodoItem({ description: textValue, pageId, todoItemId, todoId });
@@ -41,6 +43,14 @@ const TodoItemDescriptionSection: React.FC<TodoItemDescriptionSectionProps> = ({
 			content = (
 				<div className={styles.loading}>
 					<p>{descriptionValue}</p>
+				</div>
+			);
+
+			break;
+		case !isAuth && !descriptionValue:
+			content = (
+				<div>
+					<p>No description provided</p>
 				</div>
 			);
 

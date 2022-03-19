@@ -1,5 +1,7 @@
 import { PageMember } from "models";
 import { useRouter } from "next/router";
+import useAuth from "hooks/useAuth";
+
 import YourPagesSidebar from "../YourPagesSidebar";
 import PageMembers from "../PageMembers";
 import PageSettings from "../PageSettings";
@@ -13,12 +15,13 @@ interface PageLeftSideProps {
 
 export const PageLeftSide: React.FC<PageLeftSideProps> = ({ members, owner }) => {
 	const router = useRouter();
+	const { isAuth } = useAuth();
 
 	return (
 		<aside className={styles.left__side}>
-			<PageSettings />
+			{isAuth && <PageSettings />}
 			<PageMembers members={members} owner={owner} pageId={router.query.pageId as string} />
-			<YourPagesSidebar />
+			{isAuth && <YourPagesSidebar />}
 			<div className={styles.copyright__container}>
 				<p>Created with {"❤️"} in Slovenia</p>
 				<p>Mipage &#169; {new Date().getFullYear()}</p>
