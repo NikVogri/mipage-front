@@ -50,6 +50,7 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
 	const requestedPath = appContext?.router.route;
 	const isPageRequest = requestedPath.includes("/pages/[pageId]");
 	const cookies = appContext.ctx.req?.headers.cookie as string;
+	const isSSRLoad = Boolean(appContext.ctx?.req);
 
 	let user;
 	if (cookies?.includes("mipage-auth")) {
@@ -65,7 +66,7 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
 	}
 
 	let page;
-	if (isPageRequest) {
+	if (isPageRequest && isSSRLoad) {
 		const pageId = appContext?.router.query.pageId;
 
 		try {
