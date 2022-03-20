@@ -55,7 +55,7 @@ export interface Page {
 	notebooks: any[];
 	owner: PageOwner;
 	members: PageMember[];
-	isPrivate: boolean;
+	private: boolean;
 }
 
 export interface SidebarPage {

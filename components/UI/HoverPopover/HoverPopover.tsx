@@ -9,8 +9,6 @@ interface PopoverProps {
 const HoverPopover: React.FC<PopoverProps> = ({ children, text }) => {
 	const [showPopover, setShowPopover] = useState(false);
 
-	console.log(showPopover);
-
 	return (
 		<div className={styles.popover__parent}>
 			<div onMouseOver={() => setShowPopover(true)} onMouseLeave={() => setShowPopover(false)}>
