@@ -1,6 +1,6 @@
 import baseApi from "features/baseApi";
 
-import { Page, SidebarPage } from "models";
+import { Page, PageType, SidebarPage } from "models";
 
 export const pageExtendedApi = baseApi.injectEndpoints({
 	endpoints: (build) => ({
@@ -29,11 +29,11 @@ export const pageExtendedApi = baseApi.injectEndpoints({
 			}),
 			providesTags: ["SidebarPages"],
 		}),
-		createPage: build.mutation<Page, { pageData: Partial<Page> }>({
-			query: ({ pageData }) => {
+		createPage: build.mutation<Page, { title: string; type: PageType; isPrivate: boolean }>({
+			query: ({ title, type, isPrivate }) => {
 				return {
 					url: "pages",
-					body: pageData,
+					body: { title, type, isPrivate },
 					method: "POST",
 				};
 			},
