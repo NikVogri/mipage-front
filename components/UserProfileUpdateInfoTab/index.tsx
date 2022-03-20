@@ -90,7 +90,12 @@ const UserProfileUpdateInfoTab: React.FC = () => {
 				</div>
 			</div>
 
-			<LoadingButtonPrimary position="right" isLoading={isLoading} disabled={!formik.isValid || !formik.dirty}>
+			<LoadingButtonPrimary
+				scheme="create"
+				position="right"
+				isLoading={isLoading}
+				disabled={!formik.isValid || !formik.dirty}
+			>
 				Save changes
 			</LoadingButtonPrimary>
 		</form>
