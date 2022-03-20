@@ -6,8 +6,22 @@
 }
 
 .no__found {
-	font-size: 1.4rem;
-	color: var(--text-secondary);
+	p {
+		font-size: 1.8rem;
+		font-weight: bold;
+		color: var(--text-secondary);
+		text-align: center;
+		margin-top: 2rem;
+	}
+
+	padding: 3rem 1rem;
+	max-width: 50rem;
+	border-radius: 0.5rem;
+	margin: 0 auto;
+
+	display: flex;
+	align-items: center;
+	flex-direction: column;
 }
 
 .welcome__msg {
@@ -29,4 +43,35 @@
 	p {
 		color: var(--text-secondary);
 	}
+}
+
+.create__page__btn {
+	padding: 1rem 2rem;
+	font-size: 1.8rem;
+	background: var(--color-pop);
+	margin: 2rem 0;
+	color: var(--text-primary);
+
+	display: flex;
+	justify-content: center;
+
+	text-decoration: none !important;
+	box-shadow: 0rem 0.4rem 0.4rem var(--shadow-block);
+
+	transition: all 0.2s ease-in;
+	border-radius: 0.5rem;
+
+	svg {
+		margin: 0;
+		margin-right: 0.5rem;
+	}
+
+	&:hover {
+		background: var(--color-pop-hover);
+	}
+}
+
+
+.loading__wrapper {
+	min-height: 50vh;
 }
