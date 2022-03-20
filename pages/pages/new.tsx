@@ -28,7 +28,7 @@ const CreateNewPage = () => {
 	const [createPage, { isLoading, data, isSuccess, isError, error }] = useCreatePageMutation();
 
 	const handleCreatePage = async (fv: FormikValues) => {
-		await createPage({ pageData: { title: fv.title, type: fv.type, isPrivate: fv.isPrivate } });
+		await createPage({ title: fv.title, type: fv.type, isPrivate: fv.isPrivate });
 	};
 
 	const formik = useFormik({
