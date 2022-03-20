@@ -59,8 +59,6 @@ const Register = () => {
 		onSubmit: handleSubmit,
 	});
 
-	console.log(formik.isValid);
-
 	return (
 		<main className={styles.register}>
 			<Head>
