@@ -4,12 +4,13 @@ import { useState } from "react";
 interface DeleteConfirmationProps {
 	onDelete: () => void;
 	onCancel: () => void;
+	isLoading?: boolean;
 	text: string;
 }
 
 import styles from "./DeleteConfirmation.module.scss";
 
-const DeleteConfirmation: React.FC<DeleteConfirmationProps> = ({ onDelete, onCancel, text }) => {
+const DeleteConfirmation: React.FC<DeleteConfirmationProps> = ({ onDelete, onCancel, text, isLoading }) => {
 	const [confirmationInputVal, setConfirmationInputVal] = useState("");
 
 	return (
@@ -24,9 +25,9 @@ const DeleteConfirmation: React.FC<DeleteConfirmationProps> = ({ onDelete, onCan
 			/>
 			<div className={styles.btn__container}>
 				<LoadingButtonPrimary
-					isLoading={false}
+					isLoading={isLoading ?? false}
 					scheme="create"
-					disabled={confirmationInputVal !== "DELETE"}
+					disabled={confirmationInputVal !== "DELETE" || isLoading}
 					onClick={onDelete}
 				>
 					Confirm
