@@ -4,7 +4,6 @@ import Avatar from "components/Avatar";
 import UserSettingsList from "components/UserSettingsList";
 
 import styles from "./UserNavSettings.module.scss";
-import UserProfileModal from "components/UI/modals/UserProfile";
 
 interface UserNavSettingsProps {
 	username: string;
