@@ -12,6 +12,7 @@ const onlyAuth = (
 	// eslint-disable-next-line react/display-name
 	return (props: React.ComponentProps<any>) => {
 		const authChecked = useAppSelector(selectAuthChecked);
+		const { isAuth } = useAuth();
 
 		if (!authChecked) {
 			return <FullPageLoadingSpinner />;
@@ -20,8 +21,6 @@ const onlyAuth = (
 		if (allowException) {
 			return <WrappedComponent {...props} />;
 		}
-
-		const { isAuth } = useAuth();
 
 		if (isAuth) {
 			return <WrappedComponent {...props} />;
