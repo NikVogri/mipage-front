@@ -43,7 +43,7 @@ const UserSettingsModal: React.FC<UserSettingsModalProps> = ({ isOpen, setIsClos
 					{!showDeleteConfirmation && (
 						<LoadingButtonPrimary
 							scheme="delete"
-							position="center"
+							position="left"
 							onClick={() => setShowDeleteConfirmation(true)}
 							isLoading={false}
 						>
