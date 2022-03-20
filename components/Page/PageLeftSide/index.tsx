@@ -11,15 +11,17 @@ import styles from "./PageLeftSide.module.scss";
 interface PageLeftSideProps {
 	members: PageMember[];
 	owner: PageMember;
+	title: string;
+	isPrivate: boolean;
 }
 
-export const PageLeftSide: React.FC<PageLeftSideProps> = ({ members, owner }) => {
+export const PageLeftSide: React.FC<PageLeftSideProps> = ({ members, owner, title, isPrivate }) => {
 	const router = useRouter();
 	const { isAuth } = useAuth();
 
 	return (
 		<aside className={styles.left__side}>
-			{isAuth && <PageSettings />}
+			{isAuth && <PageSettings pageId={router.query.pageId as string} title={title} isPrivate={isPrivate} />}
 			<PageMembers members={members} owner={owner} pageId={router.query.pageId as string} />
 			{isAuth && <YourPagesSidebar />}
 			<div className={styles.copyright__container}>
