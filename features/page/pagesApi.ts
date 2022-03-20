@@ -16,6 +16,7 @@ export const pageExtendedApi = baseApi.injectEndpoints({
 			query: ({ pageId }) => ({
 				url: `pages/${pageId}`,
 			}),
+			providesTags: ["Page"],
 		}),
 		getSinglePublicPage: build.query<Page, { pageId: string }>({
 			query: ({ pageId }) => ({
@@ -38,6 +39,25 @@ export const pageExtendedApi = baseApi.injectEndpoints({
 			},
 			invalidatesTags: ["UserPages", "SidebarPages"],
 		}),
+		updatePage: build.mutation<Page, { pageId: string; title: string; isPrivate: boolean }>({
+			query: ({ pageId, title, isPrivate }) => {
+				return {
+					url: `pages/${pageId}`,
+					body: { title, isPrivate },
+					method: "PATCH",
+				};
+			},
+			invalidatesTags: ["UserPages", "SidebarPages", "Page"],
+		}),
+		deletePage: build.mutation<Page, { pageId: string }>({
+			query: ({ pageId }) => {
+				return {
+					url: `pages/${pageId}`,
+					method: "DELETE",
+				};
+			},
+			invalidatesTags: ["UserPages", "SidebarPages"],
+		}),
 	}),
 });
 
@@ -49,4 +69,6 @@ export const {
 	useLazyGetSinglePublicPageQuery,
 	useGetSinglePublicPageQuery,
 	useGetSidebarPagesQuery,
+	useUpdatePageMutation,
+	useDeletePageMutation,
 } = pageExtendedApi;
