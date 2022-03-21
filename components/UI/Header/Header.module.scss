@@ -11,6 +11,10 @@
 
 	font-size: 1.5rem;
 	box-shadow: 0.25rem 0.25rem 0.5rem var(--shadow-block);
+
+	@media only screen and (max-width: 768px) {
+		padding: 0 1rem;
+	}
 }
 
 .header__container {
@@ -25,6 +29,11 @@
 
 	a {
 		text-decoration: none !important;
+	}
+
+	@media only screen and (max-width: 768px) {
+		margin: 0;
+		margin-left: auto;
 	}
 }
 
