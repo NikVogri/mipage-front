@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import { useGetSinglePublicTodoItemQuery, useGetSingleTodoItemQuery } from "features/todo/todoApi";
 import useAuth from "hooks/useAuth";
+import { IoMdClose } from "react-icons/io";
 
 import BaseModal from "react-modal";
 import TodoItemCommentSection from "components/TodoItemCommentSection";
@@ -11,7 +12,6 @@ import TodoItemUpdateTitle from "components/TodoItemUpdateTitle";
 import TodoItemControls from "components/TodoItemControls/TodoItemControls";
 
 import styles from "./TodoItem.module.scss";
-import { IoMdClose } from "react-icons/io";
 interface TodoItemModalProps {
 	isOpen: boolean;
 	setIsOpen: Dispatch<SetStateAction<boolean>>;

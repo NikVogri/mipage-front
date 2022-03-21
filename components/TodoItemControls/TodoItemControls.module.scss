@@ -17,4 +17,10 @@
 			margin-right: 1rem;
 		}
 	}
+
+	@media screen and (max-width: 768px) {
+		border-top: solid 1px var(--outline);
+		margin-top: 1rem;
+		padding-top: 1rem;
+	}
 }
