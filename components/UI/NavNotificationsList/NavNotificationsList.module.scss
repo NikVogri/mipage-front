@@ -6,12 +6,13 @@
 	right: 0;
 
 	width: 35rem;
+	max-width: 35rem;
 	height: 30rem;
 	padding: 1rem 0;
 
 	@media only screen and (max-width: 768px) {
 		right: -100%;
-		width: 95vw;
+		width: 85vw;
 	}
 
 	overflow-y: auto;
