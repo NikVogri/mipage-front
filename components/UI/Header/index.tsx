@@ -8,24 +8,30 @@ import Notifications from "../NavNotifications";
 import styles from "./Header.module.scss";
 import { useAppDispatch } from "hooks/redux-hooks";
 import { togglePageSidebar } from "features/ui/uiSlice";
+import { useRouter } from "next/router";
 
 const Header: React.FC = () => {
 	const { isAuth, user } = useAuth();
+	const router = useRouter();
 	const dispatch = useAppDispatch();
+
+	const isPageSite = router.query.pageId ? true : false;
 
 	return (
 		<nav className={styles.header}>
 			{isAuth ? (
 				<div className={styles.header__container}>
 					<div className={styles.header__container__left}>
-						<button
-							className={styles.only__mobile}
-							onClick={() => {
-								dispatch(togglePageSidebar());
-							}}
-						>
-							<IoMdMenu size={24} />
-						</button>
+						{isPageSite && (
+							<button
+								className={styles.only__mobile}
+								onClick={() => {
+									dispatch(togglePageSidebar());
+								}}
+							>
+								<IoMdMenu size={24} />
+							</button>
+						)}
 					</div>
 					<div className={styles.header__container__right}>
 						<Notifications />
