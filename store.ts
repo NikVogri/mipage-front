@@ -2,6 +2,7 @@ import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 
 import pagesSlice from "features/page/pagesSlice";
 import authSlice from "features/auth/authSlice";
+import uiSlice from "features/ui/uiSlice";
 
 import baseApi from "features/baseApi";
 
@@ -9,6 +10,7 @@ export const store = configureStore({
 	reducer: {
 		auth: authSlice,
 		page: pagesSlice,
+		ui: uiSlice,
 		[baseApi.reducerPath]: baseApi.reducer,
 	},
 
