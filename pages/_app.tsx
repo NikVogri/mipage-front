@@ -1,4 +1,5 @@
 import type { AppContext, AppProps } from "next/app";
+import { setIsMobileView } from "features/ui/uiSlice";
 import { setAuthChecked, setUser } from "features/auth/authSlice";
 import { Provider } from "react-redux";
 import { PUBLIC_PATHS } from "config";
@@ -17,6 +18,8 @@ import "styles/main.scss";
 import "../styles/globals.css";
 import "react-toastify/dist/ReactToastify.css";
 function MyApp({ Component, pageProps, user }: AppProps & { user: User }) {
+	const isClientSide = typeof window !== "undefined";
+
 	useEffect(() => {
 		if (user) {
 			store.dispatch(setUser(user));
@@ -24,6 +27,12 @@ function MyApp({ Component, pageProps, user }: AppProps & { user: User }) {
 			store.dispatch(setAuthChecked());
 		}
 	}, [user]);
+
+	useEffect(() => {
+		if (isClientSide) {
+			store.dispatch(setIsMobileView(window.innerHeight < 768));
+		}
+	}, [isClientSide]);
 
 	return (
 		<Provider store={store}>

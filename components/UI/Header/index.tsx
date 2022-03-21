@@ -1,28 +1,48 @@
+import { IoMdMenu } from "react-icons/io";
+
 import UserNavSettings from "components/UserNavSettings";
 import useAuth from "hooks/useAuth";
 import Link from "next/link";
 import Notifications from "../NavNotifications";
 
 import styles from "./Header.module.scss";
+import { useAppDispatch } from "hooks/redux-hooks";
+import { togglePageSidebar } from "features/ui/uiSlice";
 
 const Header: React.FC = () => {
 	const { isAuth, user } = useAuth();
+	const dispatch = useAppDispatch();
 
 	return (
 		<nav className={styles.header}>
 			{isAuth ? (
 				<div className={styles.header__container}>
-					<Notifications />
-					<UserNavSettings username={user?.username!} avatar={user?.avatar} />
+					<div className={styles.header__container__left}>
+						<button
+							className={styles.only__mobile}
+							onClick={() => {
+								dispatch(togglePageSidebar());
+							}}
+						>
+							<IoMdMenu size={24} />
+						</button>
+					</div>
+					<div className={styles.header__container__right}>
+						<Notifications />
+						<UserNavSettings username={user?.username!} avatar={user?.avatar} />
+					</div>
 				</div>
 			) : (
 				<div className={styles.header__container}>
-					<Link href="/login">
-						<a className={`${styles.auth__btn} ${styles.auth__btn_login}`}>Login</a>
-					</Link>
-					<Link href="/register">
-						<a className={`${styles.auth__btn} ${styles.auth__btn_register}`}>Get started</a>
-					</Link>
+					<div className={styles.header__container__left}></div>
+					<div className={styles.header__container__right}>
+						<Link href="/login">
+							<a className={`${styles.auth__btn} ${styles.auth__btn_login}`}>Login</a>
+						</Link>
+						<Link href="/register">
+							<a className={`${styles.auth__btn} ${styles.auth__btn_register}`}>Get started</a>
+						</Link>
+					</div>
 				</div>
 			)}
 		</nav>

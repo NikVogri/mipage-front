@@ -7,6 +7,22 @@
 	background: var(--background-card);
 	overflow-y: auto;
 
+	transition: all 0.3s ease-in;
+
+	&.closed {
+		width: 0;
+		opacity: 0;
+	}
+
+	&.open {
+		opacity: 1;
+		width: 45rem;
+
+		@media only screen and (max-width: 768px) {
+			width: 150rem;
+		}
+	}
+
 	@include scrollbar;
 }
 
