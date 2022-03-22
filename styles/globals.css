@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+	max-width: 100vw;
+	overflow-x: hidden;
+}
+
 .heading__primary {
 	font-size: 3.5rem;
 	font-weight: 700;
