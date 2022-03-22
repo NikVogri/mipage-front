@@ -10,7 +10,9 @@ import { useEffect } from "react";
 import Layout from "../components/UI/Layout";
 import App from "next/app";
 
+import { useRouter } from "next/router";
 import { ToastContainer } from "react-toastify";
+import { logPageViewToGTag } from "helpers/googleTag";
 import axios from "config/axios";
 
 import "styles/globals.css";
@@ -19,6 +21,7 @@ import "../styles/globals.css";
 import "react-toastify/dist/ReactToastify.css";
 function MyApp({ Component, pageProps, user }: AppProps & { user: User }) {
 	const isClientSide = typeof window !== "undefined";
+	const router = useRouter();
 
 	useEffect(() => {
 		if (user) {
@@ -33,6 +36,21 @@ function MyApp({ Component, pageProps, user }: AppProps & { user: User }) {
 			store.dispatch(setIsMobileView(window.innerHeight < 768));
 		}
 	}, [isClientSide]);
+
+	useEffect(() => {
+		const handleRouteChange = (url: string) => {
+			logPageViewToGTag(url);
+		};
+		//When the component is mounted, subscribe to router changes
+		//and log those page views
+		router.events.on("routeChangeComplete", handleRouteChange);
+
+		// If the component is unmounted, unsubscribe
+		// from the event with the `off` method
+		return () => {
+			router.events.off("routeChangeComplete", handleRouteChange);
+		};
+	}, [router.events]);
 
 	return (
 		<Provider store={store}>
