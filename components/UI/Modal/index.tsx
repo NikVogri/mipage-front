@@ -30,6 +30,7 @@ const Modal = ({ isOpen, setIsOpen, children, contentLabel, className }: ModalPr
 			className={`${styles.modal} ${className ?? className}`}
 			overlayClassName={styles.modal__background}
 			onRequestClose={() => setIsOpen(false)}
+			preventScroll={true}
 		>
 			<div className={styles.modal__body}>{children}</div>
 		</BaseModal>
