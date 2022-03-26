@@ -8,6 +8,7 @@ import { User } from "models";
 import { useEffect } from "react";
 
 import Layout from "../components/UI/Layout";
+import CookieConsent from "react-cookie-consent";
 import App from "next/app";
 
 import { useRouter } from "next/router";
@@ -23,6 +24,13 @@ function MyApp({ Component, pageProps, user }: AppProps & { user: User }) {
 	const isClientSide = typeof window !== "undefined";
 	const router = useRouter();
 
+	function handleAccept() {
+		(window as any)?.gtag("consent", "update", {
+			ad_storage: "granted",
+			analytics_storage: "granted",
+		});
+	}
+
 	useEffect(() => {
 		if (user) {
 			store.dispatch(setUser(user));
@@ -36,6 +44,16 @@ function MyApp({ Component, pageProps, user }: AppProps & { user: User }) {
 			store.dispatch(setIsMobileView(window.innerHeight < 768));
 		}
 	}, [isClientSide]);
+
+	useEffect(() => {
+		if (checkConsented()) {
+			console.log("HERE", "consented", window);
+			(window as any)?.gtag("consent", "update", {
+				ad_storage: "granted",
+				analytics_storage: "granted",
+			});
+		}
+	}, []);
 
 	useEffect(() => {
 		const handleRouteChange = (url: string) => {
@@ -55,6 +73,16 @@ function MyApp({ Component, pageProps, user }: AppProps & { user: User }) {
 	return (
 		<Provider store={store}>
 			<Layout>
+				<CookieConsent
+					buttonText="Accept"
+					enableDeclineButton
+					onAccept={() => {
+						handleAccept();
+					}}
+					declineButtonText="Decline"
+				>
+					We use cookies to improve your experience on our site.
+				</CookieConsent>
 				<Component {...pageProps} />
 				<ToastContainer
 					position="top-center"
@@ -120,3 +148,18 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
 };
 
 export default MyApp;
+
+function checkConsented() {
+	let decodedCookie = decodeURIComponent(document.cookie) as any;
+	decodedCookie = decodedCookie.split(";") as string[];
+	decodedCookie = decodedCookie.find((cookie: string) => {
+		return cookie.substring(0, 13) === "CookieConsent";
+	});
+	if (!decodedCookie) {
+		return false;
+	}
+	if (decodedCookie.substring(14, 18) === "true") {
+		return true;
+	}
+	return false;
+}
