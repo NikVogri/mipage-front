@@ -1,40 +1,72 @@
-import useAuth from "hooks/useAuth";
-import type { NextPage } from "next";
-import Head from "next/head";
 import Link from "next/link";
-import { MdAccountCircle, MdAppRegistration, MdBuildCircle, MdCreate, MdSupervisedUserCircle } from "react-icons/md";
+import type { NextPage } from "next";
+import { MdArrowDownward } from "react-icons/md";
+import { useRouter } from "next/router";
+
+import TaskSvg from "components/svg/Task";
+import ChatSvg from "components/svg/Chat";
+import WorldSvg from "components/svg/World";
+import Head from "next/head";
 
 import styles from "../styles/pages/Index.module.scss";
 
 const Home: NextPage = () => {
-	const { isAuth } = useAuth();
+	const router = useRouter();
+
 	return (
-		<div className={styles.container}>
+		<main className={styles.index}>
 			<Head>
 				<title>Mipage | Your own digital notebook</title>
 			</Head>
 
-			<main className={styles.under__construction__container}>
-				<MdBuildCircle size={84} />
-				<h1>Thank you for visiting Mipage</h1>
-				<h2>Mipage is currently under construction and some functionality might not work as expected.</h2>
-
-				{isAuth ? (
-					<Link href="/pages">
-						<a className={styles.register}>Visit your pages</a>
-					</Link>
-				) : (
-					<Link href="/register">
-						<a className={styles.register}>
-							<MdAccountCircle size={18} />
-							Create your account now!
-						</a>
-					</Link>
-				)}
-
-				<p>Created with {"❤️"} in Slovenia</p>
-			</main>
-		</div>
+			<div className={styles.header}>
+				<h2>Mipage</h2>
+				<h1>
+					<span>Your own</span> <span>Digital</span> <span>Notebook</span>
+				</h1>
+			</div>
+			<div className={styles.container}>
+				<button className={styles.down__indicator} onClick={() => router.push("#start")}>
+					<MdArrowDownward size={28} />
+				</button>
+			</div>
+			<hr />
+			<div className={styles.container}>
+				<section className={styles.section} id="start">
+					<WorldSvg />
+					<div className={styles.text__container}>
+						<h2>Access your pages from anywhere</h2>
+						<p>Access your pages from anywhere in the world on any device!</p>
+					</div>
+				</section>
+			</div>
+			<hr />
+			<div className={styles.container}>
+				<section className={styles.section} id="start">
+					<div className={styles.text__container}>
+						<h2>Create your tasks</h2>
+						<p>Create and track your tasks using the intuitive UI built specifically for you!</p>
+					</div>
+					<TaskSvg />
+				</section>
+			</div>
+			<hr />
+			<div className={styles.container}>
+				<section className={styles.section}>
+					<ChatSvg />
+					<div className={styles.text__container}>
+						<h2>Communicate</h2>
+						<p>Communicate with your team members on all the little details!</p>
+					</div>
+				</section>
+			</div>
+			<footer className={styles.footer}>
+				<h3>Get started now</h3>
+				<Link href="/register">
+					<a className={styles.btn}>Join Now</a>
+				</Link>
+			</footer>
+		</main>
 	);
 };
 
