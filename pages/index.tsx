@@ -16,7 +16,35 @@ const Home: NextPage = () => {
 	return (
 		<main className={styles.index}>
 			<Head>
-				<title>Mipage | Your own digital notebook</title>
+				<title>Mipage - Your own digital notebook</title>
+				<meta charSet="utf-8"></meta>
+				<meta
+					name="description"
+					content="Create your own digital notebooks and todo lists and share them with your team members"
+				></meta>
+				<meta
+					name="viewport"
+					content="width=device-width,minimum-scale=1.0,initial-scale=1,user-scalable=yes"
+				></meta>
+				<meta name="apple-mobile-web-app-capable" content="yes"></meta>
+				<meta name="theme-color" content="#18191a"></meta>
+				<meta name="msapplication-config" content="https://www.mipage.me/sitemap.xml"></meta>
+				<meta property="og:title" content="Mipage - Your own digital notebook"></meta>
+				<meta property="og:url" content="https://mipage.me"></meta>
+				<meta property="og:site_name" content="Mipage"></meta>
+				<meta
+					property="og:description"
+					content="Create your own digital notebooks and todo lists and share them with your team members"
+				></meta>
+
+				<meta name="keywords" content="digital notebook, notebook, todo, todo list, teamwork"></meta>
+				<meta name="twitter:card" content="summary"></meta>
+				<meta name="twitter:url" content="https://mipage.me"></meta>
+				<meta name="twitter:title" content="Mipage - Your own digital notebook"></meta>
+				<meta
+					name="twitter:description"
+					content="Create your own digital notebooks and todo lists and share them with your team members"
+				></meta>
 			</Head>
 
 			<div className={styles.header}>
