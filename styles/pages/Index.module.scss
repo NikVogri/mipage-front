@@ -58,6 +58,12 @@
 			-webkit-background-clip: text;
 			-webkit-text-fill-color: transparent;
 		}
+
+		@media only screen and (max-height: 1000px) and (min-width: 1000px) {
+			font-size: 13rem;
+			line-height: 13rem;
+			top: 50%;
+		}
 	}
 
 	h1 {
@@ -108,6 +114,12 @@
 			font-size: 4.5rem;
 			line-height: 5rem;
 			margin-bottom: 5rem;
+		}
+
+		@media only screen and (max-height: 1000px) and (min-width: 1000px) {
+			font-size: 13rem;
+			line-height: 13rem;
+			left: 30rem;
 		}
 	}
 }
