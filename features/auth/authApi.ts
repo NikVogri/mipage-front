@@ -1,30 +1,15 @@
-import axios from "config/axios";
-import { PersonalInfoPayload, User } from "models";
+import baseApi from "features/baseApi";
 
-export const fetchMe = async (): Promise<User | void> => {
-	try {
-		const res = await axios.get("/users/me", { withCredentials: true });
-		return res.data;
-	} catch (err: any) {}
-};
+export const authExtendedApi = baseApi.injectEndpoints({
+	endpoints: (build) => ({
+		forgotPassword: build.mutation<null, { email: string }>({
+			query: ({ email }) => ({
+				url: `auth/forgot-password`,
+				method: "POST",
+				body: { email },
+			}),
+		}),
+	}),
+});
 
-export const postLogin = async (loginData: { email: string; password: string }): Promise<void> => {
-	await axios.post("/auth/login", loginData, { withCredentials: true });
-};
-
-export const postSignup = async (signupData: { email: string; username: string; password: string }): Promise<void> => {
-	await axios.post("/auth/register", signupData);
-};
-
-export const postLogout = async () => {
-	await axios.post("auth/logout", null, { withCredentials: true });
-};
-
-export const postPersonalInfo = async (personalInfo: PersonalInfoPayload): Promise<PersonalInfoPayload> => {
-	const res = await axios.post("users/me/personal-info", personalInfo, { withCredentials: true });
-	return res.data;
-};
-
-export const deleteUser = async (): Promise<void> => {
-	await axios.delete("users/me", { withCredentials: true });
-};
+export const { useForgotPasswordMutation } = authExtendedApi;
