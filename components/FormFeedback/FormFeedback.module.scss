@@ -1,0 +1,18 @@
+.feedback {
+	padding: 1rem 2rem;
+	font-size: 1.6rem;
+	border-radius: 0.5rem;
+	width: 100%;
+}
+
+.success {
+	border: solid 1px #27ae60;
+	background-color: #27ae5f4d;
+	color: #b2c9bc;
+}
+
+.error {
+	border: solid 1px #fd6868;
+	background-color: rgba(238, 96, 96, 0.276);
+	color: #cab6b6;
+}
