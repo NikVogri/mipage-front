@@ -6,7 +6,7 @@ import Head from "next/head";
 import LoadingButtonPrimary from "components/UI/LoadingButtonPrimary/LoadingButtonPrimary";
 import FormFeedback from "components/FormFeedback/FormFeedback";
 
-import styles from "../styles/pages/ForgotPassword.module.scss";
+import styles from "../../styles/pages/ForgotPassword.module.scss";
 
 const forgotPasswordValidationSchema = Yup.object().shape({
 	email: Yup.string().email("Email needs to be an email address").required("Email is required"),
