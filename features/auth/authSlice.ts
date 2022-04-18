@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, isFulfilled, isPending, isRejected, PayloadAction } from "@reduxjs/toolkit";
 import { PersonalInfoPayload, User } from "models";
 import { RootState } from "store";
-import { fetchMe, postLogin, postLogout, postSignup, postPersonalInfo, deleteUser } from "features/auth/authApi";
+import { fetchMe, postLogin, postLogout, postSignup, postPersonalInfo, deleteUser } from "features/auth/authEndpoints";
 import { toast } from "react-toastify";
 
 export interface AuthState {
