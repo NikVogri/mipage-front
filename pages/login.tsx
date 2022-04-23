@@ -96,6 +96,9 @@ const Login = () => {
 				<Link href="/register">
 					<a className={`${styles.secondary__btn} block mt-5`}>{"Don't"} have an account? Register</a>
 				</Link>
+				<Link href="/reset-password">
+					<a className={`${styles.secondary__btn} block mt-5`}>Forgot password</a>
+				</Link>
 				<p className={styles.copyright}>Copyright © {new Date().getFullYear()} MIPAGE</p>
 			</div>
 		</main>
