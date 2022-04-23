@@ -2,7 +2,7 @@ import type { AppContext, AppProps } from "next/app";
 import { setIsMobileView } from "features/ui/uiSlice";
 import { setAuthChecked, setUser } from "features/auth/authSlice";
 import { Provider } from "react-redux";
-import { PUBLIC_PATHS } from "config";
+import { isPagePublic } from "helpers/isPagePublic";
 import { store } from "../store";
 import { User } from "models";
 import { useEffect } from "react";
@@ -47,7 +47,6 @@ function MyApp({ Component, pageProps, user }: AppProps & { user: User }) {
 
 	useEffect(() => {
 		if (checkConsented()) {
-			console.log("HERE", "consented", window);
 			(window as any)?.gtag("consent", "update", {
 				ad_storage: "granted",
 				analytics_storage: "granted",
@@ -102,8 +101,8 @@ function MyApp({ Component, pageProps, user }: AppProps & { user: User }) {
 MyApp.getInitialProps = async (appContext: AppContext) => {
 	const appProps = await App.getInitialProps(appContext);
 
-	const requestedPath = appContext?.router.route;
-	const isPageRequest = requestedPath.includes("/pages/[pageId]");
+	const requestedPath = appContext?.router.asPath;
+	const isPageRequest = requestedPath.includes("/pages");
 	const cookies = appContext.ctx.req?.headers.cookie as string;
 	const isSSRLoad = Boolean(appContext.ctx?.req);
 
@@ -139,7 +138,7 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
 				appContext.ctx.res?.writeHead(307, { Location: "/login" }).end();
 			}
 		}
-	} else if (!user && !PUBLIC_PATHS.includes(requestedPath)) {
+	} else if (!user && !isPagePublic(requestedPath)) {
 		// Server side redirect if user is not logged in and trying to access auth only pages
 		appContext.ctx.res?.writeHead(307, { Location: "/login" }).end();
 	}
