@@ -9,7 +9,14 @@ export const authExtendedApi = baseApi.injectEndpoints({
 				body: { email },
 			}),
 		}),
+		resetPassword: build.mutation<null, { password: string; token: string }>({
+			query: ({ password, token }) => ({
+				url: `auth/reset-password`,
+				method: "POST",
+				body: { password, token },
+			}),
+		}),
 	}),
 });
 
-export const { useForgotPasswordMutation } = authExtendedApi;
+export const { useForgotPasswordMutation, useResetPasswordMutation } = authExtendedApi;
