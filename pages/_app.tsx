@@ -20,6 +20,8 @@ import "styles/globals.css";
 import "styles/main.scss";
 import "../styles/globals.css";
 import "react-toastify/dist/ReactToastify.css";
+import "@szhsin/react-menu/dist/index.css";
+import "@szhsin/react-menu/dist/transitions/slide.css";
 function MyApp({ Component, pageProps, user }: AppProps & { user: User }) {
 	const isClientSide = typeof window !== "undefined";
 	const router = useRouter();
