@@ -48,7 +48,22 @@ export const membersExtendedApi = baseApi.injectEndpoints({
 				}
 			},
 		}),
+		leavePage: build.mutation<PageMember[], { pageId: string }>({
+			query: ({ pageId }) => ({
+				url: `/pages/${pageId}/members`,
+				method: "DELETE",
+			}),
+			invalidatesTags: ["SidebarPages"],
+			async onQueryStarted({}, { queryFulfilled }) {
+				try {
+					await queryFulfilled;
+					toast.success(`Successfully left page`);
+				} catch {
+					toast.error(`Could not leave page, try again later`);
+				}
+			},
+		}),
 	}),
 });
 
-export const { useAddMemberToPageMutation, useRemoveMemberFromPageMutation } = membersExtendedApi;
+export const { useAddMemberToPageMutation, useRemoveMemberFromPageMutation, useLeavePageMutation } = membersExtendedApi;

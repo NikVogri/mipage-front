@@ -64,6 +64,7 @@ export interface SidebarPage {
 	type: PageType;
 	updatedAt: string;
 	notebooks?: SidebarNotebook[];
+	isOwner: boolean;
 }
 
 export interface TodoItem {

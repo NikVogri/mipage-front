@@ -12,8 +12,6 @@ import Modal from "components/UI/Modal";
 import * as Yup from "yup";
 
 import styles from "./TodoCardHead.module.scss";
-import "@szhsin/react-menu/dist/index.css";
-import "@szhsin/react-menu/dist/transitions/slide.css";
 
 interface TodoCardHeadProps {
 	color: string;

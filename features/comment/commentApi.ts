@@ -9,7 +9,7 @@ export const commentsExtendedApi = baseApi.injectEndpoints({
 			{ pageId: string; todoItemId: string; page: number }
 		>({
 			query: ({ pageId, todoItemId, page = 0 }) => ({
-				url: `pages/${pageId}/todo-items/${todoItemId}/comments?page=${page}size=10`,
+				url: `pages/${pageId}/todo-items/${todoItemId}/comments?page=${page}&size=10`,
 			}),
 		}),
 		createTodoItemComment: build.mutation<TodoItemComment, { pageId: string; todoItemId: string; body: string }>({
