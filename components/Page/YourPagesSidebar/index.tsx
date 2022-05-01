@@ -1,14 +1,14 @@
 import { useRouter } from "next/router";
 import { PageType, SidebarPage } from "models";
 import { useGetSidebarPagesQuery } from "features/page/pagesApi";
+import { HiPlus } from "react-icons/hi";
 
 import Link from "next/link";
 import LoadingSpinner from "components/LoadingSpinner";
-
-import styles from "./YourPagesSidebar.module.scss";
 import NotebooksLinkDropdown from "../NotebooksLinkDropdown";
 import TodoPageLink from "../TodoPageLink";
-import { HiPlus } from "react-icons/hi";
+
+import styles from "./YourPagesSidebar.module.scss";
 
 interface YourPagesSidebarProps {}
 
@@ -49,6 +49,7 @@ const YourPagesSidebar: React.FC<YourPagesSidebarProps> = () => {
 								pageId={page.id}
 								title={page.title}
 								active={router.query.pageId === page.id}
+								isOwner={page.isOwner}
 							/>
 						);
 					}

@@ -2,10 +2,9 @@
 	display: flex !important;
 	align-items: center;
 	justify-content: flex-start;
-	color: var(--text-secondary);
-	padding: 0.2rem 1rem;
 
 	text-decoration: none !important;
+	flex: 1;
 
 	h4 {
 		font-size: 1.8rem;
@@ -13,6 +12,14 @@
 		padding: 0.25rem 0rem;
 		margin-bottom: 0;
 	}
+}
+
+.container {
+	display: flex;
+	justify-content: space-between;
+
+	color: var(--text-secondary);
+	padding: 0.2rem 1rem;
 
 	svg {
 		margin-left: 0.1rem;
@@ -21,8 +28,10 @@
 	}
 
 	&.active {
-		svg {
-			opacity: 1;
+		a {
+			svg {
+				opacity: 1;
+			}
 		}
 
 		transition: background 0.3s ease-out;
@@ -30,5 +39,60 @@
 		font-weight: bold;
 		background: var(--shadow-block);
 		color: var(--text-primary);
+	}
+
+	button {
+		display: none;
+
+		svg {
+			opacity: 0.5;
+		}
+
+		&:hover {
+			svg {
+				opacity: 1;
+			}
+		}
+	}
+
+	&:hover {
+		button {
+			display: block;
+		}
+
+		background: var(--shadow-block);
+		opacity: 0.95;
+	}
+}
+
+.menu {
+	background: var(--background-card);
+	border: solid 1px var(--outline);
+
+	border-radius: 0.5rem;
+	color: var(--text-primary);
+	font-size: 1.4rem;
+	box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.1);
+
+	z-index: 5;
+
+	svg {
+		margin-right: 1rem;
+	}
+}
+.menu__item {
+	&:not(:last-of-type) {
+		border-bottom: solid 1px var(--outline);
+	}
+
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+
+	&:hover {
+		background-color: var(--outline);
+	}
+	&.dangerous {
+		color: var(--color-pop);
+		font-weight: bold;
 	}
 }

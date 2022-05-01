@@ -19,12 +19,16 @@ interface PageLeftSideProps {
 
 export const PageLeftSide: React.FC<PageLeftSideProps> = ({ members, owner, title, isPrivate }) => {
 	const sidebarIsOpen = useAppSelector(pageSidebarIsOpen);
-	const { isAuth } = useAuth();
+	const { isAuth, user } = useAuth();
 	const router = useRouter();
+
+	const isPageOwner = user?.id === owner.id;
 
 	return (
 		<aside className={`${styles.left__side} ${sidebarIsOpen ? styles.open : styles.closed}`}>
-			{isAuth && <PageSettings pageId={router.query.pageId as string} title={title} isPrivate={isPrivate} />}
+			{isAuth && isPageOwner && (
+				<PageSettings pageId={router.query.pageId as string} title={title} isPrivate={isPrivate} />
+			)}
 			<PageMembers members={members} owner={owner} pageId={router.query.pageId as string} />
 			{isAuth && <YourPagesSidebar />}
 			<div className={styles.copyright__container}>
