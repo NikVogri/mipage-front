@@ -33,9 +33,26 @@ const NavNotificationsList: React.FC<NavNotificationsListProps> = ({ notifs, onC
 		}
 	};
 
+	const handleMarkAllNotificationsViewed = async () => {
+		if (notifs) {
+			const ids = notifs.filter((n) => !n.viewed).map((n) => n.id);
+
+			for (let id of ids) {
+				await markNotificationComplete({ id });
+			}
+		}
+	};
+
 	return (
 		<div className={`${styles.notifications__list} ${styles.active}`} ref={notifListRef}>
-			<h3>Notifications {notifs ? <span>({notViewedNotifsCount})</span> : null}</h3>
+			<h3>
+				<span>Notifications {notifs ? <span>({notViewedNotifsCount})</span> : null} </span>
+				{notViewedNotifsCount > 0 && (
+					<button className={styles.view__all__btn} onClick={handleMarkAllNotificationsViewed}>
+						View All
+					</button>
+				)}
+			</h3>
 			<ul className={styles.notifications__container}>
 				{notifs && notifs.length > 0 ? (
 					notifs.map((n) => (

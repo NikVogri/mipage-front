@@ -37,6 +37,9 @@
 		font-size: 2rem;
 		border-bottom: solid 1px var(--outline);
 		padding: 0 0 0.5rem 1rem;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
 	}
 }
 
@@ -55,4 +58,19 @@
 	color: var(--text-secondary);
 	font-weight: 700;
 	opacity: 0.5;
+}
+
+.view__all__btn {
+	padding: 0.5rem 1rem;
+	margin-right: 1rem;
+	font-size: 1.4rem;
+	border-radius: 0.5rem;
+
+	border: solid 1px var(--outline);
+
+	transition: all 0.2s ease-in;
+
+	&:hover {
+		background-color: var(--outline);
+	}
 }
