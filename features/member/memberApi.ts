@@ -20,11 +20,7 @@ export const membersExtendedApi = baseApi.injectEndpoints({
 							page.members = updatedMembers;
 						})
 					);
-
-					toast.success(`Successfully added user to your page`);
-				} catch {
-					toast.error(`Could not add user to this page`);
-				}
+				} catch {}
 			},
 		}),
 		removeMemberFromPage: build.mutation<PageMember[], { pageId: string; id: string }>({
