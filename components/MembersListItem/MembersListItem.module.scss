@@ -1,0 +1,32 @@
+.member__list__item {
+	display: flex;
+	padding: 1.1rem 1rem;
+
+	justify-content: space-between;
+	align-items: center;
+
+	.results__username__container {
+		display: flex;
+		align-items: center;
+		color: var(--text-primary);
+
+		.results__username {
+			margin-left: 2rem;
+		}
+	}
+
+	&:not(:last-of-type) {
+		border-bottom: solid 1px var(--outline);
+	}
+}
+
+.btn__container {
+	button {
+		margin: 0;
+		padding: 0.35rem 1rem;
+	}
+}
+
+.owner__indicator {
+	fill: var(--color-pop);
+}
