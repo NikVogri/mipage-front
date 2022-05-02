@@ -12,8 +12,6 @@ interface MembersListProps {
 }
 
 const MembersList: React.FC<MembersListProps> = ({ owner, users, pageId }) => {
-	console.log(users);
-
 	if (users.length > 0) {
 		return (
 			<div className={styles.members__container}>
