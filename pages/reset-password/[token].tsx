@@ -1,14 +1,15 @@
 import * as Yup from "yup";
+import useAuth from "hooks/useAuth";
 import { FormikValues, useFormik } from "formik";
 import { useRouter } from "next/router";
 import { useResetPasswordMutation } from "features/auth/authApi";
+import { getMessageFromErrorResponse } from "helpers/getMessageFromErrorResponse";
 
 import Head from "next/head";
 import LoadingButtonPrimary from "components/UI/LoadingButtonPrimary/LoadingButtonPrimary";
 import FormFeedback from "components/FormFeedback/FormFeedback";
 
 import styles from "../../styles/pages/ResetPassword.module.scss";
-import useAuth from "hooks/useAuth";
 
 const forgotPasswordValidationSchema = Yup.object().shape({
 	password: Yup.string().min(6, "Password must be more than 6 characters long").required("Password is required"),
@@ -53,13 +54,7 @@ const ResetPassword = () => {
 					{isSuccess && (
 						<FormFeedback type="success">Password successfully changed, please login now</FormFeedback>
 					)}
-					{isError && (
-						<FormFeedback type="error">
-							{(error as any)?.status === 400 && (error as any)?.data?.message
-								? (error as any)?.data?.message
-								: "Something went wrong, please try again later"}
-						</FormFeedback>
-					)}
+					{isError && <FormFeedback type="error">{getMessageFromErrorResponse(error)}</FormFeedback>}
 
 					<div className="form-group">
 						<label className="label">New password</label>
