@@ -1,6 +1,7 @@
 import React from "react";
 import { useAddMemberToPageMutation } from "features/member/memberApi";
 import { FormikValues, useFormik } from "formik";
+import { getMessageFromErrorResponse } from "helpers/getMessageFromErrorResponse";
 import * as Yup from "yup";
 
 import FormFeedback from "components/FormFeedback/FormFeedback";
@@ -34,7 +35,7 @@ const AddUserToPageForm: React.FC<AddUserToPageFormProps> = ({ pageId }) => {
 	return (
 		<form className={styles.search__for_users__form} onSubmit={formik.handleSubmit}>
 			<div className={styles.form__feedback__container}>
-				{isError && <FormFeedback type="error">{(error as any).data.message}</FormFeedback>}
+				{isError && <FormFeedback type="error">{getMessageFromErrorResponse(error)}</FormFeedback>}
 				{isSuccess && (
 					<FormFeedback type="success">
 						User was successfully added to the page if they have an acconut
