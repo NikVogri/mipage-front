@@ -48,10 +48,8 @@
 
 .additional__info {
 	position: absolute;
-	z-index: 9999999;
-	top: 50%;
-	right: -8rem;
-	transform: translateY(-50%);
+	z-index: 9999;
+	top: 110%;
 
 	border: solid 1px var(--outline);
 	padding: 0 0.5rem;
