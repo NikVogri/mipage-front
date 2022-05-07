@@ -1,24 +1,22 @@
 import * as Yup from "yup";
-import Head from "next/head";
-import { useState } from "react";
 import { PageType } from "models";
 import { useRouter } from "next/router";
-import { Formik, Form, Field, FormikValues, useFormik } from "formik";
+import { FormikValues, useFormik } from "formik";
 import { useCreatePageMutation } from "features/page/pagesApi";
 import onlyAuth from "components/HOC/withAuth";
 
+import Head from "next/head";
 import PageTypeSelection from "components/Form/CreatePage/PageTypeSelection";
 import PageAccessabilitySelection from "components/Form/CreatePage/PageAccessabilitySelection";
 import Container from "components/UI/Container";
-import LoadingButton from "components/UI/LoadingButton";
-
 import ErrorFormMessage from "components/Form/ErrorFormMessage";
-
-import styles from "../../styles/pages/New.module.scss";
 import LoadingButtonPrimary from "components/UI/LoadingButtonPrimary/LoadingButtonPrimary";
 
 const pageCreateValidationSchema = Yup.object().shape({
-	title: Yup.string().max(255, "Title can't be longer than 255 characters").required("Title is required"),
+	title: Yup.string()
+		.max(255, "Title can't be longer than 255 characters")
+		.min(3, "Title should be 3 or more characters long")
+		.required("Title is required"),
 	type: Yup.mixed().oneOf(["todo", "notebook"]),
 	isPrivate: Yup.boolean(),
 });
