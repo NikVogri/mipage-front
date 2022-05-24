@@ -24,6 +24,7 @@ const UserSettingsList: React.FC<UserSettingsListProps> = ({ onClose, show }) =>
 
 	const handleUserLogout = async () => {
 		await dispatch(logout());
+		router.replace("/login");
 	};
 
 	const handleOpenProfile = () => {
