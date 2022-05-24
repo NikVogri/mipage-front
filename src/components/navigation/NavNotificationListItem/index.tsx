@@ -22,24 +22,10 @@ const NavNotificationListItem: React.FC<NavNotificationListItemProps> = ({
 	additionalData,
 	onClick,
 }) => {
-	let titleIcon;
-	switch (type) {
-		case NotificationType.ADDED_TO_PAGE:
-			titleIcon = <GoDiffAdded size={16} />;
-			break;
-		case NotificationType.REMOVED_FROM_PAGE:
-			titleIcon = <GoDiffRemoved size={16} />;
-			break;
-		default:
-			titleIcon = null;
-	}
-
 	return (
 		<li className={`${styles.notif__item} ${viewed ? styles.viewed : ""}`}>
 			<button onClick={() => onClick(id, type, additionalData)}>
-				<h4>
-					{titleIcon} {title}
-				</h4>
+				<h4>{title}</h4>
 				<p>{body}</p>
 			</button>
 		</li>
