@@ -16,14 +16,20 @@
 	display: flex;
 	flex-direction: column;
 
-	.comment__poster {
+	.comment__head {
 		display: flex;
 		align-items: center;
+
+		font-size: 1.2rem;
+		color: var(--text-secondary);
+		font-weight: bold;
 
 		.spacer {
 			padding: 0 0.35rem;
 		}
+	}
 
+	.comment__poster {
 		span {
 			display: inline-block;
 			font-size: 1.2rem;
