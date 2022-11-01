@@ -57,10 +57,8 @@ export const notebookExtendedApi = baseApi.injectEndpoints({
 							});
 						})
 					);
-
-					toast.success("Successfully created a new notebook");
 				} catch {
-					toast.error("Could not create notebook");
+					toast.error("We weren't able to create your notebook. Please try again or contact support.");
 				}
 			},
 		}),
@@ -82,7 +80,7 @@ export const notebookExtendedApi = baseApi.injectEndpoints({
 						})
 					);
 				} catch {
-					toast.error("Could not create notebook block");
+					toast.error("We weren't able to create your notebook block. Please try again or contact support.");
 				}
 			},
 		}),

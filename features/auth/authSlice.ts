@@ -26,10 +26,10 @@ export const signup = createAsyncThunk(
 	async (signupData: { email: string; username: string; password: string }, thunkAPI) => {
 		try {
 			await postSignup(signupData);
-			toast.success(`Successfully registered, log in now!`);
+			toast.success(`You have successfully registered. Log in now!`);
 		} catch (err: any) {
 			return thunkAPI.rejectWithValue(
-				err?.response?.data?.message || "Something went wrong, please try again later."
+				err?.response?.data?.message || "We weren't able to sign you up. Please try again or contact support."
 			);
 		}
 	}
@@ -69,7 +69,8 @@ export const getMe = createAsyncThunk("/user/me", async ({}, thunkAPI) => {
 		}
 	} catch (err: any) {
 		return thunkAPI.rejectWithValue(
-			err?.response?.data?.message || "Something went wrong, please try again later."
+			err?.response?.data?.message ||
+				"We weren't able to fetch your account information, please try refreshing the page."
 		);
 	}
 });
@@ -80,10 +81,11 @@ export const updatePersonalInfo = createAsyncThunk(
 		try {
 			const res = await postPersonalInfo(personalInfo);
 			thunkAPI.dispatch(updateUser(res));
-			toast.success("Successfully updated personal information");
+			toast.success("Your personal information has been updated");
 		} catch (err: any) {
 			return thunkAPI.rejectWithValue(
-				err?.response?.data?.message || "Something went wrong, please try again later."
+				err?.response?.data?.message ||
+					"We weren't able to update your personal information. Please try again or contact support."
 			);
 		}
 	}
@@ -95,7 +97,7 @@ export const deleteUserAndLogout = createAsyncThunk("/users/me/personal-info", a
 		thunkAPI.dispatch(clearUser());
 	} catch (err: any) {
 		return thunkAPI.rejectWithValue(
-			err?.response?.data?.message || "Something went wrong, please try again later."
+			err?.response?.data?.message || "We weren't able to delete your account, please try again later."
 		);
 	}
 });
