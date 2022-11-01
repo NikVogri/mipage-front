@@ -37,8 +37,6 @@ export const membersExtendedApi = baseApi.injectEndpoints({
 							page.members = updatedMembers;
 						})
 					);
-
-					toast.success(`Successfully removed user from your page`);
 				} catch {
 					toast.error(`Could not remove user from this page`);
 				}
@@ -53,7 +51,7 @@ export const membersExtendedApi = baseApi.injectEndpoints({
 			async onQueryStarted({}, { queryFulfilled }) {
 				try {
 					await queryFulfilled;
-					toast.success(`Successfully left page`);
+					toast.success(`Successfully left the page`);
 				} catch {
 					toast.error(`Could not leave page, try again later`);
 				}

@@ -99,8 +99,6 @@ export const todoExtendedApi = baseApi.injectEndpoints({
 							todoBlockToUpdate.items = todoBlockToUpdate.items?.filter((i) => i.id !== todoItemId);
 						})
 					);
-
-					toast.success("Successfully removed todo item");
 				} catch {
 					toast.error("Could not remove todo item");
 				}
@@ -161,8 +159,6 @@ export const todoExtendedApi = baseApi.injectEndpoints({
 							todoBlocks.splice(todoBlockToRemove, 1);
 						})
 					);
-
-					toast.success("Successfully removed todo block");
 				} catch {
 					toast.error("Could not remove todo block");
 				}
@@ -184,8 +180,6 @@ export const todoExtendedApi = baseApi.injectEndpoints({
 							todoBlocks.push(createdTodoBlock);
 						})
 					);
-
-					toast.success("Successfully created todo block");
 				} catch {
 					toast.error("Could not create todo block");
 				}
@@ -211,8 +205,6 @@ export const todoExtendedApi = baseApi.injectEndpoints({
 								...updatedTodoBlock,
 								items: todoBlocks[todoBlockIndex].items,
 							};
-
-							toast.success("Successfully updated todo block");
 						})
 					);
 				} catch {

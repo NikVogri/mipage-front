@@ -41,7 +41,6 @@ export const login = createAsyncThunk(
 		try {
 			await postLogin(loginData);
 			await thunkAPI.dispatch(getMe());
-			toast.success(`Successfully logged in`);
 		} catch (err: any) {
 			return thunkAPI.rejectWithValue(
 				err?.response?.data?.message || "Something went wrong, please try again later."
