@@ -22,7 +22,7 @@ const TodoItemUpdateTitle: React.FC<TodoItemUpdateTitleProps> = ({ title, pageId
 		setShowInput(false);
 
 		if (!newTitle) {
-			return toast.error("Title cannot be empty");
+			return toast.error("Title can not be empty");
 		}
 
 		updateTodoItem({ title: newTitle, pageId, todoItemId, todoId });

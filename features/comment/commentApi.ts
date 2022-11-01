@@ -32,7 +32,7 @@ export const commentsExtendedApi = baseApi.injectEndpoints({
 						)
 					);
 				} catch {
-					toast.error("Could not post comment, please try again later");
+					toast.error("We weren't able to post your comment. Please try again or contact support.");
 				}
 			},
 		}),

@@ -34,7 +34,7 @@ export const todoExtendedApi = baseApi.injectEndpoints({
 						})
 					);
 				} catch {
-					toast.error("Could not update todo item");
+					toast.error("We weren't able to create a new todo item. Please try again or contact support.");
 				}
 			},
 		}),
@@ -77,7 +77,7 @@ export const todoExtendedApi = baseApi.injectEndpoints({
 						)
 					);
 				} catch {
-					toast.error("Could not update todo item");
+					toast.error("We weren't able to update the todo item. Please try again or contact support.");
 				}
 			},
 		}),
@@ -100,7 +100,7 @@ export const todoExtendedApi = baseApi.injectEndpoints({
 						})
 					);
 				} catch {
-					toast.error("Could not remove todo item");
+					toast.error("We weren't able to remove the todo item. Please try again or contact support.");
 				}
 			},
 		}),
@@ -139,7 +139,7 @@ export const todoExtendedApi = baseApi.injectEndpoints({
 						)
 					);
 				} catch {
-					toast.error("Could not toggle complete todo");
+					toast.error("We weren't able to complete the todo item. Please try again or contact support.");
 				}
 			},
 		}),
@@ -160,7 +160,7 @@ export const todoExtendedApi = baseApi.injectEndpoints({
 						})
 					);
 				} catch {
-					toast.error("Could not remove todo block");
+					toast.error("We weren't able to remove the todo block. Please try again or contact support.");
 				}
 			},
 		}),
@@ -181,7 +181,7 @@ export const todoExtendedApi = baseApi.injectEndpoints({
 						})
 					);
 				} catch {
-					toast.error("Could not create todo block");
+					toast.error("We weren't able to create the todo block. Please try again or contact support.");
 				}
 			},
 		}),
@@ -208,7 +208,7 @@ export const todoExtendedApi = baseApi.injectEndpoints({
 						})
 					);
 				} catch {
-					toast.error("Could not update todo block");
+					toast.error("We weren't able to update the todo block. Please try again or contact support.");
 				}
 			},
 		}),

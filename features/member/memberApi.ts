@@ -38,7 +38,7 @@ export const membersExtendedApi = baseApi.injectEndpoints({
 						})
 					);
 				} catch {
-					toast.error(`Could not remove user from this page`);
+					toast.error(`We weren't able to remove the selected member. Please try again or contact support.`);
 				}
 			},
 		}),
@@ -51,9 +51,9 @@ export const membersExtendedApi = baseApi.injectEndpoints({
 			async onQueryStarted({}, { queryFulfilled }) {
 				try {
 					await queryFulfilled;
-					toast.success(`Successfully left the page`);
+					toast.success(`You have left the page`);
 				} catch {
-					toast.error(`Could not leave page, try again later`);
+					toast.error(`We weren't able to remove you from the page. Please try again or contact support.`);
 				}
 			},
 		}),
