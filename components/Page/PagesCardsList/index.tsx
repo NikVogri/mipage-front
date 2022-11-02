@@ -1,9 +1,10 @@
 import { Page } from "models";
+import { useEffect, useState } from "react";
+import { HiChevronDown } from "react-icons/hi";
+
+import PageCard from "../PageCard";
 
 import styles from "./PagesCardsList.module.scss";
-import PageCard from "../PageCard";
-import { useState } from "react";
-import { HiChevronDown } from "react-icons/hi";
 
 interface PagesCardsListProps {
 	pages: Page[];
@@ -13,6 +14,10 @@ interface PagesCardsListProps {
 
 export const PagesCardsList: React.FC<PagesCardsListProps> = ({ pages, title, showItemsInit = false }) => {
 	const [showItems, setShowItems] = useState(showItemsInit);
+
+	useEffect(() => {
+		setShowItems(showItemsInit);
+	}, [showItemsInit]);
 
 	return (
 		<div>
