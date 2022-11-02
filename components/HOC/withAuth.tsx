@@ -15,7 +15,7 @@ const onlyAuth = (
 		const { isAuth } = useAuth();
 
 		if (!authChecked) {
-			return <FullPageLoadingSpinner />;
+			return <FullPageLoadingSpinner isLoading={!authChecked} />;
 		}
 
 		if (allowException) {
