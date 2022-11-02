@@ -34,24 +34,6 @@
 	padding: 0.5rem 0 0.5rem 0;
 }
 
-.setttings__list__item {
-	text-align: left;
-	font-size: 1.5rem;
-	font-weight: 500;
-
-	button {
-		width: 100%;
-		text-align: left;
-		padding: 0.5rem 2rem;
-	}
-
-	cursor: pointer;
-
-	&:hover {
-		background-color: var(--shadow-block);
-	}
-
-	&:last-of-type {
-		color: var(--color-pop);
-	}
+.dangerous {
+	color: var(--color-pop);
 }

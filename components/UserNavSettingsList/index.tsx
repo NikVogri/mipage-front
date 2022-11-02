@@ -5,17 +5,19 @@ import { useAppDispatch } from "hooks/redux-hooks";
 
 import useDetectClickOutside from "hooks/useDetectClickOutside";
 
-import styles from "./UserSettingsList.module.scss";
 import UserProfileModal from "components/UI/modals/UserProfile";
 import UserSettingsModal from "components/UI/modals/UserSettingsModal";
 
-interface UserSettingsListProps {
+import styles from "./UserNavSettingsList.module.scss";
+import UserNavSettingsListItem from "components/UserNavSettingsListItem";
+
+interface UserNavSettingsListProps {
 	onClose: () => void;
 	show: boolean;
 	username: string;
 }
 
-const UserSettingsList: React.FC<UserSettingsListProps> = ({ onClose, show }) => {
+const UserNavSettingsList: React.FC<UserNavSettingsListProps> = ({ onClose, show }) => {
 	const [showUserProfileModal, setShowUserProfileModal] = useState(false);
 	const [showUserSettingsModal, setShowUserSettingsModal] = useState(false);
 
@@ -24,14 +26,17 @@ const UserSettingsList: React.FC<UserSettingsListProps> = ({ onClose, show }) =>
 
 	const handleUserLogout = async () => {
 		await dispatch(logout());
+		onClose();
 	};
 
 	const handleOpenProfile = () => {
 		setShowUserProfileModal(true);
+		onClose();
 	};
 
 	const handleOpenSettings = () => {
 		setShowUserSettingsModal(true);
+		onClose();
 	};
 
 	const handleCreatePage = () => {
@@ -51,33 +56,12 @@ const UserSettingsList: React.FC<UserSettingsListProps> = ({ onClose, show }) =>
 		<>
 			<div className={`${styles.user__nav__settings__list} ${show ? styles.active : ""}`} ref={settingsListRef}>
 				<ul className={styles.settings__container}>
-					<li className={styles.setttings__list__item}>
-						<button onClick={handleVisitMyPages}>
-							<h4>My pages</h4>
-						</button>
-					</li>
-					<li className={styles.setttings__list__item}>
-						<button onClick={handleOpenProfile}>
-							<h4>Profile</h4>
-						</button>
-					</li>
-					<li className={styles.setttings__list__item}>
-						<button onClick={handleOpenSettings}>
-							<h4>Settings</h4>
-						</button>
-					</li>
-					<li className={styles.setttings__list__item}>
-						<button onClick={handleCreatePage}>
-							<h4>Create a page</h4>
-						</button>
-					</li>
-
+					<UserNavSettingsListItem title="My pages" onClick={handleVisitMyPages} />
+					<UserNavSettingsListItem title="Profile" onClick={handleOpenProfile} />
+					<UserNavSettingsListItem title="Settings" onClick={handleOpenSettings} />
+					<UserNavSettingsListItem title="Create a page" onClick={handleCreatePage} />
 					<hr />
-					<li className={styles.setttings__list__item}>
-						<button onClick={handleUserLogout}>
-							<h4>Logout</h4>
-						</button>
-					</li>
+					<UserNavSettingsListItem title="Logout" onClick={handleUserLogout} className={styles.dangerous} />
 				</ul>
 			</div>
 
@@ -96,4 +80,4 @@ const UserSettingsList: React.FC<UserSettingsListProps> = ({ onClose, show }) =>
 	);
 };
 
-export default UserSettingsList;
+export default UserNavSettingsList;

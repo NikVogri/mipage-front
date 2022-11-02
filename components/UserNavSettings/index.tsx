@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import Avatar from "components/Avatar";
-import UserSettingsList from "components/UserSettingsList";
+import UserNavSettingsList from "components/UserNavSettingsList";
 
 import styles from "./UserNavSettings.module.scss";
 
@@ -18,7 +18,7 @@ const UserNavSettings: React.FC<UserNavSettingsProps> = ({ username, avatar }) =
 			<button onClick={() => setShowDropdown(!showDropdown)} title={username}>
 				<Avatar username={username} avatar={avatar} tooltip={false} />
 			</button>
-			<UserSettingsList onClose={() => setShowDropdown(false)} show={showDropdown} username={username} />
+			<UserNavSettingsList onClose={() => setShowDropdown(false)} show={showDropdown} username={username} />
 		</div>
 	);
 };
