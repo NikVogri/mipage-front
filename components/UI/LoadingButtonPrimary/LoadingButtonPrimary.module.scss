@@ -27,7 +27,7 @@
 		border: solid 1px var(--color-green);
 		color: var(--color-green);
 
-		&:hover {
+		&:hover:not([disabled]) {
 			background: var(--color-green);
 			color: var(--text-primary);
 		}
@@ -37,7 +37,7 @@
 		border: solid 1px var(--color-pop);
 		color: var(--color-pop);
 
-		&:hover {
+		&:hover:not([disabled]) {
 			background: var(--color-pop-hover);
 			color: var(--text-primary);
 		}
