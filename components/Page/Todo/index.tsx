@@ -1,13 +1,14 @@
 import { useGetPageTodosQuery, useGetPublicPageTodosQuery } from "features/todo/todoApi";
+import { Todo } from "models";
 
-import LoadingSpinner from "components/LoadingSpinner";
+import useAuth from "hooks/useAuth";
+
 import TodoCard from "../TodoCard";
+import AddTodoCard from "../AddTodoCard";
+import PageErrorLoading from "../PageErrorLoading";
+import RectangleSkeleton from "components/Skeleton/RectangleSkeleton";
 
 import styles from "./Todo.module.scss";
-import AddTodoCard from "../AddTodoCard";
-import useAuth from "hooks/useAuth";
-import { Todo } from "models";
-import PageErrorLoading from "../PageErrorLoading";
 
 interface TodoProps {
 	pageId: string;
@@ -24,19 +25,11 @@ const Todo: React.FC<TodoProps> = ({ pageId }) => {
 
 	const {
 		data: dataPublic,
-		isLoading: isLoadingPublic,
 		isError: isErrorPublic,
+		isLoading: isLoadingPublic,
 	} = useGetPublicPageTodosQuery({ pageId }, { skip: isAuth });
 
-	if (isLoadingPrivate || isLoadingPublic) {
-		return (
-			<div className={styles.todo__container}>
-				<div className={styles.todo__loading}>
-					<LoadingSpinner />
-				</div>
-			</div>
-		);
-	}
+	const isLoading = isLoadingPrivate || isLoadingPublic;
 
 	if (isErrorPrivate || isErrorPublic) {
 		<div className={styles.todo__container}>
@@ -51,19 +44,54 @@ const Todo: React.FC<TodoProps> = ({ pageId }) => {
 
 	return (
 		<div className={styles.todo__container}>
-			{data &&
-				data.map((tb) => (
-					<TodoCard
-						key={tb.id}
-						color={tb.color}
-						title={tb.title}
-						items={tb.items!}
-						id={tb.id}
-						pageId={tb.pageId}
-						todoId={tb.id}
+			{isLoading && (
+				<>
+					<RectangleSkeleton
+						height={"100%"}
+						width={"100%"}
+						styles={{
+							minWidth: "40rem",
+							maxWidth: "40rem",
+							maxHeight: "55%",
+							borderRadius: "1rem",
+						}}
 					/>
-				))}
-			{isAuth && <AddTodoCard pageId={pageId} todosCount={data?.length} />}
+					<RectangleSkeleton
+						height={"100%"}
+						width={"100%"}
+						styles={{
+							minWidth: "40rem",
+							maxWidth: "40rem",
+							maxHeight: "40%",
+							borderRadius: "1rem",
+						}}
+					/>
+					<RectangleSkeleton
+						height={"100%"}
+						width={"100%"}
+						styles={{
+							minWidth: "40rem",
+							maxWidth: "40rem",
+							maxHeight: "70%",
+							borderRadius: "1rem",
+						}}
+					/>
+				</>
+			)}
+
+			{data.map((tb) => (
+				<TodoCard
+					key={tb.id}
+					color={tb.color}
+					title={tb.title}
+					items={tb.items!}
+					id={tb.id}
+					pageId={tb.pageId}
+					todoId={tb.id}
+				/>
+			))}
+
+			{isAuth && !isLoading && <AddTodoCard pageId={pageId} todosCount={data?.length} />}
 		</div>
 	);
 };
