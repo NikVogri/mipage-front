@@ -1,70 +1,44 @@
-import Link from "next/link";
 import React from "react";
-import { PageMember, PageOwner, PageType } from "models";
-import Avatar from "components/Avatar";
-
-import styles from "./PageCard.module.scss";
+import { PageType } from "models";
 import { BsBook, BsCardChecklist } from "react-icons/bs";
 import { MdLock, MdPublic } from "react-icons/md";
+import { pluralize, truncate } from "helpers/stringTools";
+
+import Link from "next/link";
+
+import styles from "./PageCard.module.scss";
 
 interface PageItemProps {
 	title: string;
-	id: string;
+	pageId: string;
 	type: PageType;
 	isPrivate: boolean;
-	owner: PageOwner;
-	members: PageMember[];
-	notebooks?: {
-		id: string;
-		title: string;
-	}[];
+	membersCount: number;
+	notebookId: string;
 }
 
-const shortenText = (text: string, maxLen: number): string => {
-	if (text.length >= maxLen) return text.substring(0, maxLen) + "...";
-	return text;
-};
+const PageCard = ({ title, pageId, type, isPrivate, membersCount, notebookId }: PageItemProps): JSX.Element => {
+	const totalMembers = membersCount + 1; // page members + this user
+	let pageUrl = `/pages/${pageId}`;
 
-const PageCard = ({ title, id, type, isPrivate, owner, members, notebooks }: PageItemProps): JSX.Element => {
-	// TODO: Allow notebook page cards when implemented
-	// <Link href={`/pages/${id}${type === PageType.notebook ? `?n=${notebooks?.[0]?.id}` : ""}`}>
-	if (type === PageType.notebook) {
-		return (
-			<Link href={`#`}>
-				<a className={`${styles.page__card} ${styles.disabled__card}`} title={title}>
-					<div className={styles.card__text}>
-						<h3>{shortenText(title, 35)}</h3>
-						<p>
-							{members.length + 1} {members.length + 1 > 1 ? "members" : "member"}
-						</p>
-					</div>
-
-					<div className={styles.card__footer}>
-						{type === PageType.notebook && <BsBook size={24} className={styles.visibility_icon} />}
-						{isPrivate ? (
-							<MdLock size={24} className={styles.type_icon} />
-						) : (
-							<MdPublic size={24} className={styles.type_icon} />
-						)}
-					</div>
-					<h4>Notebook pages are currently disabled</h4>
-				</a>
-			</Link>
-		);
+	if (type === PageType.notebook && notebookId) {
+		pageUrl += `?n=${notebookId}`;
 	}
 
 	return (
-		<Link href={`/pages/${id}`}>
+		<Link href={pageUrl}>
 			<a className={styles.page__card} title={title}>
 				<div className={styles.card__text}>
-					<h3>{shortenText(title, 35)}</h3>
+					<h3>{truncate(title, 35)}</h3>
 					<p>
-						{members.length + 1} {members.length + 1 > 1 ? "members" : "member"}
+						{totalMembers} {pluralize("member", totalMembers)}
 					</p>
 				</div>
 
 				<div className={styles.card__footer}>
+					{type === PageType.notebook && <BsBook size={24} className={styles.visibility_icon} />}
 					{type === PageType.todo && <BsCardChecklist size={24} className={styles.visibility_icon} />}
+
 					{isPrivate ? (
 						<MdLock size={24} className={styles.type_icon} />
 					) : (
