@@ -1,5 +1,5 @@
 import { BsCardChecklist } from "react-icons/bs";
-import { truncate } from "helpers/truncateText";
+import { truncate } from "helpers/stringTools";
 import { Menu, MenuButton, MenuItem } from "@szhsin/react-menu";
 import { HiDotsHorizontal } from "react-icons/hi";
 

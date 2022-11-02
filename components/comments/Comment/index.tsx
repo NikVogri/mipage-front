@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 
-import { truncate } from "helpers/truncateText";
+import { truncate } from "helpers/stringTools";
 import { User } from "models";
 
 import Avatar from "components/Avatar";
