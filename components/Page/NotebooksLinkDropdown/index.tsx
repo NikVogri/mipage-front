@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { SidebarNotebook } from "models";
-import { truncate } from "helpers/truncateText";
+import { truncate } from "helpers/stringTools";
 import { BsBook } from "react-icons/bs";
 import { HiPlus } from "react-icons/hi";
 

@@ -1,5 +1,5 @@
 import { useCompleteTodoItemMutation, useRemoveTodoItemMutation } from "features/todo/todoApi";
-import { truncate } from "helpers/truncateText";
+import { truncate } from "helpers/stringTools";
 import useAuth from "hooks/useAuth";
 import { useState } from "react";
 import { IoMdCloseCircle } from "react-icons/io";
