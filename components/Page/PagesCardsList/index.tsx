@@ -37,12 +37,11 @@ export const PagesCardsList: React.FC<PagesCardsListProps> = ({ pages, title, sh
 						<PageCard
 							key={page.id}
 							title={page.title}
-							id={page.id}
+							pageId={page.id}
 							type={page.type}
-							isPrivate={page.private}
-							owner={page.owner}
-							members={page.members}
-							notebooks={page.notebooks}
+							isPrivate={page.isPrivate}
+							membersCount={page.members.length}
+							notebookId={page.notebooks?.[0]?.id}
 						/>
 					))
 				) : (
