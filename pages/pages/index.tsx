@@ -17,7 +17,7 @@ import styles from "styles/pages/Pages.module.scss";
 
 const Home = () => {
 	const { isAuth, user } = useAuth();
-	const { data: pages, isLoading, isError } = useGetUserPagesQuery(null, { skip: !isAuth });
+	const { data: pages, isLoading } = useGetUserPagesQuery(null, { skip: !isAuth, refetchOnMountOrArgChange: true });
 
 	return (
 		<Container>
