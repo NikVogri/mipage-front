@@ -17,12 +17,10 @@ const UserProfileUpdateInfoTab: React.FC = () => {
 	const handleUpdateSubmit = async (fv: FormikValues) => {
 		const { username, bio } = fv;
 
-		if (username && bio) {
-			setIsLoading(true);
-			await dispatch(updatePersonalInfo({ username, bio }));
-			formik.resetForm({ values: { username, bio } });
-			setIsLoading(false);
-		}
+		setIsLoading(true);
+		await dispatch(updatePersonalInfo({ username, bio }));
+		formik.resetForm({ values: { username, bio } });
+		setIsLoading(false);
 	};
 
 	const formik = useFormik({
