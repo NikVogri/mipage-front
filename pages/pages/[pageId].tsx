@@ -4,8 +4,8 @@ import { useRouter } from "next/router";
 
 import PageCenter from "components/Page/PageCenter";
 import PageErrorLoading from "components/Page/PageErrorLoading";
+import FullPageLoadingSpinner from "components/UI/FullPageLoadingSpinner/FullPageLoadingSpinner";
 import PageLeftSide from "components/Page/PageLeftSide";
-import SpinnerCentered from "components/UI/SpinnerCentered";
 
 import styles from "../../styles/pages/Page.module.scss";
 import onlyAuth from "components/HOC/withAuth";
@@ -34,7 +34,7 @@ const Page = () => {
 	}
 
 	if (isLoadingPrivate || isLoadingPub) {
-		return <SpinnerCentered />;
+		return <FullPageLoadingSpinner isLoading />;
 	}
 
 	const data = dataPrivate ?? dataPublic;

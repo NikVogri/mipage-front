@@ -4,9 +4,9 @@ import { useGetSidebarPagesQuery } from "features/page/pagesApi";
 import { HiPlus } from "react-icons/hi";
 
 import Link from "next/link";
-import LoadingSpinner from "components/LoadingSpinner";
 import NotebooksLinkDropdown from "../NotebooksLinkDropdown";
 import TodoPageLink from "../TodoPageLink";
+import RectangleSkeleton from "components/Skeleton/RectangleSkeleton";
 
 import styles from "./YourPagesSidebar.module.scss";
 
@@ -14,15 +14,7 @@ interface YourPagesSidebarProps {}
 
 const YourPagesSidebar: React.FC<YourPagesSidebarProps> = () => {
 	const router = useRouter();
-	const { data, isLoading, isError } = useGetSidebarPagesQuery(null, { skip: false });
-
-	if (isLoading) {
-		return (
-			<aside className={`card ${styles.your__pages__sidebar}`}>
-				<LoadingSpinner />
-			</aside>
-		);
-	}
+	const { data, isError, isLoading } = useGetSidebarPagesQuery(null, { skip: false });
 
 	if (isError) {
 		<aside className={`card ${styles.your__pages__sidebar}`}>
@@ -40,36 +32,47 @@ const YourPagesSidebar: React.FC<YourPagesSidebarProps> = () => {
 					</a>
 				</Link>
 			</div>
-			<ul className={styles.your__pages__sidebar_list}>
-				{data!.map((page: SidebarPage, index) => {
-					if (page.type === PageType.todo) {
-						return (
-							<TodoPageLink
-								key={index}
-								pageId={page.id}
-								title={page.title}
-								active={router.query.pageId === page.id}
-								isOwner={page.isOwner}
-							/>
-						);
-					}
+			{isLoading && (
+				<>
+					<RectangleSkeleton height={35} width={"100%"} styles={{ marginBottom: 5 }} />
+					<RectangleSkeleton height={35} width={"100%"} styles={{ marginBottom: 5 }} />
+					<RectangleSkeleton height={35} width={"100%"} styles={{ marginBottom: 5 }} />
+					<RectangleSkeleton height={35} width={"100%"} styles={{ marginBottom: 5 }} />
+				</>
+			)}
 
-					if (page.type === PageType.notebook) {
-						return (
-							<NotebooksLinkDropdown
-								key={index}
-								pageId={page.id}
-								notebooks={page.notebooks!}
-								title={page.title}
-								activeNotebookId={router.query.n as string | undefined}
-								active={router.query.pageId === page.id}
-							/>
-						);
-					}
+			{data && (
+				<ul className={styles.your__pages__sidebar_list}>
+					{data!.map((page: SidebarPage, index) => {
+						if (page.type === PageType.todo) {
+							return (
+								<TodoPageLink
+									key={index}
+									pageId={page.id}
+									title={page.title}
+									active={router.query.pageId === page.id}
+									isOwner={page.isOwner}
+								/>
+							);
+						}
 
-					return <></>;
-				})}
-			</ul>
+						if (page.type === PageType.notebook) {
+							return (
+								<NotebooksLinkDropdown
+									key={index}
+									pageId={page.id}
+									notebooks={page.notebooks!}
+									title={page.title}
+									activeNotebookId={router.query.n as string | undefined}
+									active={router.query.pageId === page.id}
+								/>
+							);
+						}
+
+						return <></>;
+					})}
+				</ul>
+			)}
 		</aside>
 	);
 };
