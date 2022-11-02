@@ -2,12 +2,13 @@ import { BsCardChecklist } from "react-icons/bs";
 import { truncate } from "helpers/stringTools";
 import { Menu, MenuButton, MenuItem } from "@szhsin/react-menu";
 import { HiDotsHorizontal } from "react-icons/hi";
+import { useState } from "react";
+import { useLeavePageMutation } from "features/member/memberApi";
+import { useRouter } from "next/router";
 
 import Link from "next/link";
 
 import styles from "./TodoPageLink.module.scss";
-import { useEffect, useRef, useState } from "react";
-import { useLeavePageMutation } from "features/member/memberApi";
 
 interface TodoPageLinkProps {
 	title: string;
@@ -20,9 +21,11 @@ const TodoPageLink: React.FC<TodoPageLinkProps> = ({ title, pageId, active, isOw
 	const [leavePage] = useLeavePageMutation();
 	const [menuCanBeShown, setMenuCanBeShown] = useState(true);
 
+	const router = useRouter();
+
 	const handleLeavePage = async () => {
-		console.log("leaving page");
 		await leavePage({ pageId });
+		router.replace("/pages");
 	};
 
 	return (
@@ -40,8 +43,8 @@ const TodoPageLink: React.FC<TodoPageLinkProps> = ({ title, pageId, active, isOw
 			{!isOwner && menuCanBeShown && (
 				<Menu
 					menuClassName={styles.menu}
-					direction="right"
-					align="start"
+					direction="top"
+					position="anchor"
 					className={styles.menu}
 					menuButton={
 						<MenuButton>
@@ -51,7 +54,7 @@ const TodoPageLink: React.FC<TodoPageLinkProps> = ({ title, pageId, active, isOw
 					transition
 				>
 					<MenuItem className={`${styles.menu__item} ${styles.dangerous}`} onClick={handleLeavePage}>
-						Leave
+						Leave page
 					</MenuItem>
 				</Menu>
 			)}
