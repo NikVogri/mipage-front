@@ -25,7 +25,7 @@ export const commentsExtendedApi = baseApi.injectEndpoints({
 					dispatch(
 						commentsExtendedApi.util.updateQueryData(
 							"getTodoItemComments",
-							{ pageId, todoItemId, page: 1 },
+							{ pageId, todoItemId, page: 0 },
 							(commentsRes) => {
 								commentsRes.comments.unshift(newComment);
 							}
