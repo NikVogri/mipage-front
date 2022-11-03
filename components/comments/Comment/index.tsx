@@ -34,12 +34,12 @@ const Comment: React.FC<CommentProps> = ({ user, body, createdAt }) => {
 				<Avatar tooltip={false} size="md" username={user.username} avatar={user.avatar} />
 			</div>
 			<div className={styles.comment__right}>
-				<p className={styles.comment__poster}>
+				<div className={styles.comment__poster}>
 					<span>{user.username}</span> <span className={styles.spacer}>&#183;</span>{" "}
 					<HoverPopover text={formattedFullDate}>
-						<span>{new Date(createdAt).toLocaleDateString()}</span>
+						<span className={styles.comment__formatted_date}>{new Date(createdAt).toLocaleDateString()}</span>
 					</HoverPopover>
-				</p>
+				</div>
 				<p className={styles.comment__content}>{showMore ? body : truncate(body, 300)}</p>
 				{isLongText && (
 					<button onClick={() => setShowMore(!showMore)} className={styles.show__more}>
