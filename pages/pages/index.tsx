@@ -1,7 +1,6 @@
 import Head from "next/head";
 
-import { MdAdd } from "react-icons/md";
-import { HiDocumentSearch } from "react-icons/hi";
+import { HiDocumentSearch, HiPlusSm } from "react-icons/hi";
 import { getGreetingMessage } from "helpers/getGreetingMessage";
 import { useGetUserPagesQuery } from "features/page/pagesApi";
 
@@ -33,15 +32,15 @@ const Home = () => {
 
 			{isLoading && <SpinnerCentered />}
 
-			{!isLoading && pages?.length && <PagesDropdown pages={pages!} userId={user!.id} />}
+			{!isLoading && pages?.length ? <PagesDropdown pages={pages!} userId={user!.id} /> : null}
 
 			{!isLoading && !pages?.length && (
-				<div className={styles.no__found}>
-					<HiDocumentSearch size={128} />
+				<div className={styles.no__pages}>
+					<HiDocumentSearch size={96} />
 					<p>You {"don't"} have any pages yet, create one now!</p>
 					<Link href="pages/new">
 						<a className={styles.create__page__btn}>
-							<MdAdd size={26} /> <span>Create new page</span>
+							<HiPlusSm size={26} /> <span>New Page</span>
 						</a>
 					</Link>
 				</div>

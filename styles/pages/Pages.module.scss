@@ -5,10 +5,9 @@
 	color: var(--text-primary);
 }
 
-.no__found {
+.no__pages {
 	p {
-		font-size: 1.8rem;
-		font-weight: bold;
+		font-size: 1.6rem;
 		color: var(--text-secondary);
 		text-align: center;
 		margin-top: 2rem;
@@ -50,11 +49,11 @@
 }
 
 .create__page__btn {
-	padding: 1rem 2rem;
+	padding: 0.5rem 2rem;
 	font-size: 1.8rem;
-	background: var(--color-pop);
-	margin: 2rem 0;
-	color: var(--text-primary);
+	border: solid 1px var(--color-pop);
+	margin-top: 3rem;
+	color: var(--color-pop);
 
 	display: flex;
 	justify-content: center;
@@ -72,6 +71,7 @@
 
 	&:hover {
 		background: var(--color-pop-hover);
+		color: var(--text-primary);
 	}
 }
 
