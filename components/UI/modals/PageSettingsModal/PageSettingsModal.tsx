@@ -14,19 +14,11 @@ import styles from "./PageSettingsModal.module.scss";
 interface PageSettingsModalProps {
 	isOpen: boolean;
 	setIsOpen: Dispatch<SetStateAction<boolean>>;
-	setIsClosed: () => void;
 	pageId: string;
 	title: string;
 	isPrivate: boolean;
 }
-const PageSettingsModal: React.FC<PageSettingsModalProps> = ({
-	isOpen,
-	setIsClosed,
-	setIsOpen,
-	pageId,
-	title,
-	isPrivate,
-}) => {
+const PageSettingsModal: React.FC<PageSettingsModalProps> = ({ isOpen, setIsOpen, pageId, title, isPrivate }) => {
 	const [updatePage, { isLoading: isLoadingUpdate }] = useUpdatePageMutation();
 	const [deletePage, { isLoading: isLoadingDelete }] = useDeletePageMutation();
 	const [showDeletionPrompt, setShowDeletionPrompt] = useState(false);
@@ -57,7 +49,7 @@ const PageSettingsModal: React.FC<PageSettingsModalProps> = ({
 	useEffect(() => {
 		formik.setFieldValue("title", title);
 		formik.setFieldValue("isPrivate", isPrivate);
-	}, [isPrivate, title]);
+	}, [isPrivate, title]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	const formValuesChanges = useMemo(() => {
 		return formik.values.title !== title || formik.values.isPrivate !== isPrivate;
