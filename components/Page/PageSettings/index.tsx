@@ -26,7 +26,6 @@ const PageSettings: React.FC<PageSettingsProps> = ({ pageId, title, isPrivate })
 			</div>
 			<PageSettingsModal
 				isOpen={showModal}
-				setIsClosed={() => setShowModal(false)}
 				setIsOpen={setShowModal}
 				pageId={pageId}
 				title={title}

@@ -48,7 +48,7 @@ const Page = () => {
 			<Head>
 				<title>{data!.title} | Mipage</title>
 			</Head>
-			<PageLeftSide members={data!.members} owner={data!.owner} title={data!.title} isPrivate={data!.private} />
+			<PageLeftSide members={data!.members} owner={data!.owner} title={data!.title} isPrivate={data!.isPrivate} />
 			<PageCenter pageType={data!.type} pageId={data!.id} />
 		</main>
 	);
