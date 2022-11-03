@@ -45,7 +45,7 @@ const TodoItemCommentSection: React.FC<TodoItemCommentSectionProps> = ({ pageId,
 		} else if (page > 1) {
 			setNoMoreResults(comments.length >= data?.total!);
 		}
-	}, [data]);
+	}, [data, comments.length]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (
 		<div>

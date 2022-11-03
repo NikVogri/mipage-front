@@ -1,4 +1,4 @@
-import { Formik, Form, Field, FormikValues, FieldConfig, useFormik } from "formik";
+import { FormikValues, useFormik } from "formik";
 import { useCreateTodoBlockMutation } from "features/todo/todoApi";
 import { FaPlus } from "react-icons/fa";
 import { useEffect, useState } from "react";
@@ -40,7 +40,7 @@ const AddTodoCard: React.FC<AddTodoCardProps> = ({ pageId, todosCount }) => {
 
 	useEffect(() => {
 		formik.setFieldValue("title", `Todo #${(todosCount || 0) + 1}`);
-	}, [todosCount]);
+	}, [todosCount]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (
 		<>
