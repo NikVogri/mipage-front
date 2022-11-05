@@ -135,3 +135,5 @@ export interface TodoItemComment {
 	todoItemId: string;
 	author: Pick<User, "id" | "username" | "avatar">;
 }
+
+export type ColorTypes = "success" | "danger";

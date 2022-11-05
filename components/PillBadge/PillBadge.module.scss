@@ -1,0 +1,15 @@
+.pill__badge {
+	font-size: 1.3rem;
+	display: inline-block;
+
+	padding: 0 0.5rem;
+	border-radius: 1rem;
+
+	&.success {
+		background-color: var(--color-success);
+	}
+
+	&.dangerous {
+		background-color: var(--color-dangerous);
+	}
+}

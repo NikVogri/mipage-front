@@ -24,11 +24,11 @@
 	}
 
 	&.create {
-		border: solid 1px var(--color-green);
-		color: var(--color-green);
+		border: solid 1px var(--color-success);
+		color: var(--color-success);
 
 		&:hover:not([disabled]) {
-			background: var(--color-green);
+			background: var(--color-success);
 			color: var(--text-primary);
 		}
 	}
