@@ -8,15 +8,10 @@
 	font-size: 1.5rem;
 	font-family: inherit;
 
-	overflow: hidden;
+	display: flex;
+	justify-content: space-between;
 
-	hr {
-		margin: 0;
-		margin-bottom: 1.5rem;
-		border: none;
-		border-bottom: solid 1px var(--outline);
-		opacity: 0.5;
-	}
+	overflow: hidden;
 
 	&::before {
 		content: "";
@@ -25,68 +20,31 @@
 		right: 0;
 		top: 0;
 		height: 100%;
-		width: 0.85rem;
 
 		background-color: var(--outline);
 	}
 
-	&.complete {
-		&::before {
-			background-color: var(--color-green);
-		}
+	&:hover {
+		background-color: var(--horizontal-ruling);
 	}
 
-	.open__modal__btn {
-		padding: 1.5rem;
-		width: 100%;
+	&__clickable {
+		padding: 1.5rem 2.5rem 1.5rem 1rem;
 		height: 100%;
+		width: 100%;
+	}
+
+	&__creation_date {
+		font-size: 0.8em;
+		opacity: 0.75;
+		margin-top: 0.5rem;
+	}
+
+	&__clickable {
 		text-align: left;
-
-		&:hover {
-			background-color: var(--horizontal-ruling);
-		}
-	}
-}
-
-.todo__item__controls {
-	padding: 0 1.5rem;
-	max-height: 0;
-
-	transition: all 0.3s ease-in-out;
-
-	button {
-		margin-right: 0.5rem;
-		display: flex;
-		align-items: center;
-
-		@include btn_basic;
-
-		span {
-			margin-left: 0.5rem;
-		}
 	}
 
-	.controls__btn__container {
-		display: flex;
-		margin-bottom: 1.5rem;
-	}
-
-	.complete {
-		svg {
-			fill: var(--text-secondary);
-		}
-	}
-	.remove {
-		svg {
-			fill: var(--text-secondary);
-		}
-	}
-
-	&.active {
-		max-height: 7rem;
-
-		@media only screen and (max-width: 768px) {
-			max-height: 0;
-		}
+	&__badges {
+		margin-top: 0.5rem;
 	}
 }
