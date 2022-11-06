@@ -7,7 +7,7 @@ import PageErrorLoading from "components/page/PageErrorLoading";
 import FullPageLoadingSpinner from "components/UI/FullPageLoadingSpinner";
 import PageLeftSide from "components/page/PageLeftSide";
 
-import styles from "../../styles/pages/Page.module.scss";
+import styles from "styles/pages/Page.module.scss";
 import onlyAuth from "components/HOC/withAuth";
 import useAuth from "hooks/useAuth";
 

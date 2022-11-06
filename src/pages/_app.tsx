@@ -3,25 +3,28 @@ import { setIsMobileView } from "features/ui/uiSlice";
 import { setAuthChecked, setUser } from "features/auth/authSlice";
 import { Provider } from "react-redux";
 import { isPagePublic } from "helpers/isPagePublic";
-import { store } from "../store";
+import { store } from "store";
 import { User } from "models";
 import { useEffect } from "react";
 
-import Layout from "../components/UI/Layout";
+import Layout from "components/UI/Layout";
 import CookieConsent from "react-cookie-consent";
 import App from "next/app";
 
 import { useRouter } from "next/router";
 import { ToastContainer } from "react-toastify";
 import { logPageViewToGTag } from "helpers/googleTag";
+
 import axios from "config/axios";
 
 import "styles/globals.css";
 import "styles/main.scss";
-import "../styles/globals.css";
+import "styles/globals.css";
+
 import "react-toastify/dist/ReactToastify.css";
 import "@szhsin/react-menu/dist/index.css";
 import "@szhsin/react-menu/dist/transitions/slide.css";
+
 function MyApp({ Component, pageProps, user }: AppProps & { user: User }) {
 	const isClientSide = typeof window !== "undefined";
 	const router = useRouter();

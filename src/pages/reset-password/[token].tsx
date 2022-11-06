@@ -9,7 +9,7 @@ import Head from "next/head";
 import LoadingButton from "components/UI/LoadingButton";
 import FormFeedback from "components/form/FormFeedback";
 
-import styles from "../../styles/pages/ResetPassword.module.scss";
+import styles from "styles/pages/ResetPassword.module.scss";
 
 const forgotPasswordValidationSchema = Yup.object().shape({
 	password: Yup.string().min(6, "Password must be more than 6 characters long").required("Password is required"),

@@ -1,4 +1,4 @@
-import { PUBLIC_PATHS } from "config";
+import { PUBLIC_PATHS } from "config/paths";
 
 // TODO: make this check more robust
 export const isPagePublic = (urlPath: string): boolean => {

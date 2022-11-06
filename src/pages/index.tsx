@@ -8,7 +8,7 @@ import ChatSvg from "components/svg/Chat";
 import WorldSvg from "components/svg/World";
 import Head from "next/head";
 
-import styles from "../styles/pages/Index.module.scss";
+import styles from "styles/pages/Index.module.scss";
 
 const Home: NextPage = () => {
 	const router = useRouter();
