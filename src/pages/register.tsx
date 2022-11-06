@@ -11,7 +11,7 @@ import LoadingButton from "components/UI/LoadingButton";
 
 import * as Yup from "yup";
 
-import styles from "../styles/pages/Register.module.scss";
+import styles from "styles/pages/Register.module.scss";
 
 const signupValidationSchema = Yup.object().shape({
 	email: Yup.string().email("Please enter a correct email address").required("Email is required"),

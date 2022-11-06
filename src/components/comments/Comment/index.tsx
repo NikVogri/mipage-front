@@ -37,7 +37,9 @@ const Comment: React.FC<CommentProps> = ({ user, body, createdAt }) => {
 				<div className={styles.comment__poster}>
 					<span>{user.username}</span> <span className={styles.spacer}>&#183;</span>{" "}
 					<HoverPopover text={formattedFullDate}>
-						<span className={styles.comment__formatted_date}>{new Date(createdAt).toLocaleDateString()}</span>
+						<span className={styles.comment__formatted_date}>
+							{new Date(createdAt).toLocaleDateString()}
+						</span>
 					</HoverPopover>
 				</div>
 				<p className={styles.comment__content}>{showMore ? body : truncate(body, 300)}</p>
