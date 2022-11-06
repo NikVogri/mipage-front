@@ -7,7 +7,7 @@ import usePush from "hooks/usePush";
 
 import Link from "next/link";
 import Head from "next/head";
-import LoadingButtonPrimary from "components/UI/LoadingButtonPrimary/LoadingButtonPrimary";
+import LoadingButton from "components/UI/LoadingButton";
 
 import * as Yup from "yup";
 
@@ -138,9 +138,13 @@ const Register = () => {
 						)}
 					</div>
 
-					<LoadingButtonPrimary isLoading={loading} disabled={loading || !formik.dirty || !formik.isValid}>
+					<LoadingButton
+						isLoading={loading}
+						disabled={loading || !formik.dirty || !formik.isValid}
+						delay={250}
+					>
 						Create account
-					</LoadingButtonPrimary>
+					</LoadingButton>
 				</form>
 
 				<Link href="/login">

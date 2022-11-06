@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { clearAuthError, login, selectIsAuth, selectLoading } from "features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "hooks/redux-hooks";
 
-import LoadingButtonPrimary from "components/UI/LoadingButtonPrimary/LoadingButtonPrimary";
+import LoadingButton from "components/UI/LoadingButton";
 
 import usePush from "hooks/usePush";
 
@@ -88,9 +88,13 @@ const Login = () => {
 						)}
 					</div>
 
-					<LoadingButtonPrimary isLoading={loading} disabled={loading || !formik.dirty || !formik.isValid}>
+					<LoadingButton
+						isLoading={loading}
+						disabled={loading || !formik.dirty || !formik.isValid}
+						delay={250}
+					>
 						Login
-					</LoadingButtonPrimary>
+					</LoadingButton>
 				</form>
 
 				<Link href="/register">

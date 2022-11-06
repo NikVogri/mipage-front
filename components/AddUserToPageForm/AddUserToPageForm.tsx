@@ -5,7 +5,7 @@ import { getMessageFromErrorResponse } from "helpers/getMessageFromErrorResponse
 import * as Yup from "yup";
 
 import FormFeedback from "components/FormFeedback/FormFeedback";
-import LoadingButtonPrimary from "components/UI/LoadingButtonPrimary/LoadingButtonPrimary";
+import LoadingButton from "components/UI/LoadingButton";
 
 import styles from "./AddUserToPageForm.module.scss";
 
@@ -61,14 +61,15 @@ const AddUserToPageForm: React.FC<AddUserToPageFormProps> = ({ pageId }) => {
 			</div>
 
 			<div className={styles.btn__container}>
-				<LoadingButtonPrimary
+				<LoadingButton
 					isLoading={isLoading}
 					disabled={isLoading || !formik.dirty || !formik.isValid}
-					scheme="create"
+					scheme="success"
 					position="right"
+					delay={250}
 				>
 					Add
-				</LoadingButtonPrimary>
+				</LoadingButton>
 			</div>
 		</form>
 	);

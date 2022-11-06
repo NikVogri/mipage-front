@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction } from "react";
 import { useCreateNotebookMutation } from "features/notebook/notebookApi";
 import * as Yup from "yup";
 
-import LoadingButtonPrimary from "components/UI/LoadingButtonPrimary/LoadingButtonPrimary";
+import LoadingButton from "components/UI/LoadingButton";
 import Modal from "components/UI/Modal";
 
 import styles from "./AddNotebookModal.module.scss";
@@ -73,14 +73,14 @@ const AddNotebookModal: React.FC<AddNotebookModalProps> = ({
 
 					<Modal.Footer>
 						<div className={styles.btn__container}>
-							<LoadingButtonPrimary
+							<LoadingButton
 								isLoading={isLoading}
-								scheme="create"
+								scheme="success"
 								disabled={isLoading}
 								delay={250}
 							>
 								Submit
-							</LoadingButtonPrimary>
+							</LoadingButton>
 						</div>
 					</Modal.Footer>
 				</form>

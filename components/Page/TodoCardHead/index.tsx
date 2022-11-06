@@ -6,7 +6,7 @@ import { FormikValues, useFormik } from "formik";
 import { CirclePicker } from "react-color";
 import useAuth from "hooks/useAuth";
 
-import LoadingButtonPrimary from "components/UI/LoadingButtonPrimary/LoadingButtonPrimary";
+import LoadingButton from "components/UI/LoadingButton";
 import Modal from "components/UI/Modal";
 
 import * as Yup from "yup";
@@ -109,14 +109,15 @@ const TodoCardHead: React.FC<TodoCardHeadProps> = ({ color, title, pageId, todoI
 
 					<Modal.Footer>
 						<div className={styles.btn__container}>
-							<LoadingButtonPrimary
+							<LoadingButton
 								position="right"
-								scheme="create"
+								scheme="success"
 								isLoading={isLoading}
 								disabled={!formik.dirty || !formik.isValid}
+								delay={250}
 							>
 								Save
-							</LoadingButtonPrimary>
+							</LoadingButton>
 						</div>
 					</Modal.Footer>
 				</form>

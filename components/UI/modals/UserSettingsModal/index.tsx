@@ -4,7 +4,7 @@ import { useAppDispatch } from "hooks/redux-hooks";
 
 import UserProfileBasic from "components/UserProfileBasic";
 import DeleteConfirmation from "components/DeleteConfirmation";
-import LoadingButtonPrimary from "components/UI/LoadingButtonPrimary/LoadingButtonPrimary";
+import LoadingButton from "components/UI/LoadingButton";
 import Modal from "components/UI/Modal";
 
 import styles from "./UserSettingsModal.module.scss";
@@ -41,14 +41,15 @@ const UserSettingsModal: React.FC<UserSettingsModalProps> = ({ isOpen, setIsClos
 						/>
 					)}
 					{!showDeleteConfirmation && (
-						<LoadingButtonPrimary
-							scheme="delete"
+						<LoadingButton
+							scheme="danger"
 							position="left"
 							onClick={() => setShowDeleteConfirmation(true)}
 							isLoading={false}
+							delay={250}
 						>
 							Delete account
-						</LoadingButtonPrimary>
+						</LoadingButton>
 					)}
 				</section>
 			</div>

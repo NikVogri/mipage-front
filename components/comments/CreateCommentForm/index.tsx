@@ -1,11 +1,11 @@
 import { useCreateTodoItemCommentMutation } from "features/comment/commentApi";
 import { FormEvent, useState } from "react";
+import { TodoItemComment } from "models";
 
 import Avatar from "components/Avatar";
-import LoadingButtonBasic from "components/UI/LoadingButtonBasic/LoadingButtonBasic";
+import LoadingButton from "components/UI/LoadingButton";
 
 import styles from "./CreateCommentForm.module.scss";
-import { TodoItemComment } from "models";
 
 interface CreateCommentFormProps {
 	username: string;
@@ -54,12 +54,15 @@ const CreateCommentForm: React.FC<CreateCommentFormProps> = ({
 					/>
 				</div>
 				<div className={styles.btn__container}>
-					<LoadingButtonBasic
-						text="Submit"
+					<LoadingButton
 						disabled={!inputVal || isLoading}
 						isLoading={isLoading}
 						delay={250}
-					/>
+						position="right"
+						scheme="success"
+					>
+						Submit
+					</LoadingButton>
 				</div>
 			</form>
 		</div>

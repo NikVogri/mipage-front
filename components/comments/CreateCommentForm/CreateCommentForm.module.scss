@@ -8,13 +8,8 @@
 		width: 100%;
 
 		.btn__container {
-			margin-top: 1rem;
 			display: flex;
 			justify-content: flex-end;
-
-			button {
-				@include btn_basic;
-			}
 		}
 	}
 }
