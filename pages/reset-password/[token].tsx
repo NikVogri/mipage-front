@@ -6,7 +6,7 @@ import { useResetPasswordMutation } from "features/auth/authApi";
 import { getMessageFromErrorResponse } from "helpers/getMessageFromErrorResponse";
 
 import Head from "next/head";
-import LoadingButtonPrimary from "components/UI/LoadingButtonPrimary/LoadingButtonPrimary";
+import LoadingButton from "components/UI/LoadingButton";
 import FormFeedback from "components/FormFeedback/FormFeedback";
 
 import styles from "../../styles/pages/ResetPassword.module.scss";
@@ -92,12 +92,13 @@ const ResetPassword = () => {
 						)}
 					</div>
 
-					<LoadingButtonPrimary
+					<LoadingButton
 						isLoading={isLoading}
 						disabled={isLoading || !formik.dirty || !formik.isValid || isSuccess}
+						delay={250}
 					>
 						Submit
-					</LoadingButtonPrimary>
+					</LoadingButton>
 				</form>
 				<p className={styles.copyright}>Copyright © {new Date().getFullYear()} MIPAGE</p>
 			</div>

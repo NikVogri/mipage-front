@@ -4,7 +4,7 @@ import { useRemoveMemberFromPageMutation } from "features/member/memberApi";
 import { BiCrown } from "react-icons/bi";
 
 import Avatar from "components/Avatar";
-import LoadingButtonPrimary from "components/UI/LoadingButtonPrimary/LoadingButtonPrimary";
+import LoadingButton from "components/UI/LoadingButton";
 
 import styles from "./MembersListItem.module.scss";
 
@@ -32,14 +32,15 @@ const MembersListItem: React.FC<MembersListItemProps> = ({ ownerId, pageId, id, 
 	// Only display controls if the currently authenticated user is the owner of the page
 	let controls = (
 		<div className={styles.btn__container}>
-			<LoadingButtonPrimary
+			<LoadingButton
 				onClick={handleRemoveUserFromPage}
 				disabled={isLoading}
 				isLoading={isLoading}
-				scheme="delete"
+				scheme="danger"
+				delay={250}
 			>
 				Remove
-			</LoadingButtonPrimary>
+			</LoadingButton>
 		</div>
 	);
 

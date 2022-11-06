@@ -3,7 +3,7 @@ import { FormikValues, useFormik } from "formik";
 import { useForgotPasswordMutation } from "features/auth/authApi";
 
 import Head from "next/head";
-import LoadingButtonPrimary from "components/UI/LoadingButtonPrimary/LoadingButtonPrimary";
+import LoadingButton from "components/UI/LoadingButton";
 import FormFeedback from "components/FormFeedback/FormFeedback";
 
 import styles from "../../styles/pages/ForgotPassword.module.scss";
@@ -61,12 +61,13 @@ const ForgotPassword = () => {
 						)}
 					</div>
 
-					<LoadingButtonPrimary
+					<LoadingButton
 						isLoading={isLoading}
 						disabled={isLoading || !formik.dirty || !formik.isValid || isSuccess}
+						delay={250}
 					>
 						Request reset
-					</LoadingButtonPrimary>
+					</LoadingButton>
 				</form>
 				<p className={styles.copyright}>Copyright © {new Date().getFullYear()} MIPAGE</p>
 			</div>

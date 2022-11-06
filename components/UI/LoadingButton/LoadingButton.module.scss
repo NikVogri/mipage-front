@@ -7,6 +7,7 @@
 	margin-top: 1.5rem;
 	padding: 0.7rem 2rem;
 	justify-content: center;
+	text-align: center !important;
 
 	border: solid 1px var(--outline);
 	font-weight: 400;
@@ -23,7 +24,7 @@
 		margin-left: auto;
 	}
 
-	&.create {
+	&.success {
 		border: solid 1px var(--color-success);
 		color: var(--color-success);
 
@@ -33,7 +34,7 @@
 		}
 	}
 
-	&.delete {
+	&.danger {
 		border: solid 1px var(--color-pop);
 		color: var(--color-pop);
 
@@ -41,5 +42,9 @@
 			background: var(--color-pop-hover);
 			color: var(--text-primary);
 		}
+	}
+
+	&.flat {
+		border: none;
 	}
 }

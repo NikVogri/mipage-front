@@ -4,7 +4,7 @@ import { FaPlus } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { CirclePicker } from "react-color";
 
-import LoadingButtonPrimary from "components/UI/LoadingButtonPrimary/LoadingButtonPrimary";
+import LoadingButton from "components/UI/LoadingButton";
 import Modal from "components/UI/Modal";
 
 import * as Yup from "yup";
@@ -82,9 +82,9 @@ const AddTodoCard: React.FC<AddTodoCardProps> = ({ pageId, todosCount }) => {
 
 					<Modal.Footer>
 						<div className={styles.btn__container}>
-							<LoadingButtonPrimary scheme="create" position="right" isLoading={isLoading}>
+							<LoadingButton scheme="success" position="right" isLoading={isLoading} delay={250}>
 								Submit
-							</LoadingButtonPrimary>
+							</LoadingButton>
 						</div>
 					</Modal.Footer>
 				</form>

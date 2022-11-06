@@ -4,7 +4,7 @@ import { useDeletePageMutation, useUpdatePageMutation } from "features/page/page
 import { useRouter } from "next/router";
 import * as Yup from "yup";
 
-import LoadingButtonPrimary from "components/UI/LoadingButtonPrimary/LoadingButtonPrimary";
+import LoadingButton from "components/UI/LoadingButton";
 import Modal from "components/UI/Modal";
 import PageAccessabilitySelection from "components/Form/CreatePage/PageAccessabilitySelection";
 import DeleteConfirmation from "components/DeleteConfirmation";
@@ -99,14 +99,15 @@ const PageSettingsModal: React.FC<PageSettingsModalProps> = ({ isOpen, setIsOpen
 						/>
 
 						<div className={styles.btn__container}>
-							<LoadingButtonPrimary
-								scheme="create"
+							<LoadingButton
+								scheme="success"
 								position="right"
 								isLoading={isLoadingUpdate}
 								disabled={isLoadingUpdate || !formValuesChanges}
+								delay={250}
 							>
 								Save changes
-							</LoadingButtonPrimary>
+							</LoadingButton>
 						</div>
 					</form>
 				</section>
@@ -114,14 +115,14 @@ const PageSettingsModal: React.FC<PageSettingsModalProps> = ({ isOpen, setIsOpen
 					<h4>Dangerous actions</h4>
 					<div className={styles.delete__btn__container}>
 						<p>Delete this page, this action can not be undone!</p>
-						<LoadingButtonPrimary
-							scheme="delete"
+						<LoadingButton
+							scheme="danger"
 							position="center"
 							onClick={() => setShowDeletionPrompt(true)}
 							isLoading={false}
 						>
 							Delete page
-						</LoadingButtonPrimary>
+						</LoadingButton>
 					</div>
 				</section>
 			</div>

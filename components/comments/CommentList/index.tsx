@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { TodoItemComment } from "models";
 
-import LoadingButtonBasic from "components/UI/LoadingButtonBasic/LoadingButtonBasic";
 import Comment from "../Comment";
+import LoadingButton from "components/UI/LoadingButton";
 
 import styles from "./CommentList.module.scss";
 
@@ -32,14 +32,15 @@ const CommentList: React.FC<CommentListProps> = ({ comments = [], total, onLoadM
 			{comments?.length > 0 &&
 				comments.map((c) => <Comment key={c.id} user={c.author} body={c.body} createdAt={c.createdAt} />)}
 			{showMoreBtn && (
-				<LoadingButtonBasic
+				<LoadingButton
 					className={styles.load__more__btn}
-					text="Show more"
 					delay={150}
 					isLoading={isLoadingMore}
 					disabled={isLoadingMore}
 					onClick={handleLoadMoreComments}
-				/>
+				>
+					Load more
+				</LoadingButton>
 			)}
 		</ul>
 	);

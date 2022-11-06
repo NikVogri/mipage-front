@@ -10,7 +10,7 @@ import PageTypeSelection from "components/Form/CreatePage/PageTypeSelection";
 import PageAccessabilitySelection from "components/Form/CreatePage/PageAccessabilitySelection";
 import Container from "components/UI/Container";
 import ErrorFormMessage from "components/Form/ErrorFormMessage";
-import LoadingButtonPrimary from "components/UI/LoadingButtonPrimary/LoadingButtonPrimary";
+import LoadingButton from "components/UI/LoadingButton";
 
 const pageCreateValidationSchema = Yup.object().shape({
 	title: Yup.string()
@@ -83,14 +83,15 @@ const CreateNewPage = () => {
 					isPrivate={formik.values.isPrivate}
 				/>
 
-				<LoadingButtonPrimary
+				<LoadingButton
 					position="left"
-					scheme="create"
+					scheme="success"
 					isLoading={isLoading}
 					disabled={!formik.dirty || !formik.isValid}
+					delay={250}
 				>
 					Create page
-				</LoadingButtonPrimary>
+				</LoadingButton>
 			</form>
 		</Container>
 	);

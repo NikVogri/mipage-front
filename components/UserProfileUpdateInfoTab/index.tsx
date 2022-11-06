@@ -5,7 +5,7 @@ import { updatePersonalInfo } from "features/auth/authSlice";
 import { useAppDispatch } from "hooks/redux-hooks";
 import * as Yup from "yup";
 
-import LoadingButtonPrimary from "components/UI/LoadingButtonPrimary/LoadingButtonPrimary";
+import LoadingButton from "components/UI/LoadingButton";
 
 import styles from "./UserProfileUpdateInfoTab.module.scss";
 
@@ -88,14 +88,15 @@ const UserProfileUpdateInfoTab: React.FC = () => {
 				</div>
 			</div>
 
-			<LoadingButtonPrimary
-				scheme="create"
+			<LoadingButton
+				scheme="success"
 				position="right"
 				isLoading={isLoading}
 				disabled={!formik.isValid || !formik.dirty}
+				delay={250}
 			>
 				Save changes
-			</LoadingButtonPrimary>
+			</LoadingButton>
 		</form>
 	);
 };

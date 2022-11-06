@@ -2,7 +2,7 @@ import React from "react";
 import { useCompleteTodoItemMutation, useRemoveTodoItemMutation } from "features/todo/todoApi";
 import { IoMdCheckmark, IoMdClose, IoMdTrash } from "react-icons/io";
 
-import LoadingButtonPrimary from "components/UI/LoadingButtonPrimary/LoadingButtonPrimary";
+import LoadingButton from "components/UI/LoadingButton";
 
 import styles from "./TodoItemControls.module.scss";
 
@@ -31,24 +31,24 @@ const TodoItemControls: React.FC<TodoItemControlsProps> = ({ completed, pageId, 
 	return (
 		<div className={styles.right__controls}>
 			<div className={styles.right__controls__btn__container}>
-				<LoadingButtonPrimary
+				<LoadingButton
 					onClick={handleCompleteTodoItem}
 					isLoading={completeItemLoading}
 					disabled={isLoading}
 					delay={350}
-					scheme={completed ? "delete" : "create"}
+					scheme={completed ? "danger" : "success"}
 				>
 					{completed ? <IoMdClose size={20} /> : <IoMdCheckmark size={20} />}
-				</LoadingButtonPrimary>
-				<LoadingButtonPrimary
+				</LoadingButton>
+				<LoadingButton
 					onClick={handleRemoveTodoItem}
 					isLoading={removeItemLoading}
 					disabled={isLoading}
 					delay={350}
-					scheme="delete"
+					scheme="danger"
 				>
 					<IoMdTrash size={20} />
-				</LoadingButtonPrimary>
+				</LoadingButton>
 			</div>
 		</div>
 	);
