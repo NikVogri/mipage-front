@@ -46,8 +46,6 @@ const TodoCard: React.FC<TodoCardProps> = ({ id, color, title, items = [], pageI
 								title={item.title}
 								todoItemId={item.id}
 								onOpenModal={handleOpenModal}
-								pageId={pageId}
-								todoId={todoId}
 								createdAt={item.createdAt}
 							/>
 						))}
