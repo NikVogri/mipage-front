@@ -35,7 +35,7 @@ const AddUserToPageForm: React.FC<AddUserToPageFormProps> = ({ pageId }) => {
 	return (
 		<form className={styles.search__for_users__form} onSubmit={formik.handleSubmit}>
 			<div className={styles.form__feedback__container}>
-				{isError && <FormFeedback type="error">{getMessageFromErrorResponse(error)}</FormFeedback>}
+				{isError && <FormFeedback type="danger">{getMessageFromErrorResponse(error)}</FormFeedback>}
 				{isSuccess && (
 					<FormFeedback type="success">
 						User was successfully added to the page if they have an acconut

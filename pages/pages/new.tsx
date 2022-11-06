@@ -55,7 +55,7 @@ const CreateNewPage = () => {
 			</Head>
 			<h1 className="heading__primary">Create a new page</h1>
 			<form onSubmit={formik.handleSubmit}>
-				{isError && <FormFeedback type="error">{(error as any).data.message}</FormFeedback>}
+				{isError && <FormFeedback type="danger">{(error as any).data.message}</FormFeedback>}
 
 				<div>
 					<h2 className="heading__section">Title</h2>

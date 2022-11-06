@@ -54,7 +54,7 @@ const ResetPassword = () => {
 					{isSuccess && (
 						<FormFeedback type="success">Password successfully changed, please login now</FormFeedback>
 					)}
-					{isError && <FormFeedback type="error">{getMessageFromErrorResponse(error)}</FormFeedback>}
+					{isError && <FormFeedback type="danger">{getMessageFromErrorResponse(error)}</FormFeedback>}
 
 					<div className="form-group">
 						<label className="label">New password</label>

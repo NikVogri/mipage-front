@@ -1,9 +1,10 @@
+import { ColorTypes } from "models";
 import React from "react";
 
 import styles from "./FormFeedback.module.scss";
 
 interface FormFeedbackProps {
-	type: "success" | "error";
+	type: ColorTypes;
 	children: React.ReactNode;
 }
 
