@@ -1,26 +1,32 @@
 @import "../../styles/partial/components/basic_button";
 
 .right__controls {
-	button {
-		display: flex;
-		align-items: center;
-
-		@include btn_basic;
-		margin-bottom: 0.5rem;
-		font-weight: bold;
-
-		padding: 0.75rem 0 0.75rem 1rem;
-
-		width: 15rem;
-
-		svg {
-			margin-right: 1rem;
-		}
-	}
-
 	@media screen and (max-width: 768px) {
 		border-top: solid 1px var(--outline);
 		margin-top: 1rem;
 		padding-top: 1rem;
+	}
+
+	&__btn__container {
+		display: flex;
+
+		button {
+			display: flex;
+			align-items: center;
+
+			@include btn_basic;
+
+			padding: 0.75rem 0 0.75rem 1rem;
+
+			border: solid 1px var(--outline);
+
+			svg {
+				margin-right: 1rem;
+			}
+
+			&:not(last-of-type) {
+				margin-left: 1rem;
+			}
+		}
 	}
 }
