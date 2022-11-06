@@ -4,9 +4,9 @@ import { useGetSidebarPagesQuery } from "features/page/pagesApi";
 import { HiPlus } from "react-icons/hi";
 
 import Link from "next/link";
-import NotebooksLinkDropdown from "../NotebooksLinkDropdown";
-import TodoPageLink from "../TodoPageLink";
-import RectangleSkeleton from "components/Skeleton/RectangleSkeleton";
+import NotebooksLinkDropdown from "../../notebook/NotebooksLinkDropdown";
+import TodoPageLink from "../../todo/TodoPageLink";
+import RectangleSkeleton from "components/skeletons/RectangleSkeleton";
 
 import styles from "./YourPagesSidebar.module.scss";
 

@@ -1,5 +1,5 @@
-import PageSettingsModal from "components/UI/modals/PageSettingsModal/PageSettingsModal";
-import SidebarButton from "components/UI/SidebarButton/SidebarButton";
+import PageSettingsModal from "components/modals/PageSettingsModal";
+import SidebarButton from "components/UI/SidebarButton";
 import { useState } from "react";
 import { HiPencil } from "react-icons/hi";
 

@@ -2,10 +2,10 @@ import Head from "next/head";
 import { useGetSinglePageQuery, useGetSinglePublicPageQuery } from "features/page/pagesApi";
 import { useRouter } from "next/router";
 
-import PageCenter from "components/Page/PageCenter";
-import PageErrorLoading from "components/Page/PageErrorLoading";
-import FullPageLoadingSpinner from "components/UI/FullPageLoadingSpinner/FullPageLoadingSpinner";
-import PageLeftSide from "components/Page/PageLeftSide";
+import PageCenter from "components/page/PageCenter";
+import PageErrorLoading from "components/page/PageErrorLoading";
+import FullPageLoadingSpinner from "components/UI/FullPageLoadingSpinner";
+import PageLeftSide from "components/page/PageLeftSide";
 
 import styles from "../../styles/pages/Page.module.scss";
 import onlyAuth from "components/HOC/withAuth";

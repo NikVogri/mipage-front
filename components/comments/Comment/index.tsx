@@ -3,8 +3,8 @@ import { useMemo, useState } from "react";
 import { truncate } from "helpers/stringTools";
 import { User } from "models";
 
-import Avatar from "components/Avatar";
-import HoverPopover from "components/UI/HoverPopover/HoverPopover";
+import Avatar from "components/UI/Avatar";
+import HoverPopover from "components/UI/HoverPopover";
 
 import styles from "./Comment.module.scss";
 

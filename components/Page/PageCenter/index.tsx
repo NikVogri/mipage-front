@@ -1,6 +1,6 @@
 import { PageType } from "models";
-import Notebook from "../Notebook";
-import Todo from "../Todo";
+import Notebook from "../../notebook/Notebook";
+import Todo from "../../todo/Todo";
 
 import styles from "./PageCenter.module.scss";
 

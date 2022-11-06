@@ -6,11 +6,11 @@ import { useCreatePageMutation } from "features/page/pagesApi";
 import onlyAuth from "components/HOC/withAuth";
 
 import Head from "next/head";
-import PageTypeSelection from "components/Form/CreatePage/PageTypeSelection";
-import PageAccessabilitySelection from "components/Form/CreatePage/PageAccessabilitySelection";
+import PageTypeSelection from "components/form/PageTypeSelection";
+import PageAccessabilitySelection from "components/form/PageAccessabilitySelection";
 import Container from "components/UI/Container";
-import ErrorFormMessage from "components/Form/ErrorFormMessage";
 import LoadingButton from "components/UI/LoadingButton";
+import FormFeedback from "components/form/FormFeedback";
 
 const pageCreateValidationSchema = Yup.object().shape({
 	title: Yup.string()
@@ -55,7 +55,7 @@ const CreateNewPage = () => {
 			</Head>
 			<h1 className="heading__primary">Create a new page</h1>
 			<form onSubmit={formik.handleSubmit}>
-				{isError && <ErrorFormMessage message={(error as any).data.message} />}
+				{isError && <FormFeedback type="error">{(error as any).data.message}</FormFeedback>}
 
 				<div>
 					<h2 className="heading__section">Title</h2>

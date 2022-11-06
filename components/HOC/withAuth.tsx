@@ -3,7 +3,7 @@ import React from "react";
 import { selectAuthChecked } from "features/auth/authSlice";
 import { useAppSelector } from "hooks/redux-hooks";
 import useAuth from "hooks/useAuth";
-import FullPageLoadingSpinner from "components/UI/FullPageLoadingSpinner/FullPageLoadingSpinner";
+import FullPageLoadingSpinner from "components/UI/FullPageLoadingSpinner";
 
 const onlyAuth = (
 	WrappedComponent: React.FC,

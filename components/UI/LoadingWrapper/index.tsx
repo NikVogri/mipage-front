@@ -1,4 +1,4 @@
-import LoadingSpinner from "components/LoadingSpinner";
+import LoadingSpinner from "components/UI/LoadingSpinner";
 import { useEffect, useState } from "react";
 import { FaLaptopHouse } from "react-icons/fa";
 
