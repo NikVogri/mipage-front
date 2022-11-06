@@ -2,6 +2,7 @@ import { useGetPageTodosQuery, useGetPublicPageTodosQuery } from "features/todo/
 import { Todo } from "models";
 
 import useAuth from "hooks/useAuth";
+import { useLoadingDelay } from "hooks/useLoadingDelay";
 
 import TodoCard from "../TodoCard";
 import AddTodoCard from "../AddTodoCard";
@@ -21,6 +22,7 @@ const Todo: React.FC<TodoProps> = ({ pageId }) => {
 		data: dataPrivate,
 		isLoading: isLoadingPrivate,
 		isError: isErrorPrivate,
+		isFetching: isFetchingPrivate,
 	} = useGetPageTodosQuery({ pageId }, { skip: !isAuth });
 
 	const {
@@ -30,6 +32,7 @@ const Todo: React.FC<TodoProps> = ({ pageId }) => {
 	} = useGetPublicPageTodosQuery({ pageId }, { skip: isAuth });
 
 	const isLoading = isLoadingPrivate || isLoadingPublic;
+	const { showLoader } = useLoadingDelay(isLoading || isFetchingPrivate, 500);
 
 	if (isErrorPrivate || isErrorPublic) {
 		<div className={styles.todo__container}>
@@ -38,13 +41,13 @@ const Todo: React.FC<TodoProps> = ({ pageId }) => {
 	}
 
 	const data = dataPrivate ?? dataPublic;
-	if (!data) {
+	if (!data && !isLoading) {
 		return <PageErrorLoading />;
 	}
 
 	return (
 		<div className={styles.todo__container}>
-			{isLoading && (
+			{showLoader && (
 				<>
 					<RectangleSkeleton
 						height={"100%"}
@@ -79,17 +82,18 @@ const Todo: React.FC<TodoProps> = ({ pageId }) => {
 				</>
 			)}
 
-			{data.map((tb) => (
-				<TodoCard
-					key={tb.id}
-					color={tb.color}
-					title={tb.title}
-					items={tb.items!}
-					id={tb.id}
-					pageId={tb.pageId}
-					todoId={tb.id}
-				/>
-			))}
+			{data &&
+				data.map((tb) => (
+					<TodoCard
+						key={tb.id}
+						color={tb.color}
+						title={tb.title}
+						items={tb.items!}
+						id={tb.id}
+						pageId={tb.pageId}
+						todoId={tb.id}
+					/>
+				))}
 
 			{isAuth && !isLoading && <AddTodoCard pageId={pageId} todosCount={data?.length} />}
 		</div>
