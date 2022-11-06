@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useRef } from "react";
 
 import { useLoadingDelay } from "hooks/useLoadingDelay";
 
@@ -29,13 +29,16 @@ const LoadingButton: React.FC<LoadingButtonProps> = ({
 	className,
 }) => {
 	const { showLoader } = useLoadingDelay(isLoading, delay);
+	const btnRef = useRef<HTMLButtonElement>(null);
 
 	return (
 		<button
+			ref={btnRef}
 			disabled={disabled}
 			className={`${styles.btn__submit} ${className} ${flat && styles.flat} ${styles[position]} ${
 				styles[scheme]
 			}`}
+			style={showLoader ? { width: btnRef.current?.offsetWidth, height: btnRef.current?.offsetHeight } : {}}
 			onClick={onClick}
 		>
 			{showLoader ? (

@@ -87,7 +87,7 @@ const CreateNewPage = () => {
 					position="left"
 					scheme="success"
 					isLoading={isLoading}
-					disabled={!formik.dirty || !formik.isValid}
+					disabled={!formik.dirty || !formik.isValid || isLoading}
 					delay={250}
 				>
 					Create page

@@ -120,6 +120,7 @@ const PageSettingsModal: React.FC<PageSettingsModalProps> = ({ isOpen, setIsOpen
 							position="center"
 							onClick={() => setShowDeletionPrompt(true)}
 							isLoading={false}
+							className={styles.delete__btn}
 						>
 							Delete page
 						</LoadingButton>
