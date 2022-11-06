@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "@szhsin/react-menu": "^2.3.2",
-    "add": "^2.0.6",
     "axios": "^0.24.0",
     "draft-js": "^0.11.7",
     "formik": "^2.2.9",
@@ -18,14 +17,11 @@
     "react-color": "^2.19.3",
     "react-content-loader": "^6.1.0",
     "react-cookie-consent": "^7.3.1",
-    "react-debounce-input": "^3.2.5",
     "react-dom": "17.0.2",
     "react-icons": "^4.3.1",
     "react-modal": "^3.14.4",
-    "react-query": "^3.34.6",
     "react-redux": "^7.2.6",
     "react-toastify": "^8.2.0",
-    "redux-devtools": "^3.7.0",
     "yup": "^0.32.11"
   },
   "devDependencies": {
