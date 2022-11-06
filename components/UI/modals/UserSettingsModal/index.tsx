@@ -47,6 +47,7 @@ const UserSettingsModal: React.FC<UserSettingsModalProps> = ({ isOpen, setIsClos
 							onClick={() => setShowDeleteConfirmation(true)}
 							isLoading={false}
 							delay={250}
+							className={styles.delete__btn}
 						>
 							Delete account
 						</LoadingButton>

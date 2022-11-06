@@ -92,6 +92,7 @@ const Login = () => {
 						isLoading={loading}
 						disabled={loading || !formik.dirty || !formik.isValid}
 						delay={250}
+						className={styles.login__btn}
 					>
 						Login
 					</LoadingButton>
