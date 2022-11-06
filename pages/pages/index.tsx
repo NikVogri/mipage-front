@@ -7,8 +7,8 @@ import { useGetUserPagesQuery } from "features/page/pagesApi";
 import Link from "next/link";
 import Container from "components/UI/Container";
 import onlyAuth from "components/HOC/withAuth";
-import StickyAddPageButton from "components/StickyAddPageButton";
-import PagesDropdown from "components/Page/PagesDropdown/PagesDropdown";
+import StickyAddPageButton from "components/page/StickyAddPageButton";
+import PagesDropdown from "components/page/PagesDropdown/PagesDropdown";
 import SpinnerCentered from "components/UI/SpinnerCentered";
 import useAuth from "hooks/useAuth";
 

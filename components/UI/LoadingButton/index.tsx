@@ -2,7 +2,7 @@ import React, { ReactNode, useRef } from "react";
 
 import { useLoadingDelay } from "hooks/useLoadingDelay";
 
-import LoadingSpinner from "components/LoadingSpinner";
+import LoadingSpinner from "components/UI/LoadingSpinner";
 
 import styles from "./LoadingButton.module.scss";
 

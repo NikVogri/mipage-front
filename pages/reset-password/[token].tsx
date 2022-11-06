@@ -7,7 +7,7 @@ import { getMessageFromErrorResponse } from "helpers/getMessageFromErrorResponse
 
 import Head from "next/head";
 import LoadingButton from "components/UI/LoadingButton";
-import FormFeedback from "components/FormFeedback/FormFeedback";
+import FormFeedback from "components/form/FormFeedback";
 
 import styles from "../../styles/pages/ResetPassword.module.scss";
 

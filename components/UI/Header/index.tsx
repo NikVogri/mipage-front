@@ -1,9 +1,9 @@
 import { IoMdMenu } from "react-icons/io";
 
-import UserNavSettings from "components/UserNavSettings";
+import UserNavSettings from "components/navigation/UserNavSettings";
 import useAuth from "hooks/useAuth";
 import Link from "next/link";
-import Notifications from "../NavNotifications";
+import Notifications from "../../navigation/NavNotifications";
 
 import styles from "./Header.module.scss";
 import { useAppDispatch } from "hooks/redux-hooks";

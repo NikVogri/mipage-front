@@ -2,7 +2,7 @@ import { useCreateTodoItemCommentMutation } from "features/comment/commentApi";
 import { FormEvent, useState } from "react";
 import { TodoItemComment } from "models";
 
-import Avatar from "components/Avatar";
+import Avatar from "components/UI/Avatar";
 import LoadingButton from "components/UI/LoadingButton";
 
 import styles from "./CreateCommentForm.module.scss";
