@@ -43,7 +43,7 @@ const ForgotPassword = () => {
 						</FormFeedback>
 					)}
 
-					{isError && <FormFeedback type="error">Something went wrong, please try again later</FormFeedback>}
+					{isError && <FormFeedback type="danger">Something went wrong, please try again later</FormFeedback>}
 
 					<div className="form-group">
 						<label className="label">Your email address</label>
