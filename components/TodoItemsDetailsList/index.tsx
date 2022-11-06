@@ -19,7 +19,7 @@ const TodoItemsDetailsList: React.FC<TodoItemsDetailsListProps> = ({
 	return (
 		<ul className={styles.about__item__details}>
 			<li>
-				<span className={styles.about__title}>Created by:</span>{" "}
+				<span className={styles.about__title}>Owner:</span>{" "}
 				<div>
 					{username && <Avatar avatar={avatar} username={username} tooltip={false} size="sm" />}
 					<span className={styles.creator__name} title={!username ? "This user does not exist anymore!" : ""}>

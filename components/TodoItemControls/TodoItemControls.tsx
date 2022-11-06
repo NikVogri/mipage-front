@@ -1,7 +1,8 @@
 import React from "react";
 import { useCompleteTodoItemMutation, useRemoveTodoItemMutation } from "features/todo/todoApi";
-import { IoMdCloseCircle } from "react-icons/io";
-import { MdCheckCircle, MdOutlineRemoveCircle } from "react-icons/md";
+import { IoMdCheckmark, IoMdClose, IoMdTrash } from "react-icons/io";
+
+import LoadingButtonPrimary from "components/UI/LoadingButtonPrimary/LoadingButtonPrimary";
 
 import styles from "./TodoItemControls.module.scss";
 
@@ -29,25 +30,25 @@ const TodoItemControls: React.FC<TodoItemControlsProps> = ({ completed, pageId, 
 
 	return (
 		<div className={styles.right__controls}>
-			<div className={styles.controls__btn__container}>
-				<button
-					title="Complete item"
-					className={styles.complete}
+			<div className={styles.right__controls__btn__container}>
+				<LoadingButtonPrimary
 					onClick={handleCompleteTodoItem}
+					isLoading={completeItemLoading}
 					disabled={isLoading}
+					delay={350}
+					scheme={completed ? "delete" : "create"}
 				>
-					{!completed ? <MdCheckCircle size={18} /> : <IoMdCloseCircle size={18} />}
-					<span>{!completed ? "Complete" : "Uncomplete"}</span>
-				</button>
-				<button
-					title="Remove item"
-					className={styles.remove}
+					{completed ? <IoMdClose size={20} /> : <IoMdCheckmark size={20} />}
+				</LoadingButtonPrimary>
+				<LoadingButtonPrimary
 					onClick={handleRemoveTodoItem}
+					isLoading={removeItemLoading}
 					disabled={isLoading}
+					delay={350}
+					scheme="delete"
 				>
-					<MdOutlineRemoveCircle size={18} />
-					<span>Remove</span>
-				</button>
+					<IoMdTrash size={20} />
+				</LoadingButtonPrimary>
 			</div>
 		</div>
 	);

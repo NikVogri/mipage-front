@@ -4,12 +4,13 @@ import styles from "./LoadingButtonBasic.module.scss";
 
 interface LoadingButtonBasicProps {
 	disabled?: boolean;
-	text: string;
+	text?: string;
 	className?: string;
 	delay: number;
 	isLoading: boolean;
-	type?: 'submit' | 'reset' | 'button';
+	type?: "submit" | "reset" | "button";
 	onClick?: () => void;
+	children?: React.ReactNode;
 }
 const LoadingButtonBasic: React.FC<LoadingButtonBasicProps> = ({
 	isLoading,
@@ -19,6 +20,7 @@ const LoadingButtonBasic: React.FC<LoadingButtonBasicProps> = ({
 	delay,
 	type,
 	onClick,
+	children,
 }) => {
 	const [showLoader, setShowLoader] = useState(false);
 
@@ -40,7 +42,7 @@ const LoadingButtonBasic: React.FC<LoadingButtonBasicProps> = ({
 					<LoadingSpinner size={16} />
 				</div>
 			)}
-			<span>{text}</span>
+			{!children ? <span>{text}</span> : children}
 		</button>
 	);
 };

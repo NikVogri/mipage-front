@@ -1,9 +1,9 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import LoadingButtonBasic from "../LoadingButtonBasic/LoadingButtonBasic";
 import styles from "./LoadingButtonPrimary.module.scss";
 
 interface LoadingButtonPrimaryProps {
-	children: string;
+	children: string | ReactNode;
 	delay?: number;
 	disabled?: boolean;
 	isLoading: boolean;
@@ -24,7 +24,8 @@ const LoadingButtonPrimary: React.FC<LoadingButtonPrimaryProps> = ({
 		<LoadingButtonBasic
 			disabled={disabled}
 			className={`${styles.btn__submit} ${styles[position]} ${styles[scheme]}`}
-			text={children}
+			text={typeof children === "string" ? children : undefined}
+			children={typeof children === "string" ? undefined : children}
 			delay={delay}
 			isLoading={isLoading}
 			type={!onClick ? "submit" : "button"}
