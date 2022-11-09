@@ -9,7 +9,7 @@ import FormFeedback from "components/form/FormFeedback";
 import styles from "styles/pages/ForgotPassword.module.scss";
 
 const forgotPasswordValidationSchema = Yup.object().shape({
-	email: Yup.string().email("Email needs to be an email address").required("Email is required"),
+	email: Yup.string().email("Enter a valid email address").required("Email is required"),
 });
 
 const ForgotPassword = () => {
@@ -54,6 +54,7 @@ const ForgotPassword = () => {
 							id="email"
 							required
 							value={formik.values.email}
+							onBlur={formik.handleBlur}
 							onChange={formik.handleChange}
 						/>
 						{formik.errors.email && formik.touched.email && (

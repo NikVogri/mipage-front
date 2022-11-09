@@ -14,12 +14,18 @@ import * as Yup from "yup";
 import styles from "styles/pages/Register.module.scss";
 
 const signupValidationSchema = Yup.object().shape({
-	email: Yup.string().email("Please enter a correct email address").required("Email is required"),
+	email: Yup.string().email("Enter a valid email address").required("Email is required"),
 	username: Yup.string()
-		.min(5, "Username must be more than 5 characters long")
+		.min(5, "Username must be at least 5 characters long")
 		.max(50, "Max 50 characters")
 		.required("Username is required"),
-	password: Yup.string().min(6, "Password must be more than 6 characters long").required("Password is required"),
+	password: Yup.string()
+		.min(8, "Password must be more 8 or more characters long")
+		.matches(
+			/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/,
+			"Password must include at least 1 uppercase letter and at least 1 number"
+		)
+		.required("Password is required"),
 	passwordConfirm: Yup.string()
 		.oneOf([Yup.ref("password"), null], "Passwords don't match")
 		.required("Password confirmation is required"),
@@ -76,6 +82,7 @@ const Register = () => {
 							name="email"
 							id="email"
 							value={formik.values.email}
+							onBlur={formik.handleBlur}
 							onChange={formik.handleChange}
 							required
 						/>
@@ -94,6 +101,7 @@ const Register = () => {
 							name="username"
 							id="username"
 							value={formik.values.username}
+							onBlur={formik.handleBlur}
 							onChange={formik.handleChange}
 							required
 						/>
@@ -113,6 +121,7 @@ const Register = () => {
 							name="password"
 							id="password"
 							value={formik.values.password}
+							onBlur={formik.handleBlur}
 							onChange={formik.handleChange}
 						/>
 						{formik.errors.password && formik.touched.password && (
@@ -131,9 +140,10 @@ const Register = () => {
 							name="passwordConfirm"
 							id="passwordConfirm"
 							value={formik.values.passwordConfirm}
+							onBlur={formik.handleBlur}
 							onChange={formik.handleChange}
 						/>
-						{formik.errors.password && formik.touched.passwordConfirm && (
+						{formik.errors.passwordConfirm && formik.touched.passwordConfirm && (
 							<span className="form-error">{formik.errors.passwordConfirm}</span>
 						)}
 					</div>
