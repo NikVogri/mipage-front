@@ -13,7 +13,7 @@ import usePush from "hooks/usePush";
 import styles from "styles/pages/Login.module.scss";
 
 const loginValidationSchema = Yup.object().shape({
-	email: Yup.string().email("Email needs to be an email address").required("Email is required"),
+	email: Yup.string().email("Enter a valid email address").required("Email is required"),
 	password: Yup.string().required("Password is required"),
 });
 
@@ -63,6 +63,7 @@ const Login = () => {
 							id="email"
 							required
 							value={formik.values.email}
+							onBlur={formik.handleBlur}
 							onChange={formik.handleChange}
 						/>
 						{formik.errors.email && formik.touched.email && (
@@ -81,6 +82,7 @@ const Login = () => {
 							name="password"
 							id="password"
 							value={formik.values.password}
+							onBlur={formik.handleBlur}
 							onChange={formik.handleChange}
 						/>
 						{formik.errors.password && formik.touched.password && (

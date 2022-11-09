@@ -12,7 +12,13 @@ import FormFeedback from "components/form/FormFeedback";
 import styles from "styles/pages/ResetPassword.module.scss";
 
 const forgotPasswordValidationSchema = Yup.object().shape({
-	password: Yup.string().min(6, "Password must be more than 6 characters long").required("Password is required"),
+	password: Yup.string()
+		.min(8, "Password must be more 8 or more characters long")
+		.matches(
+			/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/,
+			"Password must include at least 1 uppercase letter and at least 1 number"
+		)
+		.required("Password is required"),
 	passwordConfirm: Yup.string()
 		.oneOf([Yup.ref("password"), null], "Passwords don't match")
 		.required("Password confirmation is required"),
@@ -52,7 +58,7 @@ const ResetPassword = () => {
 					<h1 className="heading__primary">Reset password</h1>
 
 					{isSuccess && (
-						<FormFeedback type="success">Password successfully changed, please login now</FormFeedback>
+						<FormFeedback type="success">Password successfully changed, please log in now</FormFeedback>
 					)}
 					{isError && <FormFeedback type="danger">{getMessageFromErrorResponse(error)}</FormFeedback>}
 
@@ -67,6 +73,7 @@ const ResetPassword = () => {
 							id="password"
 							required
 							value={formik.values.password}
+							onBlur={formik.handleBlur}
 							onChange={formik.handleChange}
 						/>
 						{formik.errors.password && formik.touched.password && (
@@ -85,6 +92,7 @@ const ResetPassword = () => {
 							id="passwordConfirm"
 							required
 							value={formik.values.passwordConfirm}
+							onBlur={formik.handleBlur}
 							onChange={formik.handleChange}
 						/>
 						{formik.errors.passwordConfirm && formik.touched.passwordConfirm && (
