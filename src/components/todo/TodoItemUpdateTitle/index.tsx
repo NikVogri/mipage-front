@@ -36,6 +36,14 @@ const TodoItemUpdateTitle: React.FC<TodoItemUpdateTitleProps> = ({ title, pageId
 		);
 	}
 
+	if (!isAuth) {
+		return (
+			<div className={styles.title}>
+				<h1>{title}</h1>
+			</div>
+		);
+	}
+
 	if (showInput) {
 		return (
 			<div className={styles.title}>
@@ -50,7 +58,7 @@ const TodoItemUpdateTitle: React.FC<TodoItemUpdateTitleProps> = ({ title, pageId
 
 	return (
 		<div className={styles.title}>
-			<button onClick={() => setShowInput(true && isAuth)}>
+			<button onClick={() => setShowInput(true)}>
 				<h1>{title}</h1>
 			</button>
 		</div>

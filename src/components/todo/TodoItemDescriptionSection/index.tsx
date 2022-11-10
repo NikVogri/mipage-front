@@ -47,6 +47,13 @@ const TodoItemDescriptionSection: React.FC<TodoItemDescriptionSectionProps> = ({
 			);
 
 			break;
+		case !isAuth && !!description:
+			content = (
+				<div>
+					<p>{description}</p>
+				</div>
+			);
+			break;
 		case !isAuth && !descriptionValue:
 			content = (
 				<div>
