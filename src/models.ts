@@ -83,7 +83,6 @@ export interface Todo {
 	color: string;
 	pageId: string;
 	id: string;
-	allCompleted: boolean;
 	createdAt: Date;
 	updatedAt: Date;
 	items?: TodoItem[];
