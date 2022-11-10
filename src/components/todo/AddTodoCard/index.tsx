@@ -63,6 +63,7 @@ const AddTodoCard: React.FC<AddTodoCardProps> = ({ pageId, todosCount }) => {
 							name="title"
 							id="title"
 							value={formik.values.title}
+							onBlur={formik.handleBlur}
 							onChange={formik.handleChange}
 						/>
 						{formik.errors.title && formik.touched.title && (
