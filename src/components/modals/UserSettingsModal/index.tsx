@@ -8,6 +8,7 @@ import LoadingButton from "components/UI/LoadingButton";
 import Modal from "components/modals/BaseModal";
 
 import styles from "./UserSettingsModal.module.scss";
+import { useRouter } from "next/router";
 
 interface UserSettingsModalProps {
 	isOpen: boolean;
@@ -18,9 +19,14 @@ interface UserSettingsModalProps {
 const UserSettingsModal: React.FC<UserSettingsModalProps> = ({ isOpen, setIsClosed, setIsOpen }) => {
 	const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 	const dispatch = useAppDispatch();
+	const router = useRouter();
 
 	const handleDeleteAccount = async () => {
-		await dispatch(deleteUserAndLogout());
+		const res = await dispatch(deleteUserAndLogout());
+
+		if (res.meta.requestStatus === "fulfilled") {
+			router.push("/");
+		}
 	};
 
 	return (
