@@ -19,9 +19,8 @@
 	display: flex;
 	align-items: center;
 
-	input {
+	.comment__input__input_container {
 		margin-left: 2rem;
-		border: solid 1px var(--outline);
-		font-family: inherit;
+		width: 100%;
 	}
 }
