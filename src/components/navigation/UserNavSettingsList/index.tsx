@@ -27,6 +27,7 @@ const UserNavSettingsList: React.FC<UserNavSettingsListProps> = ({ onClose, show
 	const handleUserLogout = async () => {
 		await dispatch(logout());
 		onClose();
+		router.push("/login");
 	};
 
 	const handleOpenProfile = () => {

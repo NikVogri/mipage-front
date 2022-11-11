@@ -108,15 +108,16 @@ const authSlice = createSlice({
 	reducers: {
 		setUser: (state, action: PayloadAction<User>) => {
 			const payload = action.payload;
-			const { id, username, avatar, createdAt, email, updatedAt, bio } = payload;
+			const { id, username, avatar, createdAt, email, bio } = payload;
 
 			state.isAuth = true;
 			state.checked = true;
-			state.user = { id, username, avatar, email, createdAt, updatedAt, bio };
+			state.user = { id, username, avatar, email, createdAt, bio };
 		},
 
 		updateUser: (state, action: PayloadAction<PersonalInfoPayload>) => {
-			state.user = Object.assign(state.user, action.payload);
+			// TODO: correct state.user type
+			state.user = Object.assign(state.user as any, action.payload);
 		},
 
 		clearUser: (state) => {
