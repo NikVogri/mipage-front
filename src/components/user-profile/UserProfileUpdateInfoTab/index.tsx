@@ -30,7 +30,7 @@ const UserProfileUpdateInfoTab: React.FC = () => {
 		},
 		validationSchema: Yup.object({
 			username: Yup.string()
-				.min(3, "Username must be at least 3 characters long")
+				.min(5, "Username must be at least 3 characters long")
 				.required("Username is required"),
 			bio: Yup.string().max(1024, "Bio can not be longer than 1024 characters"),
 		}),
