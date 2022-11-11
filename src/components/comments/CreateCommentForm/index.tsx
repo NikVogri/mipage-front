@@ -1,6 +1,7 @@
 import { useCreateTodoItemCommentMutation } from "features/comment/commentApi";
-import { FormEvent, useState } from "react";
 import { TodoItemComment } from "models";
+import { FormikValues, useFormik } from "formik";
+import * as Yup from "yup";
 
 import Avatar from "components/UI/Avatar";
 import LoadingButton from "components/UI/LoadingButton";
@@ -15,6 +16,10 @@ interface CreateCommentFormProps {
 	onCommentAdded: (comment: TodoItemComment) => void;
 }
 
+const commentBodyValidationSchema = Yup.object().shape({
+	body: Yup.string().min(1).max(4096).required(),
+});
+
 const CreateCommentForm: React.FC<CreateCommentFormProps> = ({
 	username,
 	avatar,
@@ -23,39 +28,54 @@ const CreateCommentForm: React.FC<CreateCommentFormProps> = ({
 	onCommentAdded,
 }) => {
 	const [createComment, { isLoading }] = useCreateTodoItemCommentMutation();
-	const [inputVal, setInputVal] = useState("");
 
-	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
+	const handleSubmit = async (fv: FormikValues) => {
+		const todoComment = await createComment({ body: fv.body, pageId, todoItemId }).unwrap();
+		formik.resetForm();
 
-		try {
-			const res = (await createComment({ body: inputVal, pageId, todoItemId })) as any;
-			setInputVal("");
-
-			if (res?.data) {
-				onCommentAdded(res.data as TodoItemComment); // Todo change to correct type
-			}
-		} catch (error) {}
+		if (todoComment) {
+			onCommentAdded(todoComment);
+		}
 	};
+
+	const formik = useFormik({
+		initialValues: {
+			body: "",
+		},
+		onSubmit: handleSubmit,
+		validationSchema: commentBodyValidationSchema,
+	});
 
 	return (
 		<div className={styles.add__new__comment}>
-			<form onSubmit={handleSubmit}>
+			<form onSubmit={formik.handleSubmit}>
 				<div className={styles.comment__input}>
 					<div>
 						<Avatar tooltip={false} size="md" username={username} avatar={avatar} />
 					</div>
 
-					<input
-						type="text"
-						value={inputVal}
-						disabled={isLoading}
-						onChange={(e) => setInputVal(e.target.value)}
-					/>
+					<div className={styles.comment__input__input_container}>
+						<input
+							className={`form-control form-control-modal ${
+								formik.errors.body && formik.touched.body ? "invalid" : ""
+							}`}
+							type="text"
+							value={formik.values.body}
+							disabled={isLoading}
+							id="body"
+							name="body"
+							onBlur={formik.handleBlur}
+							onChange={formik.handleChange}
+						/>
+
+						{formik.errors.body && formik.touched.body && (
+							<span className="form-error">{formik.errors.body}</span>
+						)}
+					</div>
 				</div>
 				<div className={styles.btn__container}>
 					<LoadingButton
-						disabled={!inputVal || isLoading}
+						disabled={!formik.isValid || isLoading || !formik.dirty}
 						isLoading={isLoading}
 						delay={250}
 						position="right"
