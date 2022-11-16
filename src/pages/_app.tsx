@@ -107,7 +107,7 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
 	const appProps = await App.getInitialProps(appContext);
 
 	const requestedPath = appContext?.router.asPath;
-	const isPageRequest = requestedPath.includes("/pages");
+	const isPageRequest = /\/pages\/[a-f0-9\-]{36}/.test(requestedPath);
 	const cookies = appContext.ctx.req?.headers.cookie as string;
 	const isSSRLoad = Boolean(appContext.ctx?.req);
 
