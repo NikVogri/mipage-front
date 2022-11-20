@@ -1,3 +1,5 @@
+@import "styles/partial/mixins";
+
 .comment {
 	display: flex;
 	align-items: flex-start;
@@ -39,14 +41,6 @@
 	.comment__formatted_date {
 		cursor: default;
 	}
-}
 
-.show__more {
-	display: block;
-	margin-top: 0.5rem;
-	text-align: center;
-	font-size: 1.2rem;
-	font-weight: bold;
-	color: var(--color-pop);
-	cursor: pointer;
+	@include wysiwyg_richtext_defaults;
 }

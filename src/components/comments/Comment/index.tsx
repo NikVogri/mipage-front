@@ -1,6 +1,5 @@
-import { useMemo, useState } from "react";
-
-import { truncate } from "helpers/stringTools";
+import { useMemo } from "react";
+import { sanitizeHtml } from "helpers/sanitizeHtml";
 import { User } from "models";
 
 import Avatar from "components/UI/Avatar";
@@ -15,10 +14,6 @@ interface CommentProps {
 }
 
 const Comment: React.FC<CommentProps> = ({ user, body, createdAt }) => {
-	const [showMore, setShowMore] = useState(false);
-
-	const isLongText = body.length > 300;
-
 	const formattedFullDate = useMemo(() => {
 		const date = new Date(createdAt);
 		const month = date.toLocaleString("default", { month: "long" });
@@ -42,12 +37,12 @@ const Comment: React.FC<CommentProps> = ({ user, body, createdAt }) => {
 						</span>
 					</HoverPopover>
 				</div>
-				<p className={styles.comment__content}>{showMore ? body : truncate(body, 300)}</p>
-				{isLongText && (
-					<button onClick={() => setShowMore(!showMore)} className={styles.show__more}>
-						{showMore ? "Show less" : "Show more"}
-					</button>
-				)}
+				<p
+					className={styles.comment__content}
+					dangerouslySetInnerHTML={{
+						__html: sanitizeHtml(body),
+					}}
+				></p>
 			</div>
 		</li>
 	);
