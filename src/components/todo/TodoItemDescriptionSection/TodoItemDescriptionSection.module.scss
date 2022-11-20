@@ -1,4 +1,5 @@
-@import "../../../styles/partial/components/basic_button";
+@import "styles/partial/components/basic_button";
+@import "styles/partial/mixins";
 
 .add__description__btn {
 	@include btn_basic;
@@ -22,5 +23,9 @@
 
 	@media screen and (max-width: 768px) {
 		margin-left: 0rem;
+	}
+
+	.description {
+		@include wysiwyg_richtext_defaults;
 	}
 }

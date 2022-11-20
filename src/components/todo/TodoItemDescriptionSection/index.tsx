@@ -1,12 +1,12 @@
-import LoadingSpinner from "components/UI/LoadingSpinner";
-import LoadingWrapper from "components/UI/LoadingWrapper";
-import TextAreaWithControls from "components/UI/TextAreaWithControls";
-import { useUpdateTodoItemMutation } from "features/todo/todoApi";
-import useAuth from "hooks/useAuth";
 import { useEffect, useState } from "react";
+import { useUpdateTodoItemMutation } from "features/todo/todoApi";
 import { MdAdd, MdDescription } from "react-icons/md";
+import useAuth from "hooks/useAuth";
+
+import WYSIWYGWithControls from "components/UI/WYSIWYGWithControls";
 
 import styles from "./TodoItemDescriptionSection.module.scss";
+import { sanitizeHtml } from "helpers/sanitizeHtml";
 
 interface TodoItemDescriptionSectionProps {
 	description: string;
@@ -49,9 +49,12 @@ const TodoItemDescriptionSection: React.FC<TodoItemDescriptionSectionProps> = ({
 			break;
 		case !isAuth && !!description:
 			content = (
-				<div>
-					<p>{description}</p>
-				</div>
+				<div
+					className={styles.description}
+					dangerouslySetInnerHTML={{
+						__html: sanitizeHtml(description),
+					}}
+				></div>
 			);
 			break;
 		case !isAuth && !descriptionValue:
@@ -65,14 +68,19 @@ const TodoItemDescriptionSection: React.FC<TodoItemDescriptionSectionProps> = ({
 		case description && !showDescriptionInput:
 			content = (
 				<button onClick={() => setShowDescriptionInput(true)}>
-					<p>{description}</p>
+					<div
+						className={styles.description}
+						dangerouslySetInnerHTML={{
+							__html: sanitizeHtml(description),
+						}}
+					></div>
 				</button>
 			);
 			break;
 		case showDescriptionInput:
 			content = (
-				<TextAreaWithControls
-					value={descriptionValue}
+				<WYSIWYGWithControls
+					initialHtml={descriptionValue}
 					onCancel={() => setShowDescriptionInput(false)}
 					onConfirm={handleUpdateDescription}
 				/>
