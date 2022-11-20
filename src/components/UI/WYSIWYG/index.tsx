@@ -19,6 +19,15 @@ interface WYSIWYGProps {
 	className?: string;
 }
 
+const styleMap = {
+	CODE: {
+		backgroundColor: "var(--background-card)",
+		padding: "0.2rem 0.5rem",
+		borderRadius: "0.5rem",
+		border: "solid 1px var(--outline)",
+	},
+};
+
 const WYSIWYG: React.FC<WYSIWYGProps> = ({
 	editorState,
 	onStateUpdate,
@@ -94,7 +103,12 @@ const WYSIWYG: React.FC<WYSIWYGProps> = ({
 				tags={tags}
 			/>
 			<div className={`${editorClass ? editorClass : ""} ${styles.editor}`}>
-				<Editor editorState={editorState} onChange={handleStateChange} handleKeyCommand={handleKeyCommand} />
+				<Editor
+					editorState={editorState}
+					onChange={handleStateChange}
+					handleKeyCommand={handleKeyCommand}
+					customStyleMap={styleMap}
+				/>
 			</div>
 		</div>
 	);
