@@ -49,7 +49,6 @@ const WYSIWYG: React.FC<WYSIWYGProps> = ({
 
 		let html = convertToHTML({
 			blockToHTML: (block) => {
-				console.log(block);
 				if (!block.text) {
 					return <br />;
 				}
