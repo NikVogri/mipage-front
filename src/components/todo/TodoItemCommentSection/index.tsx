@@ -55,13 +55,7 @@ const TodoItemCommentSection: React.FC<TodoItemCommentSectionProps> = ({ pageId,
 				Comments
 			</h3>
 			<section className={styles.comment__section}>
-				<CreateCommentForm
-					username={user?.username!}
-					avatar={user?.avatar!}
-					todoItemId={todoItemId}
-					pageId={pageId}
-					onCommentAdded={handleCommentAdded}
-				/>
+				<CreateCommentForm todoItemId={todoItemId} pageId={pageId} onCommentAdded={handleCommentAdded} />
 				<hr />
 				<LoadingWrapper isLoading={isFetching && page === 0} delay={0}>
 					<CommentList
