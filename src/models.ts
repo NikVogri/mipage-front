@@ -134,3 +134,6 @@ export interface TodoItemComment {
 }
 
 export type ColorTypes = "success" | "danger";
+
+export type WYSIWYGBlockTypes = "H1" | "H2" | "H3" | "H4" | "H5" | "H6" | "UL" | "OL";
+export type WYSIWYGInlineStyles = "Bold" | "Italic" | "Underline" | "Monospace";

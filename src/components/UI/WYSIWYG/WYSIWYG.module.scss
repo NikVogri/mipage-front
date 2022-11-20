@@ -1,0 +1,31 @@
+.wysiwyg {
+	border: solid 1px var(--outline);
+
+	.editor {
+		padding: 1rem;
+
+		h1,
+		h2,
+		h3 {
+			font-weight: bold;
+			color: var(--text-primary);
+			margin-bottom: 0.5rem;
+		}
+
+		h1 {
+			font-size: 3rem;
+		}
+
+		h2 {
+			font-size: 2.5rem;
+		}
+
+		h3 {
+			font-size: 2rem;
+		}
+	}
+}
+
+.editor :global(.public-DraftEditor-content) {
+	min-height: 13rem;
+}

@@ -1,0 +1,38 @@
+.header {
+	max-height: 4rem;
+	padding: 0.5rem;
+	border-bottom: solid 1px var(--outline);
+
+	display: flex;
+	align-items: stretch;
+
+	background-color: var(--background-card);
+
+	button {
+		font-size: 1.6rem;
+		height: 100% !important;
+		margin: 0.1rem;
+
+		&[data-selected] {
+			background-color: var(--outline);
+		}
+
+		&:hover {
+			transition: background-color 0.3s ease-in-out;
+			background-color: var(--outline);
+		}
+
+		span {
+			height: 100%;
+
+			svg {
+				height: 2.4rem;
+				path {
+					height: 100%;
+				}
+			}
+		}
+
+		padding: 0.25rem 0.5rem;
+	}
+}
