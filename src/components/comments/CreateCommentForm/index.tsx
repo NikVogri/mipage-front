@@ -1,16 +1,16 @@
 import { useCreateTodoItemCommentMutation } from "features/comment/commentApi";
 import { TodoItemComment } from "models";
 import { FormikValues, useFormik } from "formik";
+import { EditorState } from "draft-js";
+import { useState } from "react";
 import * as Yup from "yup";
 
-import Avatar from "components/UI/Avatar";
 import LoadingButton from "components/UI/LoadingButton";
+import WYSIWYG from "components/UI/WYSIWYG";
 
 import styles from "./CreateCommentForm.module.scss";
 
 interface CreateCommentFormProps {
-	username: string;
-	avatar?: string;
 	pageId: string;
 	todoItemId: string;
 	onCommentAdded: (comment: TodoItemComment) => void;
@@ -20,17 +20,13 @@ const commentBodyValidationSchema = Yup.object().shape({
 	body: Yup.string().min(1).max(4096).required(),
 });
 
-const CreateCommentForm: React.FC<CreateCommentFormProps> = ({
-	username,
-	avatar,
-	pageId,
-	todoItemId,
-	onCommentAdded,
-}) => {
+const CreateCommentForm: React.FC<CreateCommentFormProps> = ({ pageId, todoItemId, onCommentAdded }) => {
+	const [editorState, setEditorState] = useState(EditorState.createEmpty());
 	const [createComment, { isLoading }] = useCreateTodoItemCommentMutation();
 
 	const handleSubmit = async (fv: FormikValues) => {
 		const todoComment = await createComment({ body: fv.body, pageId, todoItemId }).unwrap();
+		setEditorState(EditorState.createEmpty());
 		formik.resetForm();
 
 		if (todoComment) {
@@ -50,27 +46,13 @@ const CreateCommentForm: React.FC<CreateCommentFormProps> = ({
 		<div className={styles.add__new__comment}>
 			<form onSubmit={formik.handleSubmit}>
 				<div className={styles.comment__input}>
-					<div>
-						<Avatar tooltip={false} size="md" username={username} avatar={avatar} />
-					</div>
-
 					<div className={styles.comment__input__input_container}>
-						<input
-							className={`form-control form-control-modal ${
-								formik.errors.body && formik.touched.body ? "invalid" : ""
-							}`}
-							type="text"
-							value={formik.values.body}
-							disabled={isLoading}
-							id="body"
-							name="body"
-							onBlur={formik.handleBlur}
-							onChange={formik.handleChange}
+						<WYSIWYG
+							editorState={editorState}
+							onStateUpdate={setEditorState}
+							onHtmlChange={(val) => formik.setFieldValue("body", val, true)}
+							tags={["H1", "H2", "H3", "Bold", "Italic", "Monospace", "OL", "UL", "Underline"]}
 						/>
-
-						{formik.errors.body && formik.touched.body && (
-							<span className="form-error">{formik.errors.body}</span>
-						)}
 					</div>
 				</div>
 				<div className={styles.btn__container}>
