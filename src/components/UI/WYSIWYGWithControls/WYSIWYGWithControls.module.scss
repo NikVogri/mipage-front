@@ -1,0 +1,12 @@
+@import "styles/partial/components/basic_button";
+
+.wysiwyg__with__controls {
+	.btn__container {
+		display: flex;
+		align-items: center;
+
+		button {
+			@include btn_basic;
+		}
+	}
+}
