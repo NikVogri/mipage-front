@@ -13,25 +13,20 @@ import styles from "./CreateCommentForm.module.scss";
 interface CreateCommentFormProps {
 	pageId: string;
 	todoItemId: string;
-	onCommentAdded: (comment: TodoItemComment) => void;
 }
 
 const commentBodyValidationSchema = Yup.object().shape({
 	body: Yup.string().min(1).max(4096).required(),
 });
 
-const CreateCommentForm: React.FC<CreateCommentFormProps> = ({ pageId, todoItemId, onCommentAdded }) => {
+const CreateCommentForm: React.FC<CreateCommentFormProps> = ({ pageId, todoItemId }) => {
 	const [editorState, setEditorState] = useState(EditorState.createEmpty());
 	const [createComment, { isLoading }] = useCreateTodoItemCommentMutation();
 
 	const handleSubmit = async (fv: FormikValues) => {
-		const todoComment = await createComment({ body: fv.body, pageId, todoItemId }).unwrap();
+		await createComment({ body: fv.body, pageId, todoItemId }).unwrap();
 		setEditorState(EditorState.createEmpty());
 		formik.resetForm();
-
-		if (todoComment) {
-			onCommentAdded(todoComment);
-		}
 	};
 
 	const formik = useFormik({
@@ -62,6 +57,7 @@ const CreateCommentForm: React.FC<CreateCommentFormProps> = ({ pageId, todoItemI
 						delay={250}
 						position="right"
 						scheme="success"
+						type="submit"
 					>
 						Submit
 					</LoadingButton>

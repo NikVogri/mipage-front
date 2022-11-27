@@ -16,8 +16,6 @@ interface TodoItemCommentSectionProps {
 }
 
 const TodoItemCommentSection: React.FC<TodoItemCommentSectionProps> = ({ pageId, todoItemId }) => {
-	const { user } = useAuth();
-
 	const [comments, setComments] = useState<TodoItemComment[]>([]);
 	const [noMoreResults, setNoMoreResults] = useState(false);
 	const [page, setPage] = useState(0);
@@ -31,21 +29,19 @@ const TodoItemCommentSection: React.FC<TodoItemCommentSectionProps> = ({ pageId,
 		setPage(page);
 	};
 
-	const handleCommentAdded = (comment: TodoItemComment) => {
-		setComments((oldComments) => [comment, ...oldComments]);
-	};
-
 	useEffect(() => {
 		if (data?.comments?.length) {
+			// comments endpoint returned more comments, add them to existing comments array.√
 			if (page === 0) {
 				setComments(data.comments);
 			} else {
-				setComments((oldComments) => [...oldComments, ...data.comments]);
+				setComments((oldComments) => oldComments.concat(data.comments));
 			}
 		} else if (page > 1) {
+			// comments endpoint returned an empty array, calculate if show more button should be shown
 			setNoMoreResults(comments.length >= data?.total!);
 		}
-	}, [data, comments.length]); // eslint-disable-line react-hooks/exhaustive-deps
+	}, [data]);
 
 	return (
 		<div>
@@ -55,7 +51,7 @@ const TodoItemCommentSection: React.FC<TodoItemCommentSectionProps> = ({ pageId,
 				Comments
 			</h3>
 			<section className={styles.comment__section}>
-				<CreateCommentForm todoItemId={todoItemId} pageId={pageId} onCommentAdded={handleCommentAdded} />
+				<CreateCommentForm todoItemId={todoItemId} pageId={pageId} />
 				<hr />
 				<LoadingWrapper isLoading={isFetching && page === 0} delay={0}>
 					<CommentList
