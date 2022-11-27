@@ -1,5 +1,7 @@
 .wysiwyg {
 	border: solid 1px var(--outline);
+	border-radius: 0.5rem;
+	overflow: hidden;
 
 	.editor {
 		padding: 1rem;
