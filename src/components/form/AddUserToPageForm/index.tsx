@@ -67,6 +67,7 @@ const AddUserToPageForm: React.FC<AddUserToPageFormProps> = ({ pageId }) => {
 					scheme="success"
 					position="right"
 					delay={250}
+					type="submit"
 				>
 					Add
 				</LoadingButton>

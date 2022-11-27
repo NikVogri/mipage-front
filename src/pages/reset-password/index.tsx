@@ -67,6 +67,7 @@ const ForgotPassword = () => {
 						disabled={isLoading || !formik.dirty || !formik.isValid || isSuccess}
 						delay={250}
 						className={styles.forgot__password__btn}
+						type="submit"
 					>
 						Request reset
 					</LoadingButton>

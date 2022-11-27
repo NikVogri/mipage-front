@@ -153,6 +153,7 @@ const Register = () => {
 						disabled={loading || !formik.dirty || !formik.isValid}
 						delay={250}
 						className={styles.register__btn}
+						type="submit"
 					>
 						Create an account
 					</LoadingButton>

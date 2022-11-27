@@ -94,6 +94,7 @@ const UserProfileUpdateInfoTab: React.FC = () => {
 				isLoading={isLoading}
 				disabled={!formik.isValid || !formik.dirty}
 				delay={250}
+				type="submit"
 			>
 				Save changes
 			</LoadingButton>

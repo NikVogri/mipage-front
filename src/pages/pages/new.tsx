@@ -89,6 +89,7 @@ const CreateNewPage = () => {
 					isLoading={isLoading}
 					disabled={!formik.dirty || !formik.isValid || isLoading}
 					delay={250}
+					type="submit"
 				>
 					Create page
 				</LoadingButton>
