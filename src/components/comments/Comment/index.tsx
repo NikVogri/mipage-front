@@ -37,12 +37,12 @@ const Comment: React.FC<CommentProps> = ({ user, body, createdAt }) => {
 						</span>
 					</HoverPopover>
 				</div>
-				<p
+				<div
 					className={styles.comment__content}
 					dangerouslySetInnerHTML={{
 						__html: sanitizeHtml(body),
 					}}
-				></p>
+				></div>
 			</div>
 		</li>
 	);
