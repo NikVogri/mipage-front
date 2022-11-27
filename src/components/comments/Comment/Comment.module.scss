@@ -34,13 +34,14 @@
 
 	.comment__content {
 		margin-top: 0.5rem;
-		font-size: 1.45rem;
-		color: Var(--text-primary);
+		@include wysiwyg_richtext_defaults;
 	}
 
 	.comment__formatted_date {
 		cursor: default;
 	}
 
-	@include wysiwyg_richtext_defaults;
+	h1 {
+		font-size: 5rem;
+	}
 }
