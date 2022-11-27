@@ -16,6 +16,7 @@ interface LoadingButtonProps {
 	onClick?: () => void;
 	flat?: boolean;
 	className?: string;
+	type?: "submit" | "button";
 }
 const LoadingButton: React.FC<LoadingButtonProps> = ({
 	children,
@@ -27,6 +28,7 @@ const LoadingButton: React.FC<LoadingButtonProps> = ({
 	scheme = "default",
 	flat,
 	className,
+	type = "button",
 }) => {
 	const { showLoader } = useLoadingDelay(isLoading, delay);
 	const btnRef = useRef<HTMLButtonElement>(null);
@@ -34,6 +36,7 @@ const LoadingButton: React.FC<LoadingButtonProps> = ({
 	return (
 		<button
 			ref={btnRef}
+			type={type}
 			disabled={disabled}
 			className={`${styles.btn__submit} ${className} ${flat && styles.flat} ${styles[position]} ${
 				styles[scheme]
