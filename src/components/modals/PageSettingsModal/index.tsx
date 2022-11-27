@@ -105,6 +105,7 @@ const PageSettingsModal: React.FC<PageSettingsModalProps> = ({ isOpen, setIsOpen
 								isLoading={isLoadingUpdate}
 								disabled={isLoadingUpdate || !formValuesChanges}
 								delay={250}
+								type="submit"
 							>
 								Save changes
 							</LoadingButton>

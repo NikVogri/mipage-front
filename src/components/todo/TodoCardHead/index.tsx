@@ -115,6 +115,7 @@ const TodoCardHead: React.FC<TodoCardHeadProps> = ({ color, title, pageId, todoI
 								isLoading={isLoading}
 								disabled={!formik.dirty || !formik.isValid}
 								delay={250}
+								type="submit"
 							>
 								Save
 							</LoadingButton>
