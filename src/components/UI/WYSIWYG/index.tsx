@@ -50,13 +50,13 @@ const WYSIWYG: React.FC<WYSIWYGProps> = ({
 		let html = convertToHTML({
 			blockToHTML: (block) => {
 				if (!block.text) {
-					return <br />;
+					return "<br />";
 				}
 			},
 		})(newState.getCurrentContent());
 
 		// remove <br/> if the html string contains only that tag
-		if (html === "<br/>") {
+		if (html === "<br />") {
 			html = "";
 		}
 
