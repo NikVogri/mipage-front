@@ -2,7 +2,7 @@ import { NotebookBlockType } from "models";
 
 import CodeBlock from "../CodeBlock";
 import ImageBlock from "../ImageBlock";
-import RichTextBlock from "../../editor/RichTextBlock";
+import RichTextBlock from "../RichTextBlock";
 
 interface NotebookBlockProps {
 	type: NotebookBlockType;
