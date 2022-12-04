@@ -1,14 +1,14 @@
 import { Editor, EditorState } from "draft-js";
+import debounce from "lodash.debounce";
 import { useUpdateNotebookBlockMutation } from "features/notebook/notebookApi";
 import { editorContentToRawString } from "helpers/editorContentToRawString";
 import { parseEditorContentRawString } from "helpers/parseEditorContentRawString";
-import { useMemo, useRef, useState } from "react";
-import useEditorAutosave from "hooks/useEditorAutosave";
+import { useCallback, useMemo, useState } from "react";
+import useWarnBeforePathChange from "hooks/useWarnBeforePathChange";
 
 import EditorToolbar from "../EditorToolbar";
 
 import styles from "./RichTextBlock.module.scss";
-import useWarnBeforePathChange from "hooks/useWarnBeforePathChange";
 
 interface RichTextBlockProps {
 	content: string;
@@ -22,8 +22,8 @@ const getInitEditorState = (rawContentString: any): EditorState => {
 		try {
 			const content = parseEditorContentRawString(rawContentString);
 			return EditorState.createWithContent(content);
-		} catch (error) {
-			console.log("Could not parse content", error); // TODO: Handle error
+		} catch (err) {
+			console.log("Could not parse content", err);
 		}
 	}
 
@@ -32,19 +32,25 @@ const getInitEditorState = (rawContentString: any): EditorState => {
 
 const RichTextBlock: React.FC<RichTextBlockProps> = ({ content, pageId, notebookId, id }) => {
 	const initialEditorState = useMemo(() => getInitEditorState(content), [content]);
-	const editorStateRef = useRef(initialEditorState);
-	const [updateNotebookBlock, { isError, error }] = useUpdateNotebookBlockMutation();
-	const [currentEditorState, setCurrentEditorState] = useState(() => initialEditorState);
 
-	const { needsSync, setNeedsSync } = useEditorAutosave(async () => {
-		const stringifiedRawContent = editorContentToRawString(editorStateRef.current);
-		await updateNotebookBlock({
-			content: stringifiedRawContent,
-			pageId,
-			notebookId,
-			notebookBlockId: id,
-		});
-	});
+	const [needsSync, setNeedsSync] = useState(false);
+	const [editorState, setEditorState] = useState(initialEditorState);
+
+	const [updateNotebookBlock] = useUpdateNotebookBlockMutation();
+
+	const debounceSave = useCallback(
+		debounce(async (newEditorState: EditorState) => {
+			await updateNotebookBlock({
+				content: editorContentToRawString(newEditorState),
+				pageId,
+				notebookId,
+				notebookBlockId: id,
+			});
+
+			setNeedsSync(false);
+		}, 750),
+		[pageId, notebookId, id]
+	);
 
 	useWarnBeforePathChange(needsSync, () => {
 		const userConfirmed = confirm("You have unsaved changes. Are you sure you want to leave this page?");
@@ -56,26 +62,21 @@ const RichTextBlock: React.FC<RichTextBlockProps> = ({ content, pageId, notebook
 		return userConfirmed;
 	});
 
-	const setEditorState = (newState: EditorState) => {
-		if (!needsSync) {
+	const updateEditorState = (newEditorState: EditorState) => {
+		if (newEditorState.getCurrentContent() !== editorState.getCurrentContent()) {
 			setNeedsSync(true);
+			debounceSave(newEditorState);
 		}
 
-		editorStateRef.current = newState;
-		setCurrentEditorState(newState);
+		setEditorState(newEditorState);
 	};
-
-	if (isError) {
-		console.log(error); // TODO: Handle error
-	}
 
 	return (
 		<div className={styles.rich_text_block}>
-			<EditorToolbar editorState={currentEditorState} setEditorState={setEditorState} id={id} />
+			<EditorToolbar editorState={editorState} setEditorState={updateEditorState} id={id} />
 			<div className={`editor-${id}`}>
-				<Editor editorState={currentEditorState} onChange={setEditorState} />
+				<Editor editorState={editorState} onChange={updateEditorState} />
 			</div>
-			--
 		</div>
 	);
 };
