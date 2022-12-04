@@ -1,0 +1,10 @@
+.notebook_editor_toolbar {
+	position: absolute;
+
+	background: var(--background-primary);
+	border: solid 1px var(--outline);
+
+	border-radius: 0.25rem;
+
+	z-index: 999999;
+}

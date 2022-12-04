@@ -1,0 +1,9 @@
+@import "styles/partial/mixins";
+
+.rich_text_block {
+	font-family: "Roboto", sans-serif, "Helvetica Neue", sans-serif;
+	font-size: 1.6rem;
+	position: relative;
+
+	@include wysiwyg_richtext_defaults;
+}
