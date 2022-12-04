@@ -1,8 +1,7 @@
-import { useState } from "react";
-import SelectCard from "components/form/SelectCard";
 import { PageType } from "models";
-
 import { BsCardChecklist, BsBook } from "react-icons/bs";
+
+import SelectCard from "components/form/SelectCard";
 
 import styles from "./PageTypeSelection.module.scss";
 
@@ -22,11 +21,14 @@ const PageTypeSelection: React.FC<PageTypeStepProps> = ({ setType, pageType }) =
 					<BsCardChecklist size={64} />
 					<p className={styles.description}>Never forget anything, create multiple to-do lists</p>
 				</SelectCard>
-				<SelectCard id="notebook" disabled={true} isActive={pageType === PageType.notebook} onSelect={() => {}}>
+				<SelectCard
+					id="notebook"
+					isActive={pageType === PageType.notebook}
+					onSelect={() => setType(PageType.notebook)}
+				>
 					<h3 className={styles.title}>Notebook</h3>
 					<BsBook size={64} />
 					<p className={styles.description}>Your own accessible anywhere digital notebook</p>
-					<h4>Currently not available</h4>
 				</SelectCard>
 			</div>
 		</>
