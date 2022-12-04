@@ -78,6 +78,7 @@ const AddNotebookModal: React.FC<AddNotebookModalProps> = ({
 								scheme="success"
 								disabled={isLoading}
 								delay={250}
+								type="submit"
 							>
 								Submit
 							</LoadingButton>
