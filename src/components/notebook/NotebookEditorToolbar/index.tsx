@@ -35,13 +35,9 @@ const NotebookEditorToolbar: React.FC<EditorToolbarProps> = ({ editorState, setE
 
 	useEffect(() => {
 		const handleMouseEvent = (e: MouseEvent) => {
-			const targetElement = e.target as Node;
+			const targetElement = e.target! as HTMLElement;
 			const selection = window.getSelection()?.toString();
 			const editor = document.getElementById(`editor-${id}`)!;
-
-			// TODO: potentially use the highlighted element as the anchor point for the coordinates.
-			// It didn't work for me at the moment - deeper research needed.
-			// The current implementation also works fine.
 
 			if (
 				selection &&
@@ -51,21 +47,27 @@ const NotebookEditorToolbar: React.FC<EditorToolbarProps> = ({ editorState, setE
 			) {
 				// Custom defined offset to prevent toolbar from covering the highlighted text
 				const offsetY = 50;
-				const offsetX = 35;
-				const textHeightOffset = 16;
-
-				// Client page full size
-				const pageX = e.clientX;
-				const pageY = e.clientY;
+				const offsetX = 10;
 
 				// Editor bounds
-				const bounds = editor.getBoundingClientRect();
-				const leftBound = bounds!.left;
-				const topBound = bounds!.top;
+				const parentBounds = editor.getBoundingClientRect();
 
 				// Editor container relative 'top' and 'left' toolbar position in px
-				const localX = pageX - leftBound - offsetX;
-				const localY = pageY - topBound - offsetY - textHeightOffset;
+				const targetBounds = targetElement.getBoundingClientRect();
+				let localX = Math.abs(parentBounds.left - targetBounds.left) - offsetX;
+				let localY = Math.abs(parentBounds.top - targetBounds.top) - offsetY;
+
+				// Minimum px between highest editor and page center border
+				const minEditorOffsetTop = 30;
+
+				// Make sure toolbar does not show outside of editor bounds
+				if (localY < 0 && editor.offsetTop < minEditorOffsetTop) {
+					localY += targetBounds.height + offsetY;
+				}
+
+				if (localX < 0) {
+					localX = 0;
+				}
 
 				setToolbarPosition({ x: localX, y: localY });
 				setShowToolbar(true);
