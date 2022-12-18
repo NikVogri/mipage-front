@@ -88,7 +88,6 @@ export interface Todo {
 }
 
 export enum NotebookBlockType {
-	image = "image",
 	richText = "richText",
 	code = "code",
 }
