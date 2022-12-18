@@ -1,0 +1,20 @@
+.button {
+	padding: 0.2rem;
+	font-size: 1.4rem;
+
+	svg {
+		transition: fill 0.3s ease-in-out;
+		fill: var(--outline);
+	}
+
+	&:hover,
+	&.active {
+		svg {
+			fill: var(--text-primary);
+		}
+	}
+
+	&_spinner {
+		height: 1.8rem;
+	}
+}

@@ -1,0 +1,13 @@
+.select {
+	background-color: transparent;
+	font-size: 1.6rem;
+	margin-right: 1rem;
+
+	color: var(--outline);
+	transition: color 0.3s ease-in-out;
+
+	&:hover {
+		cursor: pointer;
+		color: var(--text-primary);
+	}
+}
