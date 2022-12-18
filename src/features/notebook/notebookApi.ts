@@ -36,6 +36,26 @@ export const notebookExtendedApi = baseApi.injectEndpoints({
 				} catch {}
 			},
 		}),
+		deleteNotebookBlock: build.mutation<
+			NotebookBlock,
+			{ pageId: string; notebookBlockId: string; notebookId: string }
+		>({
+			query: ({ pageId, notebookId, notebookBlockId }) => ({
+				url: `pages/${pageId}/notebooks/${notebookId}/notebook-blocks/${notebookBlockId}`,
+				method: "DELETE",
+			}),
+			async onQueryStarted({ pageId, notebookId, notebookBlockId }, { dispatch, queryFulfilled }) {
+				try {
+					await queryFulfilled;
+
+					dispatch(
+						notebookExtendedApi.util.updateQueryData("getNotebook", { pageId, notebookId }, (notebook) => {
+							notebook.blocks = notebook.blocks.filter((n) => n.id !== notebookBlockId);
+						})
+					);
+				} catch {}
+			},
+		}),
 		createNotebook: build.mutation<NotebookBlock, { pageId: string; title: string }>({
 			query: ({ pageId, title }) => ({
 				url: `pages/${pageId}/notebooks`,
@@ -92,4 +112,5 @@ export const {
 	useUpdateNotebookBlockMutation,
 	useCreateNotebookBlockMutation,
 	useCreateNotebookMutation,
+	useDeleteNotebookBlockMutation,
 } = notebookExtendedApi;
