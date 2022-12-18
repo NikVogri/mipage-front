@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { useGetSinglePageQuery, useGetSinglePublicPageQuery } from "features/page/pagesApi";
 import { useRouter } from "next/router";
+import { PageType } from "models";
 
 import PageCenter from "components/page/PageCenter";
 import PageErrorLoading from "components/page/PageErrorLoading";
@@ -41,6 +42,11 @@ const Page = () => {
 
 	if (!data) {
 		return <PageErrorLoading />;
+	}
+
+	if (data.type === PageType.notebook && !router.query.n) {
+		// TODO: Edge case - force open "Add a new notebook" modal if notebooks array is empty.
+		router.replace(`${router.asPath}?n=${data.notebooks[0].id}`);
 	}
 
 	return (

@@ -1,6 +1,7 @@
-import { Field, FieldConfig, Form, Formik, FormikValues, useFormik } from "formik";
+import { Formik, FormikValues, useFormik } from "formik";
 import { Dispatch, SetStateAction } from "react";
 import { useCreateNotebookMutation } from "features/notebook/notebookApi";
+import { useRouter } from "next/router";
 import * as Yup from "yup";
 
 import LoadingButton from "components/UI/LoadingButton";
@@ -27,11 +28,15 @@ const AddNotebookModal: React.FC<AddNotebookModalProps> = ({
 	notebooksCount,
 	pageId,
 }) => {
-	const [createNotebook, { isLoading }] = useCreateNotebookMutation();
+	const router = useRouter();
+	const [createNotebook, { isLoading, data }] = useCreateNotebookMutation();
 
 	const handleCreateNotebook = async (fv: FormikValues) => {
-		await createNotebook({ title: fv.title, pageId });
+		const res = await createNotebook({ title: fv.title, pageId }).unwrap();
+
+		formik.resetForm();
 		setIsClosed();
+		router.push(`${pageId}?n=${res.id}`);
 	};
 
 	const formik = useFormik({
