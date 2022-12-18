@@ -1,0 +1,18 @@
+.codeBlock {
+	position: relative;
+
+	// TODO: display controls on hover
+
+	&_controls {
+		position: absolute;
+		top: 0.5rem;
+		right: 0.5rem;
+
+		border-radius: 0.5rem;
+		padding: 0.5rem 1rem;
+		background-color: var(--background-card);
+
+		display: flex;
+		align-items: center;
+	}
+}

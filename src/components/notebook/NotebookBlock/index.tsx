@@ -17,7 +17,14 @@ const NotebookBlock: React.FC<NotebookBlockProps> = ({ type, content, pageId, no
 		case NotebookBlockType.richText:
 			return <RichTextBlock content={content} pageId={pageId} notebookId={notebookId} id={id} />;
 		case NotebookBlockType.code:
-			return <CodeBlock />;
+			return (
+				<CodeBlock
+					content={content ? JSON.parse(content) : ""}
+					pageId={pageId}
+					notebookId={notebookId}
+					id={id}
+				/>
+			);
 		case NotebookBlockType.image:
 			return <ImageBlock />;
 	}

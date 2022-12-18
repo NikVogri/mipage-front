@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+	font-family: "RobotoMono";
+	src: url("../fonts/RobotoMono_regular.ttf");
+	font-weight: normal;
+	font-style: normal;
+}
+
 html {
 	scroll-behavior: smooth;
 }
@@ -21,4 +28,17 @@ body {
 	padding: 2rem 0 0.75rem 0;
 	margin-bottom: 2rem;
 	border-bottom: solid 1px var(--horizontal-ruling);
+}
+
+.animate-spin {
+	animation: spin infinite linear 2s;
+}
+
+@keyframes spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
 }
