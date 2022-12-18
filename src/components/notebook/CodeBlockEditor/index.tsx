@@ -1,5 +1,7 @@
 import { SupportedProgrammingLanguage } from "config/programming-languages";
-import { isGrammarLoaded } from "helpers/prism";
+import { isGrammarLoaded, loadLanguageGrammar } from "helpers/prism";
+import { useEffect } from "react";
+import useForceRerender from "hooks/useForceRerender";
 
 import Editor from "react-simple-code-editor";
 import Prism from "prismjs";
@@ -13,6 +15,25 @@ interface CodeBlockEditorProps {
 }
 
 const CodeBlockEditor: React.FC<CodeBlockEditorProps> = ({ value, onValueChange, language }) => {
+	const forceRerender = useForceRerender();
+
+	useEffect(() => {
+		if (!isGrammarLoaded(language.id)) {
+			handleLoadGrammar();
+		}
+	}, [language]);
+
+	const handleLoadGrammar = async () => {
+		await loadLanguageGrammar(language);
+
+		// There was a problem where language grammar was not loaded, causing the 'highlight' function to render
+		// encoded code value instead of the highlighted one.
+		//
+		// The following solution might not be the best, but since the language gets lazy loaded there
+		// is no good alternative, but to force re-render when the grammar loads.
+		forceRerender();
+	};
+
 	const highlight = (code: string) => {
 		if (isGrammarLoaded(language.id)) {
 			return Prism.highlight(code, Prism.languages[language.id], language.id);

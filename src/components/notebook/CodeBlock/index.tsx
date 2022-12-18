@@ -1,7 +1,6 @@
 import { CodeBlockContent } from "models";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Languages, SupportedProgrammingLanguage } from "config/programming-languages";
-import { isGrammarLoaded, loadLanguageGrammar } from "helpers/prism";
 import { useUpdateNotebookBlockMutation } from "features/notebook/notebookApi";
 import useWarnBeforePathChange from "hooks/useWarnBeforePathChange";
 import debounce from "lodash.debounce";
@@ -13,40 +12,38 @@ import CodeBlockDeleteButton from "../CodeBlockDeleteButton";
 
 import "prismjs/themes/prism-dark.css";
 import styles from "./CodeBlock.module.scss";
-import useForceRerender from "hooks/useForceRerender";
 
 interface CodeBlockProps {
-	content: CodeBlockContent;
+	content: string;
 	pageId: string;
 	notebookId: string;
 	id: string;
 }
 
-const CodeBlock: React.FC<CodeBlockProps> = ({ content, id, notebookId, pageId }) => {
-	const [editorValue, setEditorValue] = useState(content.code ?? "");
-	const [needsSync, setNeedsSync] = useState(false);
-	const [language, setLanguage] = useState(Languages[content.language] ?? Languages[Object.keys(Languages)[0]]);
+const getInitialData = (content: string): CodeBlockContent => {
+	let parsedContent;
+	try {
+		parsedContent = JSON.parse(content);
+	} catch (err) {}
 
-	const forceRerender = useForceRerender();
+	if (parsedContent?.code && parsedContent?.language) {
+		return parsedContent;
+	}
+
+	return {
+		code: "",
+		language: Languages[Object.keys(Languages)[0]].id,
+	};
+};
+
+const CodeBlock: React.FC<CodeBlockProps> = ({ content, id, notebookId, pageId }) => {
+	const data = useMemo(() => getInitialData(content), [content]);
+
+	const [editorValue, setEditorValue] = useState(data.code);
+	const [language, setLanguage] = useState(Languages[data.language]);
+	const [needsSync, setNeedsSync] = useState(false);
 
 	const [updateNotebookBlock] = useUpdateNotebookBlockMutation();
-
-	useEffect(() => {
-		if (!isGrammarLoaded(language.id)) {
-			handleLoadGrammar();
-		}
-	}, [language]);
-
-	const handleLoadGrammar = async () => {
-		await loadLanguageGrammar(language);
-
-		// There was a problem where language grammar was not loaded, causing the 'highlight' function to render
-		// encoded code value instead of the highlighted one.
-		//
-		// The following solution might not be the best, but since the language gets lazy loaded there
-		// is no good alternative, but to force re-render when the grammar loads.
-		forceRerender();
-	};
 
 	const handleEditorStateChange = (newValue: string) => {
 		if (newValue !== editorValue) {
