@@ -141,3 +141,8 @@ export interface CodeBlockContent {
 	language: string;
 	code: string;
 }
+
+export interface NotebookDeviderMenuItem {
+	icon: JSX.Element;
+	type: NotebookBlockType;
+}

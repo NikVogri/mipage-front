@@ -1,0 +1,70 @@
+.devider {
+	position: relative;
+
+	&:hover {
+		background-color: transparent;
+	}
+
+	&__control {
+		display: flex;
+		align-items: center;
+		transition: all 0.3s ease-in;
+
+		width: 100%;
+
+		cursor: pointer;
+
+		.left__icon {
+			&.active {
+				svg {
+					opacity: 1;
+					background-color: var(--color-pop);
+					fill: var(--text-primary);
+				}
+			}
+
+			svg {
+				background-color: var(--horizontal-ruling);
+				border-radius: 0.5rem;
+				transition: all 0.15s ease-in;
+				fill: var(--text-primary);
+				opacity: 0;
+			}
+		}
+
+		.right__line {
+			transition: all 0.15s ease-in;
+			background-color: var(--horizontal-ruling);
+			opacity: 0.5;
+			width: 100%;
+			color: var(--outline);
+			height: 0.1rem;
+			width: 100%;
+			border-radius: 5rem;
+
+			&.active {
+				opacity: 1;
+				background-color: var(--color-pop);
+				width: 100%;
+				margin-left: auto;
+			}
+		}
+
+		&:hover {
+			& .right__line {
+				opacity: 1;
+				background-color: var(--color-pop);
+				width: 100%;
+				margin-left: auto;
+			}
+
+			& .left__icon {
+				svg {
+					opacity: 1;
+					background-color: var(--color-pop);
+					fill: var(--text-primary);
+				}
+			}
+		}
+	}
+}
