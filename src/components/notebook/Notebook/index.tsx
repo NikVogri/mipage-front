@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 
 import NotebookBlock from "../NotebookBlock";
 import LoadingSpinner from "components/UI/LoadingSpinner";
-import CreateNotebookBlockDevider from "../CreateNotebookBlockDevider";
+import NotebookBlockDevider from "../NotebookBlockDevider";
 
 interface NotebookProps {
 	pageId: string;
@@ -41,7 +41,7 @@ const Notebook: React.FC<NotebookProps> = ({ pageId }) => {
 				/>
 			))}
 
-			<CreateNotebookBlockDevider notebookId={router.query.n as string} pageId={pageId} />
+			<NotebookBlockDevider notebookId={router.query.n as string} pageId={pageId} />
 		</div>
 	);
 };
