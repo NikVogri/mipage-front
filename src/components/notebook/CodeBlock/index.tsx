@@ -8,7 +8,7 @@ import debounce from "lodash.debounce";
 import CodeBlockLanguageSelect from "../CodeBlockLanguageSelect";
 import CodeBlockEditor from "../CodeBlockEditor";
 import CodeBlockCopyButton from "../CodeBlockCopyButton";
-import CodeBlockDeleteButton from "../CodeBlockDeleteButton";
+import NotebookDeleteButton from "../NotebookDeleteButton";
 
 import "prismjs/themes/prism-dark.css";
 import styles from "./CodeBlock.module.scss";
@@ -97,7 +97,7 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ content, id, notebookId, pageId }
 					onSelect={handleLanguageSelect}
 				/>
 				<CodeBlockCopyButton code={editorValue} />
-				<CodeBlockDeleteButton notebookBlockId={id} notebookId={notebookId} pageId={pageId} />
+				<NotebookDeleteButton notebookBlockId={id} notebookId={notebookId} pageId={pageId} />
 			</div>
 		</div>
 	);
