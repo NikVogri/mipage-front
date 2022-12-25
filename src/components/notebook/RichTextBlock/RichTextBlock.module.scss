@@ -5,5 +5,37 @@
 	font-size: 1.6rem;
 	position: relative;
 
+	&.disabled {
+		cursor: not-allowed;
+		opacity: 0.1;
+	}
+
 	@include wysiwyg_richtext_defaults;
+
+	.rich_text_block__controls {
+		position: absolute;
+		right: 0;
+		top: 0.5rem;
+		right: 0.5rem;
+		z-index: 1;
+
+		visibility: hidden;
+		opacity: 0;
+
+		transition: all 0.3s ease-in-out;
+
+		background-color: var(--background-primary);
+		padding: 0.5rem 1rem;
+
+		display: flex;
+		align-items: center;
+		border-radius: 0.5rem;
+	}
+
+	&:hover {
+		.rich_text_block__controls {
+			visibility: visible;
+			opacity: 1;
+		}
+	}
 }
