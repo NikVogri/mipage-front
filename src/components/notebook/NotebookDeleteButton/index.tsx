@@ -3,18 +3,25 @@ import { useDeleteNotebookBlockMutation } from "features/notebook/notebookApi";
 
 import LoadingSpinner from "components/UI/LoadingSpinner";
 
-import styles from "./CodeBlockDeleteButton.module.scss";
+import styles from "./NotebookDeleteButton.module.scss";
 
-interface CodeBlockDeleteButtonProps {
+interface NotebookDeleteButtonProps {
 	pageId: string;
 	notebookId: string;
 	notebookBlockId: string;
+	onBeforeDelete?: (notebookBlockId: string) => void;
 }
 
-const CodeBlockDeleteButton: React.FC<CodeBlockDeleteButtonProps> = ({ pageId, notebookId, notebookBlockId }) => {
+const NotebookDeleteButton: React.FC<NotebookDeleteButtonProps> = ({
+	pageId,
+	notebookId,
+	notebookBlockId,
+	onBeforeDelete,
+}) => {
 	const [deleteNotebookBlock, { isLoading }] = useDeleteNotebookBlockMutation();
 
 	const handleDeleteClick = async () => {
+		if (onBeforeDelete) onBeforeDelete(notebookBlockId);
 		await deleteNotebookBlock({ pageId, notebookId, notebookBlockId });
 	};
 
@@ -30,4 +37,4 @@ const CodeBlockDeleteButton: React.FC<CodeBlockDeleteButtonProps> = ({ pageId, n
 	);
 };
 
-export default CodeBlockDeleteButton;
+export default NotebookDeleteButton;
