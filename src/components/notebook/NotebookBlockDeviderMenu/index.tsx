@@ -23,7 +23,7 @@ const NotebookBlockDeviderMenu: React.FC<NotebookBlockDeviderMenuProps> = ({ onS
 	return (
 		<ul className={`${styles.menu} ${show ? styles.show : ""}`}>
 			{items.map((item) => (
-				<li>
+				<li key={item.type}>
 					<button onClick={() => onSelect(item.type)}>{item.icon}</button>
 				</li>
 			))}
