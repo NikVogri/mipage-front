@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SidebarNotebook } from "models";
 import { truncate } from "helpers/stringTools";
 import { BsBook } from "react-icons/bs";
@@ -24,8 +24,12 @@ const NotebooksLinkDropdown: React.FC<NotebooksLinkDropdownProps> = ({
 	active,
 	activeNotebookId,
 }) => {
-	const [showDropdown, setShowDropdown] = useState(false);
+	const [showDropdown, setShowDropdown] = useState(active);
 	const [showAddNotebookModal, setShowAddNotebookModal] = useState(false);
+
+	useEffect(() => {
+		setShowDropdown(active);
+	}, [active]);
 
 	return (
 		<>
@@ -46,11 +50,7 @@ const NotebooksLinkDropdown: React.FC<NotebooksLinkDropdownProps> = ({
 					)}
 				</div>
 
-				<ul
-					className={`${styles.dropdown_list} ${
-						active || showDropdown || !notebooks.length ? styles.open : ""
-					}`}
-				>
+				<ul className={`${styles.dropdown_list} ${showDropdown || !notebooks.length ? styles.open : ""}`}>
 					{!notebooks.length && <span>No notebooks yet, add one now!</span>}
 					{notebooks.map((notebook) => (
 						<li
