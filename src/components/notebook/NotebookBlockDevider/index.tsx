@@ -38,7 +38,7 @@ const NotebookBlockDevider: React.FC<NotebookBlockDeviderProps> = ({ pageId, not
 		<div ref={wrapperRef} className={styles.devider}>
 			<div className={styles.devider__control} onClick={() => setShowMenu(true)}>
 				<div className={`${styles.left__icon} ${showMenu ? styles.active : ""}`}>
-					<HiPlus size={24} />
+					<HiPlus size={18} />
 				</div>
 				<div className={`${styles.right__line} ${showMenu ? styles.active : ""}`}></div>
 			</div>

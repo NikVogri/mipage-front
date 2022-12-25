@@ -18,16 +18,16 @@
 			&.active {
 				svg {
 					opacity: 1;
-					background-color: var(--color-pop);
-					fill: var(--text-primary);
+					border: solid 1px var(--color-pop);
+					fill: var(--color-pop);
 				}
 			}
 
 			svg {
-				background-color: var(--horizontal-ruling);
+				border: solid 1px var(--horizontal-ruling);
 				border-radius: 0.5rem;
 				transition: all 0.15s ease-in;
-				fill: var(--text-primary);
+				fill: var(--horizontal-ruling);
 				opacity: 0;
 			}
 		}
@@ -61,8 +61,8 @@
 			& .left__icon {
 				svg {
 					opacity: 1;
-					background-color: var(--color-pop);
-					fill: var(--text-primary);
+					border: solid 1px var(--color-pop);
+					fill: var(--color-pop);
 				}
 			}
 		}
