@@ -2,12 +2,13 @@ import debounce from "lodash.debounce";
 import { Editor, EditorCommand, EditorState, RichUtils } from "draft-js";
 import { useUpdateNotebookBlockMutation } from "features/notebook/notebookApi";
 import { getInitEditorState, editorContentToRawString } from "helpers/editor";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import useWarnBeforePathChange from "hooks/useWarnBeforePathChange";
 
 import NotebookEditorToolbar from "../NotebookEditorToolbar";
 
 import styles from "./RichTextBlock.module.scss";
+import NotebookDeleteButton from "../NotebookDeleteButton";
 
 interface RichTextBlockProps {
 	content: string;
@@ -31,6 +32,7 @@ const RichTextBlock: React.FC<RichTextBlockProps> = ({ content, pageId, notebook
 
 	const [needsSync, setNeedsSync] = useState(false);
 	const [editorState, setEditorState] = useState(initialEditorState);
+	const [isGettingDeleted, setIsGettingDeleted] = useState(false);
 
 	const [updateNotebookBlock] = useUpdateNotebookBlockMutation();
 
@@ -78,15 +80,29 @@ const RichTextBlock: React.FC<RichTextBlockProps> = ({ content, pageId, notebook
 		setEditorState(newEditorState);
 	};
 
+	const handleIsGettingDeleted = () => {
+		setIsGettingDeleted(true);
+		setNeedsSync(false);
+	};
+
 	return (
-		<div className={styles.rich_text_block} id={`editor-${id}`}>
+		<div className={`${styles.rich_text_block} ${isGettingDeleted ? styles.disabled : ""}`} id={`editor-${id}`}>
 			<NotebookEditorToolbar editorState={editorState} setEditorState={updateEditorState} id={id} />
 			<Editor
 				editorState={editorState}
 				onChange={updateEditorState}
 				handleKeyCommand={handleKeyCommand}
 				customStyleMap={styleMap}
+				readOnly={isGettingDeleted}
 			/>
+			<div className={styles.rich_text_block__controls}>
+				<NotebookDeleteButton
+					onBeforeDelete={handleIsGettingDeleted}
+					notebookBlockId={id}
+					notebookId={notebookId}
+					pageId={pageId}
+				/>
+			</div>
 		</div>
 	);
 };
