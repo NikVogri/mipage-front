@@ -11,16 +11,17 @@ import styles from "./NotebookBlockDevider.module.scss";
 interface NotebookBlockDeviderProps {
 	notebookId: string;
 	pageId: string;
+	previousBlockId?: string;
 }
 
-const NotebookBlockDevider: React.FC<NotebookBlockDeviderProps> = ({ pageId, notebookId }) => {
+const NotebookBlockDevider: React.FC<NotebookBlockDeviderProps> = ({ pageId, notebookId, previousBlockId }) => {
 	const [createNotebookBlock] = useCreateNotebookBlockMutation();
 	const [showMenu, setShowMenu] = useState(false);
 	const wrapperRef = useRef<HTMLDivElement>(null);
 
 	const handleAddNotebookBlock = async (type: NotebookBlockType) => {
-		await createNotebookBlock({ pageId, notebookId, type });
 		setShowMenu(false);
+		await createNotebookBlock({ pageId, notebookId, type, previousBlockId });
 	};
 
 	useEffect(() => {
