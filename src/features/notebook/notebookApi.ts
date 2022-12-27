@@ -83,20 +83,22 @@ export const notebookExtendedApi = baseApi.injectEndpoints({
 			},
 		}),
 		createNotebookBlock: build.mutation<
-			NotebookBlock,
-			{ pageId: string; notebookId: string; type: NotebookBlockType }
+			{ block: NotebookBlock; order: string[] },
+			{ pageId: string; notebookId: string; type: NotebookBlockType; previousBlockId?: string }
 		>({
-			query: ({ pageId, notebookId, type }) => ({
+			query: ({ pageId, notebookId, type, previousBlockId }) => ({
 				url: `pages/${pageId}/notebooks/${notebookId}/notebook-blocks`,
 				method: "POST",
-				body: { type },
+				body: { type, previousBlockId },
 			}),
 			async onQueryStarted({ pageId, notebookId }, { dispatch, queryFulfilled }) {
 				try {
-					const { data: updatedNotebookBlock } = await queryFulfilled;
+					const { data } = await queryFulfilled;
+
 					dispatch(
 						notebookExtendedApi.util.updateQueryData("getNotebook", { pageId, notebookId }, (notebook) => {
-							notebook.blocks.push(updatedNotebookBlock);
+							notebook.blocks.push(data.block);
+							notebook.order = data.order;
 						})
 					);
 				} catch {
