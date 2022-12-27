@@ -14,6 +14,7 @@
 	display: none;
 	align-items: center;
 	justify-content: space-around;
+	z-index: 10;
 
 	&.show {
 		display: flex;
