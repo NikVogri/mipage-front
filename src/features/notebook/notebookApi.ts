@@ -56,7 +56,7 @@ export const notebookExtendedApi = baseApi.injectEndpoints({
 				} catch {}
 			},
 		}),
-		createNotebook: build.mutation<NotebookBlock, { pageId: string; title: string }>({
+		createNotebook: build.mutation<Notebook, { pageId: string; title: string }>({
 			query: ({ pageId, title }) => ({
 				url: `pages/${pageId}/notebooks`,
 				method: "POST",
