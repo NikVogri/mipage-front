@@ -16,20 +16,16 @@ export interface Notebook {
 	id: string;
 	title: string;
 	banner: string | null;
-	createdAt: string;
-	updatedAt: string;
 	blocks: NotebookBlock[];
+	order: string[];
 }
 
 export type SidebarNotebook = Pick<Notebook, "id" | "title">;
 
 export interface NotebookBlock {
 	id: string;
-	title: string;
 	type: NotebookBlockType;
 	content: string;
-	createdAt: string;
-	updatedAt: string;
 }
 
 export interface PageOwner {
