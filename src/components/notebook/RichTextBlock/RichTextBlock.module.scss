@@ -14,7 +14,6 @@
 
 	.rich_text_block__controls {
 		position: absolute;
-		right: 0;
 		top: 0.5rem;
 		right: 0.5rem;
 		z-index: 1;
@@ -25,6 +24,7 @@
 		transition: all 0.3s ease-in-out;
 
 		background-color: var(--background-primary);
+		border: solid 1px var(--color-pop);
 		padding: 0.5rem 1rem;
 
 		display: flex;
