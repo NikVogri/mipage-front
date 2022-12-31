@@ -2,7 +2,7 @@ import debounce from "lodash.debounce";
 import { Editor, EditorCommand, EditorState, RichUtils } from "draft-js";
 import { useUpdateNotebookBlockMutation } from "features/notebook/notebookApi";
 import { getInitEditorState, editorContentToRawString } from "helpers/editor";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import useWarnBeforePathChange from "hooks/useWarnBeforePathChange";
 
 import NotebookEditorToolbar from "../NotebookEditorToolbar";
@@ -35,6 +35,12 @@ const RichTextBlock: React.FC<RichTextBlockProps> = ({ content, pageId, notebook
 	const [isGettingDeleted, setIsGettingDeleted] = useState(false);
 
 	const [updateNotebookBlock] = useUpdateNotebookBlockMutation();
+
+	const editorRef = useRef<Editor>(null);
+
+	useEffect(() => {
+		editorRef.current?.focus();
+	}, []);
 
 	const debounceSave = useCallback(
 		debounce(async (newEditorState: EditorState) => {
@@ -94,6 +100,7 @@ const RichTextBlock: React.FC<RichTextBlockProps> = ({ content, pageId, notebook
 				handleKeyCommand={handleKeyCommand}
 				customStyleMap={styleMap}
 				readOnly={isGettingDeleted}
+				ref={editorRef}
 			/>
 			<div className={styles.rich_text_block__controls}>
 				<NotebookDeleteButton

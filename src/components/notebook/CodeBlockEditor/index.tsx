@@ -52,6 +52,7 @@ const CodeBlockEditor: React.FC<CodeBlockEditorProps> = ({ value, onValueChange,
 			preClassName={styles.editor_pre}
 			className={styles.editor}
 			lang={language.id}
+			autoFocus
 		/>
 	);
 };
