@@ -43,7 +43,7 @@ const NotebookBlockDevider: React.FC<NotebookBlockDeviderProps> = ({ pageId, not
 				</div>
 				<div className={`${styles.right__line} ${showMenu ? styles.active : ""}`}></div>
 			</div>
-			<NotebookBlockDeviderMenu onSelect={handleAddNotebookBlock} show={showMenu} />
+			{showMenu && <NotebookBlockDeviderMenu onSelect={handleAddNotebookBlock} />}
 		</div>
 	);
 };
