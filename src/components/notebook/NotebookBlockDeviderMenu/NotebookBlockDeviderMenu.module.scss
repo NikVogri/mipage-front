@@ -7,18 +7,21 @@
 	box-shadow: 0.2rem 0.15rem 1rem var(--shadow-block);
 
 	position: absolute;
-	top: 1.5rem;
 	left: 50%;
 	transform: translateX(-50%);
 
-	display: none;
+	&.top {
+		bottom: 1.5rem;
+	}
+
+	&.bottom {
+		top: 1.5rem;
+	}
+
+	display: flex;
 	align-items: center;
 	justify-content: space-around;
 	z-index: 10;
-
-	&.show {
-		display: flex;
-	}
 
 	button {
 		display: flex;
