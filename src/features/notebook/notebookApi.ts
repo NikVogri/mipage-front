@@ -106,6 +106,28 @@ export const notebookExtendedApi = baseApi.injectEndpoints({
 				}
 			},
 		}),
+		updateNotebookBlockOrder: build.mutation<
+			Notebook["order"],
+			{ pageId: string; notebookId: string; movedBlockId: string; previousBlockId: string }
+		>({
+			query: ({ pageId, notebookId, movedBlockId, previousBlockId }) => ({
+				url: `pages/${pageId}/notebooks/${notebookId}/order`,
+				method: "PATCH",
+				body: { movedBlockId, previousBlockId },
+			}),
+			async onQueryStarted({ pageId, notebookId }, { dispatch, queryFulfilled }) {
+				try {
+					const { data: newOrder } = await queryFulfilled;
+					dispatch(
+						notebookExtendedApi.util.updateQueryData("getNotebook", { pageId, notebookId }, (notebook) => {
+							notebook.order = newOrder;
+						})
+					);
+				} catch {
+					toast.error("We weren't able to move your notebook block. Please try again or contact support.");
+				}
+			},
+		}),
 	}),
 });
 
@@ -115,4 +137,5 @@ export const {
 	useCreateNotebookBlockMutation,
 	useCreateNotebookMutation,
 	useDeleteNotebookBlockMutation,
+	useUpdateNotebookBlockOrderMutation,
 } = notebookExtendedApi;
