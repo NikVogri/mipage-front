@@ -6,6 +6,7 @@ import { orderBlocks } from "helpers/notebookBlock";
 import NotebookBlock from "../NotebookBlock";
 import LoadingSpinner from "components/UI/LoadingSpinner";
 import NotebookBlockDevider from "../NotebookBlockDevider";
+import NotebookBlockDraggable from "../NotebookBlockDraggable";
 
 interface NotebookProps {
 	pageId: string;
@@ -40,14 +41,16 @@ const Notebook: React.FC<NotebookProps> = ({ pageId }) => {
 	return (
 		<>
 			{blocks.map((block) => (
-				<div key={block.id}>
-					<NotebookBlock
-						type={block.type}
-						content={block.content}
-						pageId={pageId}
-						notebookId={router.query.n as string}
-						id={block.id}
-					/>
+				<div key={block.id} style={{ height: "auto" }}>
+					<NotebookBlockDraggable notebookBlockId={block.id}>
+						<NotebookBlock
+							type={block.type}
+							content={block.content}
+							pageId={pageId}
+							notebookId={router.query.n as string}
+							id={block.id}
+						/>
+					</NotebookBlockDraggable>
 
 					<NotebookBlockDevider
 						previousBlockId={block.id}
