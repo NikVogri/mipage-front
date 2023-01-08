@@ -1,6 +1,6 @@
 .devider {
 	position: relative;
-	height: 1.5rem;
+	min-height: 1.5rem;
 
 	&:hover {
 		background-color: transparent;
@@ -9,7 +9,7 @@
 	&__control {
 		display: flex;
 		align-items: center;
-		transition: all 0.3s ease-in;
+		transition: all 0.1s ease-in;
 
 		width: 100%;
 
@@ -65,6 +65,21 @@
 					border: solid 1px var(--color-pop);
 					fill: var(--color-pop);
 				}
+			}
+		}
+
+		&.draggedOver {
+			& .right__line {
+				padding: 2rem;
+				margin: 0.5rem 0;
+				border-radius: 0.5rem;
+
+				opacity: 0.4;
+				background-color: var(--background-primary);
+			}
+
+			& .left__icon {
+				opacity: 0;
 			}
 		}
 	}

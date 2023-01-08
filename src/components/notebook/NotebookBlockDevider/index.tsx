@@ -1,6 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-
-import { useCreateNotebookBlockMutation } from "features/notebook/notebookApi";
+import { DragEvent, useEffect, useRef, useState } from "react";
+import { useCreateNotebookBlockMutation, useUpdateNotebookBlockOrderMutation } from "features/notebook/notebookApi";
 import { HiPlus } from "react-icons/hi";
 import { NotebookBlockType } from "models";
 
@@ -16,12 +15,30 @@ interface NotebookBlockDeviderProps {
 
 const NotebookBlockDevider: React.FC<NotebookBlockDeviderProps> = ({ pageId, notebookId, previousBlockId }) => {
 	const [createNotebookBlock] = useCreateNotebookBlockMutation();
+	const [updateBlockOrder] = useUpdateNotebookBlockOrderMutation();
+
 	const [showMenu, setShowMenu] = useState(false);
+	const [isDraggedOver, setIsDraggedOver] = useState(false);
+
 	const wrapperRef = useRef<HTMLDivElement>(null);
 
 	const handleAddNotebookBlock = async (type: NotebookBlockType) => {
 		setShowMenu(false);
 		await createNotebookBlock({ pageId, notebookId, type, previousBlockId });
+	};
+
+	const handleUpdateBlockOrder = async (e: DragEvent<HTMLDivElement>) => {
+		setIsDraggedOver(false);
+
+		const movedBlockId = e.dataTransfer.getData("notebookBlockId");
+		if (movedBlockId === previousBlockId!) return;
+
+		await updateBlockOrder({
+			pageId,
+			notebookId,
+			movedBlockId: movedBlockId,
+			previousBlockId: previousBlockId!,
+		});
 	};
 
 	useEffect(() => {
@@ -36,8 +53,20 @@ const NotebookBlockDevider: React.FC<NotebookBlockDeviderProps> = ({ pageId, not
 	}, []);
 
 	return (
-		<div ref={wrapperRef} className={styles.devider}>
-			<div className={styles.devider__control} onClick={() => setShowMenu(true)}>
+		<div
+			ref={wrapperRef}
+			className={styles.devider}
+			onDragOver={(e) => {
+				e.preventDefault();
+				setIsDraggedOver(true);
+			}}
+			onDragLeave={() => setIsDraggedOver(false)}
+			onDrop={handleUpdateBlockOrder}
+		>
+			<div
+				className={`${styles.devider__control} ${isDraggedOver ? styles.draggedOver : ""}`}
+				onClick={() => setShowMenu(true)}
+			>
 				<div className={`${styles.left__icon} ${showMenu ? styles.active : ""}`}>
 					<HiPlus size={18} />
 				</div>
