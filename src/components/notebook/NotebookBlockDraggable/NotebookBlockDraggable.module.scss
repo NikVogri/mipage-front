@@ -1,0 +1,54 @@
+.draggable {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	align-items: stretch;
+
+	background-color: var(--background-card);
+	border-radius: 0.1rem;
+
+	&__active {
+		opacity: 0.1;
+	}
+}
+
+.draggable__icon__container {
+	max-width: 3rem;
+
+	margin-right: 0.5rem;
+
+	border-radius: 0.3rem;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	opacity: 0.5;
+	cursor: grab;
+
+	transition: all 0.3s ease-in-out;
+
+	.draggable__icon {
+		transition: all 0.4s ease-in-out;
+
+		fill: var(--outline);
+
+		opacity: 0;
+		visibility: hidden;
+	}
+
+	&:hover {
+		opacity: 1;
+
+		background-color: var(--background-primary);
+
+		.draggable__icon {
+			opacity: 1;
+			visibility: visible;
+		}
+	}
+}
+
+.content {
+	width: 100%;
+}
