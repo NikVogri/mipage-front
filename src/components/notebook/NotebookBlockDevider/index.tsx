@@ -41,6 +41,13 @@ const NotebookBlockDevider: React.FC<NotebookBlockDeviderProps> = ({ pageId, not
 		});
 	};
 
+	const handleDragEvent = (e: DragEvent<HTMLDivElement>) => {
+		e.preventDefault();
+		if (e.currentTarget.contains(e.relatedTarget as Node)) return;
+
+		setIsDraggedOver(e.type === "dragenter");
+	};
+
 	useEffect(() => {
 		const clickHandler = (event: MouseEvent) => {
 			if (!wrapperRef.current?.contains(event.target as Node)) {
@@ -56,11 +63,9 @@ const NotebookBlockDevider: React.FC<NotebookBlockDeviderProps> = ({ pageId, not
 		<div
 			ref={wrapperRef}
 			className={styles.devider}
-			onDragOver={(e) => {
-				e.preventDefault();
-				setIsDraggedOver(true);
-			}}
-			onDragLeave={() => setIsDraggedOver(false)}
+			onDragOver={(e) => e.preventDefault()}
+			onDragEnter={handleDragEvent}
+			onDragLeave={handleDragEvent}
 			onDrop={handleUpdateBlockOrder}
 		>
 			<div
