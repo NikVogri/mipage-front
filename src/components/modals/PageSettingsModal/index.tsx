@@ -25,8 +25,9 @@ const PageSettingsModal: React.FC<PageSettingsModalProps> = ({ isOpen, setIsOpen
 
 	const router = useRouter();
 
-	const handleUpdateSubmit = async (fv: FormikValues) => {
-		await updatePage({ pageId, isPrivate: fv.isPrivate, title: fv.title });
+	const handleUpdateSubmit = async (fv: { title: string; isPrivate: boolean }) => {
+		await updatePage({ pageId, ...fv });
+		formik.resetForm({ values: { ...fv } });
 	};
 
 	const handlePageDelete = async () => {
@@ -45,15 +46,6 @@ const PageSettingsModal: React.FC<PageSettingsModalProps> = ({ isOpen, setIsOpen
 		}),
 		onSubmit: handleUpdateSubmit,
 	});
-
-	useEffect(() => {
-		formik.setFieldValue("title", title);
-		formik.setFieldValue("isPrivate", isPrivate);
-	}, [isPrivate, title]); // eslint-disable-line react-hooks/exhaustive-deps
-
-	const formValuesChanges = useMemo(() => {
-		return formik.values.title !== title || formik.values.isPrivate !== isPrivate;
-	}, [title, isPrivate, formik.values.title, formik.values.isPrivate]);
 
 	if (showDeletionPrompt) {
 		return (
@@ -103,7 +95,7 @@ const PageSettingsModal: React.FC<PageSettingsModalProps> = ({ isOpen, setIsOpen
 								scheme="success"
 								position="right"
 								isLoading={isLoadingUpdate}
-								disabled={isLoadingUpdate || !formValuesChanges}
+								disabled={isLoadingUpdate || !formik.dirty}
 								delay={250}
 								type="submit"
 							>
