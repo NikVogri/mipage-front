@@ -1,6 +1,8 @@
 import { TodoItem } from "models";
 import useAuth from "hooks/useAuth";
-import { memo, useState } from "react";
+import { memo, useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { parseQueryParams } from "helpers/router";
 
 import TodoItemModal from "components/modals/TodoItemModal";
 import TodoCardHead from "../TodoCardHead";
@@ -20,14 +22,30 @@ interface TodoCardProps {
 }
 
 const TodoCard: React.FC<TodoCardProps> = ({ id, color, title, items = [], pageId, todoId }) => {
-	const [showItemSettingsModal, setShowItemsSettingsModal] = useState(false);
-	const [selectedTodoItemId, setSelectedTodoItemId] = useState("");
-
+	const router = useRouter();
 	const { isAuth } = useAuth();
 
-	const handleOpenModal = (todoItemId: string) => {
-		setShowItemsSettingsModal(true);
-		setSelectedTodoItemId(todoItemId);
+	const [showItemSettingsModal, setShowItemsSettingsModal] = useState(false);
+
+	useEffect(() => {
+		if (router.isReady && router.query.t && !showItemSettingsModal) {
+			handleToggleModal(true, router.query.t as string);
+		}
+	}, []);
+
+	const handleToggleModal = (open: boolean, todoItemId?: string) => {
+		setShowItemsSettingsModal(open);
+
+		router.push(
+			{
+				query: parseQueryParams({
+					...router.query,
+					t: open ? todoItemId : undefined,
+				}),
+			},
+			undefined,
+			{ shallow: true }
+		);
 	};
 
 	return (
@@ -45,7 +63,7 @@ const TodoCard: React.FC<TodoCardProps> = ({ id, color, title, items = [], pageI
 								completed={item.completed}
 								title={item.title}
 								todoItemId={item.id}
-								onOpenModal={handleOpenModal}
+								onOpenModal={() => handleToggleModal(true, item.id)}
 								createdAt={item.createdAt}
 							/>
 						))}
@@ -55,12 +73,11 @@ const TodoCard: React.FC<TodoCardProps> = ({ id, color, title, items = [], pageI
 
 			{showItemSettingsModal && (
 				<TodoItemModal
-					todoItemId={selectedTodoItemId}
+					todoItemId={router.query.t as string}
 					pageId={pageId}
 					todoId={todoId}
-					isOpen={showItemSettingsModal}
-					setIsClosed={() => setShowItemsSettingsModal(false)}
-					setIsOpen={setShowItemsSettingsModal}
+					isOpen={showItemSettingsModal && !!router.query.t}
+					setIsOpen={(open) => handleToggleModal(open)}
 				/>
 			)}
 		</>
