@@ -56,14 +56,16 @@ export const PageMembers: React.FC<PageMembersProps> = ({ owner, members, pageId
 					)}
 				</ul>
 			</div>
-			<MembersModal
-				owner={owner}
-				isOpen={showMembersModal}
-				setIsClosed={() => setShowMembersModal(false)}
-				setIsOpen={setShowMembersModal}
-				pageId={pageId}
-				members={members}
-			/>
+			{showMembersModal && (
+				<MembersModal
+					owner={owner}
+					isOpen={showMembersModal}
+					setIsClosed={() => setShowMembersModal(false)}
+					setIsOpen={setShowMembersModal}
+					pageId={pageId}
+					members={members}
+				/>
+			)}
 		</>
 	);
 };
