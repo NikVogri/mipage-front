@@ -48,54 +48,56 @@ const AddTodoCard: React.FC<AddTodoCardProps> = ({ pageId, todosCount }) => {
 				<FaPlus />
 			</button>
 
-			<Modal isOpen={modalIsOpen} setIsOpen={setIsOpen} contentLabel="Add a new todo block">
-				<Modal.Head title="Add a new todo block" closeModal={() => setIsOpen(false)} />
+			{modalIsOpen && (
+				<Modal isOpen={modalIsOpen} setIsOpen={setIsOpen} contentLabel="Add a new todo block">
+					<Modal.Head title="Add a new todo block" closeModal={() => setIsOpen(false)} />
 
-				<form onSubmit={formik.handleSubmit}>
-					<div className="form-group">
-						<label className="label">Title</label>
-						<input
-							className={`form-control form-control-modal ${
-								formik.errors.title && formik.touched.title ? "invalid" : ""
-							}`}
-							type="string"
-							required
-							name="title"
-							id="title"
-							value={formik.values.title}
-							onBlur={formik.handleBlur}
-							onChange={formik.handleChange}
-						/>
-						{formik.errors.title && formik.touched.title && (
-							<span className="form-error">{formik.errors.title}</span>
-						)}
-					</div>
-
-					<div className={`form-group ${styles.color__picker}`}>
-						<label className="label">Header color</label>
-						<CirclePicker
-							width="100%"
-							onChange={({ hex }) => formik.setFieldValue("color", hex)}
-							key={formik.values.color}
-							color={formik.values.color}
-						/>
-					</div>
-
-					<Modal.Footer>
-						<div className={styles.btn__container}>
-							<LoadingButton
-								scheme="success"
-								position="right"
-								isLoading={isLoading}
-								delay={250}
-								type="submit"
-							>
-								Submit
-							</LoadingButton>
+					<form onSubmit={formik.handleSubmit}>
+						<div className="form-group">
+							<label className="label">Title</label>
+							<input
+								className={`form-control form-control-modal ${
+									formik.errors.title && formik.touched.title ? "invalid" : ""
+								}`}
+								type="string"
+								required
+								name="title"
+								id="title"
+								value={formik.values.title}
+								onBlur={formik.handleBlur}
+								onChange={formik.handleChange}
+							/>
+							{formik.errors.title && formik.touched.title && (
+								<span className="form-error">{formik.errors.title}</span>
+							)}
 						</div>
-					</Modal.Footer>
-				</form>
-			</Modal>
+
+						<div className={`form-group ${styles.color__picker}`}>
+							<label className="label">Header color</label>
+							<CirclePicker
+								width="100%"
+								onChange={({ hex }) => formik.setFieldValue("color", hex)}
+								key={formik.values.color}
+								color={formik.values.color}
+							/>
+						</div>
+
+						<Modal.Footer>
+							<div className={styles.btn__container}>
+								<LoadingButton
+									scheme="success"
+									position="right"
+									isLoading={isLoading}
+									delay={250}
+									type="submit"
+								>
+									Submit
+								</LoadingButton>
+							</div>
+						</Modal.Footer>
+					</form>
+				</Modal>
+			)}
 		</>
 	);
 };

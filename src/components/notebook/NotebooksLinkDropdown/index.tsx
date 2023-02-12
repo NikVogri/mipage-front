@@ -64,13 +64,15 @@ const NotebooksLinkDropdown: React.FC<NotebooksLinkDropdownProps> = ({
 					))}
 				</ul>
 			</div>
-			<AddNotebookModal
-				pageId={pageId}
-				notebooksCount={notebooks.length}
-				isOpen={showAddNotebookModal}
-				setIsClosed={() => setShowAddNotebookModal(false)}
-				setIsOpen={setShowAddNotebookModal}
-			/>
+			{showAddNotebookModal && (
+				<AddNotebookModal
+					pageId={pageId}
+					notebooksCount={notebooks.length}
+					isOpen={showAddNotebookModal}
+					setIsClosed={() => setShowAddNotebookModal(false)}
+					setIsOpen={setShowAddNotebookModal}
+				/>
+			)}
 		</>
 	);
 };

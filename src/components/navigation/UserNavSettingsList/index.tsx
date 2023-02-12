@@ -66,17 +66,21 @@ const UserNavSettingsList: React.FC<UserNavSettingsListProps> = ({ onClose, show
 				</ul>
 			</div>
 
-			<UserProfileModal
-				isOpen={showUserProfileModal}
-				setIsClosed={() => setShowUserProfileModal(false)}
-				setIsOpen={setShowUserProfileModal}
-			/>
+			{showUserProfileModal && (
+				<UserProfileModal
+					isOpen={showUserProfileModal}
+					setIsClosed={() => setShowUserProfileModal(false)}
+					setIsOpen={setShowUserProfileModal}
+				/>
+			)}
 
-			<UserSettingsModal
-				isOpen={showUserSettingsModal}
-				setIsClosed={() => setShowUserSettingsModal(false)}
-				setIsOpen={setShowUserSettingsModal}
-			/>
+			{showUserSettingsModal && (
+				<UserSettingsModal
+					isOpen={showUserSettingsModal}
+					setIsClosed={() => setShowUserSettingsModal(false)}
+					setIsOpen={setShowUserSettingsModal}
+				/>
+			)}
 		</>
 	);
 };

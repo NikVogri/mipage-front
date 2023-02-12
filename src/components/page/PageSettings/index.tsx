@@ -24,13 +24,15 @@ const PageSettings: React.FC<PageSettingsProps> = ({ pageId, title, isPrivate })
 					</SidebarButton>
 				</div>
 			</div>
-			<PageSettingsModal
-				isOpen={showModal}
-				setIsOpen={setShowModal}
-				pageId={pageId}
-				title={title}
-				isPrivate={isPrivate}
-			/>
+			{showModal && (
+				<PageSettingsModal
+					isOpen={showModal}
+					setIsOpen={setShowModal}
+					pageId={pageId}
+					title={title}
+					isPrivate={isPrivate}
+				/>
+			)}
 		</>
 	);
 };
