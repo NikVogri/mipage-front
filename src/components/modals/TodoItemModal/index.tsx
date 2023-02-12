@@ -14,8 +14,7 @@ import TodoItemControls from "components/todo/TodoItemControls";
 import styles from "./TodoItemModal.module.scss";
 interface TodoItemModalProps {
 	isOpen: boolean;
-	setIsOpen: Dispatch<SetStateAction<boolean>>;
-	setIsClosed: () => void;
+	setIsOpen: (open: boolean) => void;
 	todoItemId: string;
 	pageId: string;
 	todoId: string;
