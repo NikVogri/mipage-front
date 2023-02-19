@@ -11,13 +11,12 @@ interface SelectCardProps {
 }
 
 const SelectCard: React.FC<SelectCardProps> = ({ children, id, isActive, onSelect, disabled }: SelectCardProps) => {
-	const handleClick = () => onSelect(id);
-
 	return (
 		<button
 			className={`${styles.select__card} ${disabled ? styles.disabled : ""} ${isActive ? styles.active : ""}`}
 			type="button"
-			onClick={handleClick}
+			disabled={disabled}
+			onClick={() => onSelect(id)}
 		>
 			{children}
 		</button>
