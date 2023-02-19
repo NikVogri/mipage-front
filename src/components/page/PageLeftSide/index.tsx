@@ -1,7 +1,9 @@
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { PageMember } from "models";
 import { useRouter } from "next/router";
 import { useAppSelector } from "hooks/redux-hooks";
-import { pageSidebarIsOpen } from "features/ui/uiSlice";
+import { pageSidebarIsOpen, togglePageSidebar } from "features/ui/uiSlice";
 import useAuth from "hooks/useAuth";
 
 import YourPagesSidebar from "../YourPagesSidebar";
@@ -19,10 +21,18 @@ interface PageLeftSideProps {
 
 export const PageLeftSide: React.FC<PageLeftSideProps> = ({ members, owner, title, isPrivate }) => {
 	const sidebarIsOpen = useAppSelector(pageSidebarIsOpen);
+	const dispatch = useDispatch();
+
 	const { isAuth, user } = useAuth();
 	const router = useRouter();
 
 	const isPageOwner = user?.id === owner.id;
+
+	useEffect(() => {
+		if (window?.innerWidth < 768) {
+			dispatch(togglePageSidebar());
+		}
+	}, [router.asPath]);
 
 	return (
 		<aside className={`${styles.left__side} ${sidebarIsOpen ? styles.open : styles.closed}`}>
