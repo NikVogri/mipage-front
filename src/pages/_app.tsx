@@ -1,5 +1,5 @@
 import type { AppContext, AppProps } from "next/app";
-import { setIsMobileView } from "features/ui/uiSlice";
+import { setIsMobileView, togglePageSidebar } from "features/ui/uiSlice";
 import { setAuthChecked, setUser } from "features/auth/authSlice";
 import { Provider } from "react-redux";
 import { isPagePublic } from "helpers/isPagePublic";
@@ -46,8 +46,19 @@ function MyApp({ Component, pageProps, user }: AppProps & { user: User }) {
 
 	useEffect(() => {
 		if (isClientSide) {
-			store.dispatch(setIsMobileView(window.innerHeight < 768));
+			store.dispatch(setIsMobileView(window.innerWidth < 768));
 		}
+
+		const handleWindowResize = () => {
+			if (window.innerWidth > 768 && !store.getState().ui.pageSidebarIsOpen) {
+				store.dispatch(togglePageSidebar());
+			}
+
+			setIsMobileView(window.innerWidth < 768);
+		};
+
+		window.addEventListener("resize", handleWindowResize);
+		return () => window.removeEventListener("resize", handleWindowResize);
 	}, [isClientSide]);
 
 	useEffect(() => {
