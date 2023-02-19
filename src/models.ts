@@ -1,3 +1,5 @@
+import { IconType } from "react-icons";
+
 export interface User {
 	id: string;
 	username: string;
@@ -138,7 +140,10 @@ export interface CodeBlockContent {
 	code: string;
 }
 
-export interface NotebookDeviderMenuItem {
-	icon: JSX.Element;
+export interface NotebookBlockTypeItem {
+	title: string;
+	subtitle?: string;
+	icon: IconType;
 	type: NotebookBlockType;
+	disabled: boolean;
 }
