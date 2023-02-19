@@ -3,10 +3,9 @@
 .your__pages__sidebar {
 	padding: 2rem 1.5rem;
 	border-bottom: solid 1px var(--outline);
-	max-height: 50vh;
 
 	& .your__pages__sidebar_list {
-		max-height: 45vh;
+		max-height: 35vh;
 		overflow-y: auto;
 		padding-right: 1rem;
 		list-style: none;
