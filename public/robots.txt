@@ -2,4 +2,4 @@ User-agent: *
 Disallow: /
 Allow: /$
 
-Sitemap:  https://mipage.me/sitemap.xml
+Sitemap:  https://mipage.net/sitemap.xml

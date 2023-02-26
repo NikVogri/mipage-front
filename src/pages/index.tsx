@@ -28,9 +28,9 @@ const Home: NextPage = () => {
 				></meta>
 				<meta name="apple-mobile-web-app-capable" content="yes"></meta>
 				<meta name="theme-color" content="#18191a"></meta>
-				<meta name="msapplication-config" content="https://www.mipage.me/sitemap.xml"></meta>
+				<meta name="msapplication-config" content="https://www.mipage.net/sitemap.xml"></meta>
 				<meta property="og:title" content="Mipage - Your own digital notebook"></meta>
-				<meta property="og:url" content="https://mipage.me"></meta>
+				<meta property="og:url" content="https://mipage.net"></meta>
 				<meta property="og:site_name" content="Mipage"></meta>
 				<meta
 					property="og:description"
@@ -39,7 +39,7 @@ const Home: NextPage = () => {
 
 				<meta name="keywords" content="digital notebook, notebook, todo, todo list, teamwork"></meta>
 				<meta name="twitter:card" content="summary"></meta>
-				<meta name="twitter:url" content="https://mipage.me"></meta>
+				<meta name="twitter:url" content="https://mipage.net"></meta>
 				<meta name="twitter:title" content="Mipage - Your own digital notebook"></meta>
 				<meta
 					name="twitter:description"
