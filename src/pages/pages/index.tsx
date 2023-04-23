@@ -37,7 +37,7 @@ const Home = () => {
 				<div className={styles.no__pages}>
 					<HiDocumentSearch size={96} />
 					<p>You {"don't"} have any pages yet, create one now!</p>
-					<Link href="pages/new">
+					<Link href="/pages/new">
 						<a className={styles.create__page__btn}>
 							<HiPlusSm size={26} /> <span>New Page</span>
 						</a>
