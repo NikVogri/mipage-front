@@ -1,21 +1,17 @@
-import type { AppContext, AppProps } from "next/app";
+import type { AppProps } from "next/app";
 import { setIsMobileView, togglePageSidebar } from "features/ui/uiSlice";
-import { setAuthChecked, setUser } from "features/auth/authSlice";
 import { Provider } from "react-redux";
-import { isPagePublic } from "helpers/isPagePublic";
 import { store } from "store";
 import { User } from "models";
 import { useEffect } from "react";
 
 import Layout from "components/UI/Layout";
 import CookieConsent from "react-cookie-consent";
-import App from "next/app";
 
 import { useRouter } from "next/router";
 import { ToastContainer } from "react-toastify";
 import { logPageViewToGTag } from "helpers/googleTag";
-
-import axios from "config/axios";
+import { initAuth } from "features/auth/authSlice";
 
 import "styles/globals.css";
 import "styles/main.scss";
@@ -25,7 +21,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "@szhsin/react-menu/dist/index.css";
 import "@szhsin/react-menu/dist/transitions/slide.css";
 
-function MyApp({ Component, pageProps, user }: AppProps & { user: User }) {
+function MyApp({ Component, pageProps }: AppProps & { user: User }) {
 	const isClientSide = typeof window !== "undefined";
 	const router = useRouter();
 
@@ -37,12 +33,15 @@ function MyApp({ Component, pageProps, user }: AppProps & { user: User }) {
 	}
 
 	useEffect(() => {
-		if (user) {
-			store.dispatch(setUser(user));
-		} else {
-			store.dispatch(setAuthChecked());
+		store.dispatch(initAuth());
+
+		if (checkConsented()) {
+			(window as any)?.gtag("consent", "update", {
+				ad_storage: "granted",
+				analytics_storage: "granted",
+			});
 		}
-	}, [user]);
+	}, [store, checkConsented]);
 
 	useEffect(() => {
 		if (isClientSide) {
@@ -60,15 +59,6 @@ function MyApp({ Component, pageProps, user }: AppProps & { user: User }) {
 		window.addEventListener("resize", handleWindowResize);
 		return () => window.removeEventListener("resize", handleWindowResize);
 	}, [isClientSide]);
-
-	useEffect(() => {
-		if (checkConsented()) {
-			(window as any)?.gtag("consent", "update", {
-				ad_storage: "granted",
-				analytics_storage: "granted",
-			});
-		}
-	}, []);
 
 	useEffect(() => {
 		const handleRouteChange = (url: string) => {
@@ -113,54 +103,6 @@ function MyApp({ Component, pageProps, user }: AppProps & { user: User }) {
 		</Provider>
 	);
 }
-
-MyApp.getInitialProps = async (appContext: AppContext) => {
-	const appProps = await App.getInitialProps(appContext);
-
-	const requestedPath = appContext?.router.asPath;
-	const isPageRequest = /\/pages\/[a-f0-9\-]{36}/.test(requestedPath);
-	const cookies = appContext.ctx.req?.headers.cookie as string;
-	const isSSRLoad = Boolean(appContext.ctx?.req);
-
-	let user;
-	if (cookies?.includes("mipage-auth")) {
-		try {
-			const res = await axios.get(`${process.env.NEXT_PUBLIC_BE_BASE_URL}/users/me`, {
-				headers: {
-					Cookie: cookies,
-				},
-			});
-
-			user = res.data;
-		} catch (err) {}
-	}
-
-	let page;
-	if (isPageRequest && isSSRLoad) {
-		const pageId = appContext?.router.query.pageId;
-
-		try {
-			const res = await axios.get(
-				`${process.env.NEXT_PUBLIC_BE_BASE_URL}/pages/${pageId}${!user ? "/public" : ""}`,
-				{
-					headers: {
-						Cookie: cookies,
-					},
-				}
-			);
-			page = res.data;
-		} catch (error: any) {
-			if (error?.response?.data?.statusCode === 401 && !user) {
-				appContext.ctx.res?.writeHead(307, { Location: "/login" }).end();
-			}
-		}
-	} else if (!user && !isPagePublic(requestedPath)) {
-		// Server side redirect if user is not logged in and trying to access auth only pages
-		appContext.ctx.res?.writeHead(307, { Location: "/login" }).end();
-	}
-
-	return { ...appProps, user, page };
-};
 
 export default MyApp;
 
