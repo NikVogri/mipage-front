@@ -2,8 +2,8 @@ import * as Yup from "yup";
 import Head from "next/head";
 import Link from "next/link";
 import { FormikValues, useFormik } from "formik";
-import { useEffect } from "react";
-import { clearAuthError, login, selectIsAuth, selectLoading } from "features/auth/authSlice";
+import { useEffect, useState } from "react";
+import { login, selectIsAuth } from "features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "hooks/redux-hooks";
 
 import LoadingButton from "components/UI/LoadingButton";
@@ -19,13 +19,15 @@ const loginValidationSchema = Yup.object().shape({
 
 const Login = () => {
 	const isAuth = useAppSelector(selectIsAuth);
-	const loading = useAppSelector(selectLoading);
 
+	const [loading, setLoading] = useState(false);
 	const dispatch = useAppDispatch();
 	const push = usePush();
 
 	const handleSubmit = async (fv: FormikValues) => {
+		setLoading(true);
 		await dispatch(login({ email: fv.email, password: fv.password }));
+		setLoading(false);
 	};
 
 	const formik = useFormik({
@@ -38,8 +40,6 @@ const Login = () => {
 	});
 
 	useEffect(() => {
-		dispatch(clearAuthError());
-
 		if (isAuth) {
 			push("/pages");
 		}

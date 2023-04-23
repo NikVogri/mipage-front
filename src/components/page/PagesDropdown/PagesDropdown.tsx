@@ -12,7 +12,7 @@ interface SortedPages {
 
 interface PagesDropdownProps {
 	pages: Page[];
-	userId: string;
+	userId?: string;
 }
 
 const PagesDropdown: React.FC<PagesDropdownProps> = ({ pages, userId }) => {

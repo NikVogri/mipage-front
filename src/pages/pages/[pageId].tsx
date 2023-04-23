@@ -7,14 +7,13 @@ import PageCenter from "components/page/PageCenter";
 import PageErrorLoading from "components/page/PageErrorLoading";
 import FullPageLoadingSpinner from "components/UI/FullPageLoadingSpinner";
 import PageLeftSide from "components/page/PageLeftSide";
+import useAuth from "hooks/useAuth";
 
 import styles from "styles/pages/Page.module.scss";
-import onlyAuth from "components/HOC/withAuth";
-import useAuth from "hooks/useAuth";
 
 const Page = () => {
 	const router = useRouter();
-	const { isAuth } = useAuth();
+	const { isAuth } = useAuth({ onlyAuth: false });
 
 	const pageId = router.query.pageId as string;
 
@@ -22,13 +21,13 @@ const Page = () => {
 		data: dataPublic,
 		isError: isErrorPub,
 		isLoading: isLoadingPub,
-	} = useGetSinglePublicPageQuery({ pageId }, { skip: isAuth });
+	} = useGetSinglePublicPageQuery({ pageId }, { skip: !pageId || isAuth });
 
 	const {
 		data: dataPrivate,
 		isError: isErrorPrivate,
 		isLoading: isLoadingPrivate,
-	} = useGetSinglePageQuery({ pageId }, { skip: !isAuth });
+	} = useGetSinglePageQuery({ pageId }, { skip: !pageId || !isAuth });
 
 	if (isErrorPrivate || isErrorPub) {
 		return <PageErrorLoading />;
@@ -60,4 +59,4 @@ const Page = () => {
 	);
 };
 
-export default onlyAuth(Page, { forceRedirect: true, allowException: true });
+export default Page;

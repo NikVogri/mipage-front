@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useFormik } from "formik";
 import { useAppDispatch, useAppSelector } from "hooks/redux-hooks";
-import { clearAuthError, selectErrorMessage, selectIsAuth, selectLoading, signup } from "features/auth/authSlice";
+import { selectIsAuth, signup } from "features/auth/authSlice";
 import usePush from "hooks/usePush";
 
 import Link from "next/link";
@@ -33,21 +33,21 @@ const signupValidationSchema = Yup.object().shape({
 
 const Register = () => {
 	const isAuth = useAppSelector(selectIsAuth);
-	const loading = useAppSelector(selectLoading);
 
+	const [loading, setLoading] = useState(false);
 	const dispatch = useAppDispatch();
 	const push = usePush();
 
 	useEffect(() => {
-		dispatch(clearAuthError());
-
 		if (isAuth) {
 			push("/pages");
 		}
 	}, [isAuth, push, dispatch]);
 
 	const handleSubmit = async (fv: { email: string; username: string; password: string }) => {
+		setLoading(true);
 		const res = await dispatch(signup(fv));
+		setLoading(false);
 
 		if (res.meta.requestStatus === "fulfilled") {
 			push("/login");

@@ -6,7 +6,6 @@ import { useGetUserPagesQuery } from "features/page/pagesApi";
 
 import Link from "next/link";
 import Container from "components/UI/Container";
-import onlyAuth from "components/HOC/withAuth";
 import StickyAddPageButton from "components/page/StickyAddPageButton";
 import PagesDropdown from "components/page/PagesDropdown/PagesDropdown";
 import SpinnerCentered from "components/UI/SpinnerCentered";
@@ -15,7 +14,7 @@ import useAuth from "hooks/useAuth";
 import styles from "styles/pages/Pages.module.scss";
 
 const Home = () => {
-	const { isAuth, user } = useAuth();
+	const { isAuth, user } = useAuth({ onlyAuth: true });
 	const { data: pages, isLoading } = useGetUserPagesQuery(null, { skip: !isAuth, refetchOnMountOrArgChange: true });
 
 	return (
@@ -25,14 +24,14 @@ const Home = () => {
 			</Head>
 			<div className={styles.welcome__msg}>
 				<h1>
-					{getGreetingMessage()}, {user!.username}!
+					{getGreetingMessage()}, {user?.username}!
 				</h1>
 				<p>Visit your pages or pages you are a member of now!</p>
 			</div>
 
 			{isLoading && <SpinnerCentered />}
 
-			{!isLoading && pages?.length ? <PagesDropdown pages={pages!} userId={user!.id} /> : null}
+			{!isLoading && pages?.length ? <PagesDropdown pages={pages!} userId={user?.id} /> : null}
 
 			{!isLoading && !pages?.length && (
 				<div className={styles.no__pages}>
@@ -51,4 +50,4 @@ const Home = () => {
 	);
 };
 
-export default onlyAuth(Home, { forceRedirect: true });
+export default Home;
