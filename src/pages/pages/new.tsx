@@ -3,7 +3,6 @@ import { PageType } from "models";
 import { useRouter } from "next/router";
 import { FormikValues, useFormik } from "formik";
 import { useCreatePageMutation } from "features/page/pagesApi";
-import onlyAuth from "components/HOC/withAuth";
 
 import Head from "next/head";
 import PageTypeSelection from "components/form/PageTypeSelection";
@@ -11,6 +10,7 @@ import PageAccessabilitySelection from "components/form/PageAccessabilitySelecti
 import Container from "components/UI/Container";
 import LoadingButton from "components/UI/LoadingButton";
 import FormFeedback from "components/form/FormFeedback";
+import useAuth from "hooks/useAuth";
 
 const pageCreateValidationSchema = Yup.object().shape({
 	title: Yup.string()
@@ -22,6 +22,8 @@ const pageCreateValidationSchema = Yup.object().shape({
 });
 
 const CreateNewPage = () => {
+	useAuth({ onlyAuth: true });
+
 	const router = useRouter();
 	const [createPage, { isLoading, data, isSuccess, isError, error }] = useCreatePageMutation();
 
@@ -98,4 +100,4 @@ const CreateNewPage = () => {
 	);
 };
 
-export default onlyAuth(CreateNewPage, { forceRedirect: true });
+export default CreateNewPage;
