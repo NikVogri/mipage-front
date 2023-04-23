@@ -4,7 +4,7 @@ import { useAppSelector } from "./redux-hooks";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 
-const useAuth = (props: { onlyAuth?: boolean }) => {
+const useAuth = (props?: { onlyAuth?: boolean }) => {
 	const router = useRouter();
 
 	const isAuth = useAppSelector(selectIsAuth);
