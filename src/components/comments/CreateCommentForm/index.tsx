@@ -46,7 +46,7 @@ const CreateCommentForm: React.FC<CreateCommentFormProps> = ({ pageId, todoItemI
 							editorState={editorState}
 							onStateUpdate={setEditorState}
 							onHtmlChange={(val) => formik.setFieldValue("body", val, true)}
-							tags={["H1", "H2", "H3", "Bold", "Italic", "Monospace", "OL", "UL", "Underline"]}
+							tags={["Bold", "Italic", "Monospace", "OL", "UL", "Underline"]}
 						/>
 					</div>
 				</div>
