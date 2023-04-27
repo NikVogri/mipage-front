@@ -52,10 +52,19 @@
 		margin-bottom: 1.5rem;
 	}
 
+	ol {
+		list-style: decimal;
+	}
+
+	ul {
+		list-style: disc;
+	}
+
 	ol,
 	ul {
-		list-style: initial;
-		margin: 1rem;
+		list-style-position: inside;
+		margin-left: 2rem;
+		margin-bottom: 1rem;
 	}
 
 	code {
