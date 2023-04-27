@@ -29,7 +29,7 @@ const Comment: React.FC<CommentProps> = ({ user, body, createdAt }) => {
 				<Avatar tooltip={false} size="md" username={user.username} avatar={user.avatar} />
 			</div>
 			<div className={styles.comment__right}>
-				<div className={styles.comment__poster}>
+				<div className={styles.comment__head}>
 					<span>{user.username}</span> <span className={styles.spacer}>&#183;</span>{" "}
 					<HoverPopover text={formattedFullDate}>
 						<span className={styles.comment__formatted_date}>
