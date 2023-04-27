@@ -12,42 +12,31 @@
 	margin-right: 2rem;
 }
 
-.comment__right {
+.comment__head {
 	display: flex;
-	flex-direction: column;
+	align-items: center;
 
-	.comment__head {
-		display: flex;
-		align-items: center;
+	font-size: 1.2rem;
+	color: var(--text-secondary);
+	font-weight: bold;
 
-		font-size: 1.2rem;
-		color: var(--text-secondary);
-		font-weight: bold;
-
-		.spacer {
-			padding: 0 0.35rem;
-		}
-	}
-
-	.comment__poster {
-		span {
-			display: inline-block;
-			font-size: 1.2rem;
-			font-weight: bold;
-			color: var(--text-secondary);
-		}
-	}
-
-	.comment__content {
-		margin-top: 0.5rem;
-		@include wysiwyg_richtext_defaults;
+	.spacer {
+		display: block;
+		margin: 0 0.5rem;
 	}
 
 	.comment__formatted_date {
 		cursor: default;
+		font-weight: 300;
 	}
+}
 
-	h1 {
-		font-size: 5rem;
+.comment__right {
+	display: flex;
+	flex-direction: column;
+
+	.comment__content {
+		margin-top: 0.5rem;
+		@include wysiwyg_richtext_defaults;
 	}
 }
