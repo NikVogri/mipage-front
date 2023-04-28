@@ -34,12 +34,12 @@
 		}
 
 		.right__line {
-			transition: all 0.15s ease-in;
+			transition: all 0.1s ease-in;
 			background-color: var(--horizontal-ruling);
 			opacity: 0.25;
 			width: 100%;
 			color: var(--outline);
-			height: 0.1rem;
+			height: 0.05rem;
 			width: 100%;
 			border-radius: 5rem;
 
@@ -68,10 +68,10 @@
 			}
 		}
 
-		&.draggedOver {
+		&.show__dropzone {
 			& .right__line {
-				padding: 2rem;
-				margin: 0.5rem 0;
+				padding: 1.5rem;
+				margin: 1.5rem 0;
 				border-radius: 0.5rem;
 
 				opacity: 0.4;
@@ -80,6 +80,12 @@
 
 			& .left__icon {
 				opacity: 0;
+			}
+		}
+
+		&.active__dropzone {
+			& .right__line {
+				background-color: var(--color-pop);
 			}
 		}
 	}

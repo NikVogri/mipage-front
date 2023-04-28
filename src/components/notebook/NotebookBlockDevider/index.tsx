@@ -11,14 +11,20 @@ interface NotebookBlockDeviderProps {
 	notebookId: string;
 	pageId: string;
 	previousBlockId?: string;
+	showDropzone?: boolean;
 }
 
-const NotebookBlockDevider: React.FC<NotebookBlockDeviderProps> = ({ pageId, notebookId, previousBlockId }) => {
+const NotebookBlockDevider: React.FC<NotebookBlockDeviderProps> = ({
+	pageId,
+	notebookId,
+	previousBlockId,
+	showDropzone,
+}) => {
 	const [createNotebookBlock] = useCreateNotebookBlockMutation();
 	const [updateBlockOrder] = useUpdateNotebookBlockOrderMutation();
 
 	const [showMenu, setShowMenu] = useState(false);
-	const [isDraggedOver, setIsDraggedOver] = useState(false);
+	const [isDraggedOver, setIsDraggedOver] = useState(showDropzone ?? false);
 
 	const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -39,6 +45,8 @@ const NotebookBlockDevider: React.FC<NotebookBlockDeviderProps> = ({ pageId, not
 			movedBlockId: movedBlockId,
 			previousBlockId: previousBlockId!,
 		});
+
+		e.dataTransfer.clearData();
 	};
 
 	const handleDragEvent = (e: DragEvent<HTMLDivElement>) => {
@@ -69,7 +77,9 @@ const NotebookBlockDevider: React.FC<NotebookBlockDeviderProps> = ({ pageId, not
 			onDrop={handleUpdateBlockOrder}
 		>
 			<div
-				className={`${styles.devider__control} ${isDraggedOver ? styles.draggedOver : ""}`}
+				className={`${styles.devider__control} ${showDropzone ? styles.show__dropzone : ""} ${
+					isDraggedOver ? styles.active__dropzone : ""
+				}`}
 				onClick={() => setShowMenu(true)}
 			>
 				<div className={`${styles.left__icon} ${showMenu ? styles.active : ""}`}>

@@ -6,9 +6,10 @@ import styles from "./NotebookBlockDraggable.module.scss";
 interface NotebookBlockDraggableProps {
 	children: ReactElement;
 	notebookBlockId: string;
+	onDragChange: (isDragged: boolean) => void;
 }
 
-const NotebookBlockDraggable: React.FC<NotebookBlockDraggableProps> = ({ notebookBlockId, children }) => {
+const NotebookBlockDraggable: React.FC<NotebookBlockDraggableProps> = ({ notebookBlockId, children, onDragChange }) => {
 	const [isDragged, setIsDragged] = useState(false);
 	const draggableRef = useRef<HTMLDivElement>(null);
 
@@ -17,7 +18,7 @@ const NotebookBlockDraggable: React.FC<NotebookBlockDraggableProps> = ({ noteboo
 		e.dataTransfer.setDragImage(draggableRef.current!, 0, 0);
 
 		if (!isDragged) {
-			setIsDragged(true);
+			setDragState(true);
 		}
 	};
 
@@ -25,8 +26,13 @@ const NotebookBlockDraggable: React.FC<NotebookBlockDraggableProps> = ({ noteboo
 		e.preventDefault();
 
 		if (isDragged) {
-			setIsDragged(false);
+			setDragState(false);
 		}
+	};
+
+	const setDragState = (isDragged: boolean) => {
+		setIsDragged(isDragged);
+		onDragChange(isDragged);
 	};
 
 	return (
