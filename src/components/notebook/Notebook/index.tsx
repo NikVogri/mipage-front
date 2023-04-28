@@ -16,6 +16,7 @@ interface NotebookProps {
 
 const Notebook: React.FC<NotebookProps> = ({ pageId }) => {
 	const [showModal, setShowModal] = useState(true);
+	const [blockIsDragged, setBlockIsDragged] = useState(false);
 
 	const router = useRouter();
 	const { data, isError, isLoading } = useGetNotebookQuery(
@@ -57,7 +58,10 @@ const Notebook: React.FC<NotebookProps> = ({ pageId }) => {
 		<>
 			{blocks.map((block) => (
 				<div key={block.id} style={{ height: "auto" }}>
-					<NotebookBlockDraggable notebookBlockId={block.id}>
+					<NotebookBlockDraggable
+						notebookBlockId={block.id}
+						onDragChange={(isDragged: boolean) => setBlockIsDragged(isDragged)}
+					>
 						<NotebookBlock
 							type={block.type}
 							content={block.content}
@@ -67,7 +71,12 @@ const Notebook: React.FC<NotebookProps> = ({ pageId }) => {
 						/>
 					</NotebookBlockDraggable>
 
-					<NotebookBlockDevider previousBlockId={block.id} notebookId={notebookId} pageId={pageId} />
+					<NotebookBlockDevider
+						previousBlockId={block.id}
+						notebookId={notebookId}
+						pageId={pageId}
+						showDropzone={blockIsDragged}
+					/>
 				</div>
 			))}
 
