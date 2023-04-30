@@ -4,6 +4,7 @@ import UserNavSettings from "components/navigation/UserNavSettings";
 import useAuth from "hooks/useAuth";
 import Link from "next/link";
 import Notifications from "../../navigation/NavNotifications";
+import NavPageSearch from "components/navigation/NavPageSearch";
 
 import styles from "./Header.module.scss";
 import { useAppDispatch } from "hooks/redux-hooks";
@@ -32,6 +33,9 @@ const Header: React.FC = () => {
 								<IoMdMenu size={24} />
 							</button>
 						)}
+					</div>
+					<div className={styles.header__container__center}>
+						<NavPageSearch />
 					</div>
 					<div className={styles.header__container__right}>
 						<Notifications />
