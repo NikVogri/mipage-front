@@ -1,0 +1,64 @@
+@import "../../../styles/partial/components/scrollbar";
+
+.result__container {
+	position: absolute;
+	top: calc(100% + 0.5rem);
+
+	overflow: hidden;
+	border: solid 1px var(--outline);
+	width: 100%;
+
+	background-color: var(--background-card);
+
+	border-radius: 0.5rem;
+
+	ul {
+		max-height: 20rem;
+		overflow-y: auto;
+
+		@include scrollbar;
+	}
+}
+
+.result__list__item {
+	display: flex;
+	padding: 0.5rem 1rem;
+	align-items: center;
+	gap: 2rem;
+
+	p {
+		color: var(--text-secondary);
+		flex: 1;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
+	}
+
+	div > svg {
+		fill: var(--text-secondary);
+		opacity: 0.25;
+	}
+
+	&:hover,
+	&:focus {
+		outline: none;
+
+		background-color: var(--background-primary);
+		cursor: pointer;
+
+		p {
+			color: var(--text-primary);
+		}
+
+		div > svg {
+			fill: var(--text-primary);
+			opacity: 1;
+		}
+	}
+}
+
+.no__hits {
+	font-size: 1.4rem;
+	padding: 1rem;
+	color: var(--text-secondary);
+}
