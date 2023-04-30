@@ -1,0 +1,21 @@
+.page__search {
+	flex: 1;
+
+	position: relative;
+
+	min-width: 15rem;
+
+	& > input {
+		border: none;
+		box-shadow: none;
+
+		margin: 0;
+		padding: 0.5rem 1rem;
+
+		border: solid 1px var(--outline);
+
+		@media only screen and (max-width: 768px) {
+			font-size: 0.85em;
+		}
+	}
+}
