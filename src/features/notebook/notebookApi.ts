@@ -5,9 +5,9 @@ import { toast } from "react-toastify";
 
 export const notebookExtendedApi = baseApi.injectEndpoints({
 	endpoints: (build) => ({
-		getNotebook: build.query<Notebook, { pageId: string; notebookId: string }>({
-			query: ({ pageId, notebookId }) => ({
-				url: `pages/${pageId}/notebooks/${notebookId}`,
+		getNotebook: build.query<Notebook, { pageId: string; notebookId: string; isAuth: boolean }>({
+			query: ({ pageId, notebookId, isAuth }) => ({
+				url: `pages/${pageId}/notebooks/${notebookId}${isAuth ? "" : "/public"}`,
 			}),
 		}),
 		updateNotebookBlock: build.mutation<
@@ -23,15 +23,19 @@ export const notebookExtendedApi = baseApi.injectEndpoints({
 				try {
 					const { data: updatedNotebookBlock } = await queryFulfilled;
 					dispatch(
-						notebookExtendedApi.util.updateQueryData("getNotebook", { pageId, notebookId }, (notebook) => {
-							const notebookBlockIndex = notebook.blocks.findIndex(
-								(block) => block.id === notebookBlockId
-							);
+						notebookExtendedApi.util.updateQueryData(
+							"getNotebook",
+							{ pageId, notebookId, isAuth: true },
+							(notebook) => {
+								const notebookBlockIndex = notebook.blocks.findIndex(
+									(block) => block.id === notebookBlockId
+								);
 
-							if (notebookBlockIndex < 0) return;
+								if (notebookBlockIndex < 0) return;
 
-							notebook.blocks[notebookBlockIndex] = updatedNotebookBlock;
-						})
+								notebook.blocks[notebookBlockIndex] = updatedNotebookBlock;
+							}
+						)
 					);
 				} catch {}
 			},
@@ -49,9 +53,13 @@ export const notebookExtendedApi = baseApi.injectEndpoints({
 					await queryFulfilled;
 
 					dispatch(
-						notebookExtendedApi.util.updateQueryData("getNotebook", { pageId, notebookId }, (notebook) => {
-							notebook.blocks = notebook.blocks.filter((n) => n.id !== notebookBlockId);
-						})
+						notebookExtendedApi.util.updateQueryData(
+							"getNotebook",
+							{ pageId, notebookId, isAuth: true },
+							(notebook) => {
+								notebook.blocks = notebook.blocks.filter((n) => n.id !== notebookBlockId);
+							}
+						)
 					);
 				} catch {}
 			},
@@ -96,10 +104,14 @@ export const notebookExtendedApi = baseApi.injectEndpoints({
 					const { data } = await queryFulfilled;
 
 					dispatch(
-						notebookExtendedApi.util.updateQueryData("getNotebook", { pageId, notebookId }, (notebook) => {
-							notebook.blocks.push(data.block);
-							notebook.order = data.order;
-						})
+						notebookExtendedApi.util.updateQueryData(
+							"getNotebook",
+							{ pageId, notebookId, isAuth: true },
+							(notebook) => {
+								notebook.blocks.push(data.block);
+								notebook.order = data.order;
+							}
+						)
 					);
 				} catch {
 					toast.error("We weren't able to create your notebook block. Please try again or contact support.");
@@ -119,9 +131,13 @@ export const notebookExtendedApi = baseApi.injectEndpoints({
 				try {
 					const { data: newOrder } = await queryFulfilled;
 					dispatch(
-						notebookExtendedApi.util.updateQueryData("getNotebook", { pageId, notebookId }, (notebook) => {
-							notebook.order = newOrder;
-						})
+						notebookExtendedApi.util.updateQueryData(
+							"getNotebook",
+							{ pageId, notebookId, isAuth: true },
+							(notebook) => {
+								notebook.order = newOrder;
+							}
+						)
 					);
 				} catch {
 					toast.error("We weren't able to move your notebook block. Please try again or contact support.");
