@@ -4,6 +4,7 @@ import { Languages, SupportedProgrammingLanguage } from "config/programming-lang
 import { useUpdateNotebookBlockMutation } from "features/notebook/notebookApi";
 import useWarnBeforePathChange from "hooks/useWarnBeforePathChange";
 import debounce from "lodash.debounce";
+import useAuth from "hooks/useAuth";
 
 import CodeBlockLanguageSelect from "../CodeBlockLanguageSelect";
 import CodeBlockEditor from "../CodeBlockEditor";
@@ -38,6 +39,7 @@ const getInitialData = (content: string): CodeBlockContent => {
 
 const CodeBlock: React.FC<CodeBlockProps> = ({ content, id, notebookId, pageId }) => {
 	const data = useMemo(() => getInitialData(content), [content]);
+	const { isAuth } = useAuth();
 
 	const [editorValue, setEditorValue] = useState(data.code);
 	const [language, setLanguage] = useState(Languages[data.language]);
@@ -87,18 +89,26 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ content, id, notebookId, pageId }
 		return userConfirmed;
 	});
 
+	if (isAuth) {
+		return (
+			<div className={styles.codeBlock}>
+				<CodeBlockEditor value={editorValue} onValueChange={handleEditorStateChange} language={language} />
+				<div className={styles.codeBlock_controls}>
+					<CodeBlockLanguageSelect
+						languages={Object.values(Languages)}
+						selected={language}
+						onSelect={handleLanguageSelect}
+					/>
+					<CodeBlockCopyButton code={editorValue} />
+					<NotebookDeleteButton notebookBlockId={id} notebookId={notebookId} pageId={pageId} />
+				</div>
+			</div>
+		);
+	}
+
 	return (
 		<div className={styles.codeBlock}>
-			<CodeBlockEditor value={editorValue} onValueChange={handleEditorStateChange} language={language} />
-			<div className={styles.codeBlock_controls}>
-				<CodeBlockLanguageSelect
-					languages={Object.values(Languages)}
-					selected={language}
-					onSelect={handleLanguageSelect}
-				/>
-				<CodeBlockCopyButton code={editorValue} />
-				<NotebookDeleteButton notebookBlockId={id} notebookId={notebookId} pageId={pageId} />
-			</div>
+			<CodeBlockEditor value={editorValue} onValueChange={() => {}} language={language} />
 		</div>
 	);
 };

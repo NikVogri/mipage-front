@@ -9,6 +9,7 @@ import NotebookEditorToolbar from "../NotebookEditorToolbar";
 
 import styles from "./RichTextBlock.module.scss";
 import NotebookDeleteButton from "../NotebookDeleteButton";
+import useAuth from "hooks/useAuth";
 
 interface RichTextBlockProps {
 	content: string;
@@ -29,6 +30,7 @@ const styleMap = {
 
 const RichTextBlock: React.FC<RichTextBlockProps> = ({ content, pageId, notebookId, id }) => {
 	const initialEditorState = useMemo(() => getInitEditorState(content), [content]);
+	const { isAuth } = useAuth();
 
 	const [needsSync, setNeedsSync] = useState(false);
 	const [editorState, setEditorState] = useState(initialEditorState);
@@ -93,23 +95,25 @@ const RichTextBlock: React.FC<RichTextBlockProps> = ({ content, pageId, notebook
 
 	return (
 		<div className={`${styles.rich_text_block} ${isGettingDeleted ? styles.disabled : ""}`} id={`editor-${id}`}>
-			<NotebookEditorToolbar editorState={editorState} setEditorState={updateEditorState} id={id} />
+			{isAuth && <NotebookEditorToolbar editorState={editorState} setEditorState={updateEditorState} id={id} />}
 			<Editor
 				editorState={editorState}
 				onChange={updateEditorState}
 				handleKeyCommand={handleKeyCommand}
 				customStyleMap={styleMap}
-				readOnly={isGettingDeleted}
+				readOnly={isGettingDeleted || !isAuth}
 				ref={editorRef}
 			/>
-			<div className={styles.rich_text_block__controls}>
-				<NotebookDeleteButton
-					onBeforeDelete={handleIsGettingDeleted}
-					notebookBlockId={id}
-					notebookId={notebookId}
-					pageId={pageId}
-				/>
-			</div>
+			{isAuth && (
+				<div className={styles.rich_text_block__controls}>
+					<NotebookDeleteButton
+						onBeforeDelete={handleIsGettingDeleted}
+						notebookBlockId={id}
+						notebookId={notebookId}
+						pageId={pageId}
+					/>
+				</div>
+			)}
 		</div>
 	);
 };

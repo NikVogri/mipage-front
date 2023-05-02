@@ -3,12 +3,77 @@ import { useGetNotebookQuery } from "features/notebook/notebookApi";
 import { useRouter } from "next/router";
 import { NotebookBlock as INotebookBlock } from "models";
 import { orderBlocks } from "helpers/notebookBlock";
+import useAuth from "hooks/useAuth";
 
 import NotebookBlock from "../NotebookBlock";
-import LoadingSpinner from "components/UI/LoadingSpinner";
 import NotebookBlockDevider from "../NotebookBlockDevider";
 import NotebookBlockDraggable from "../NotebookBlockDraggable";
 import AddNotebookBlockModal from "components/modals/AddNotebookBlockModal";
+import LoadingWrapper from "components/UI/LoadingWrapper";
+
+interface NotebookBlockProps {
+	blocks?: INotebookBlock[];
+	order?: string[];
+	pageId: string;
+	notebookId: string;
+}
+
+const NotebookBlocksList: React.FC<NotebookBlockProps> = ({ blocks = [], order = [], pageId, notebookId }) => {
+	const [blockIsDragged, setBlockIsDragged] = useState(false);
+	const { isAuth } = useAuth();
+
+	let sortedBlocks: INotebookBlock[] = [];
+	if (blocks.length && order.length) {
+		sortedBlocks = orderBlocks(blocks, order);
+	} else if (blocks.length) {
+		sortedBlocks = blocks;
+	}
+
+	if (isAuth) {
+		return (
+			<div>
+				{sortedBlocks.map((b) => (
+					<div key={b.id}>
+						<NotebookBlockDraggable
+							notebookBlockId={b.id}
+							onDragChange={(isDragged: boolean) => setBlockIsDragged(isDragged)}
+						>
+							<NotebookBlock
+								type={b.type}
+								content={b.content}
+								pageId={pageId}
+								notebookId={notebookId}
+								id={b.id}
+							/>
+						</NotebookBlockDraggable>
+
+						<NotebookBlockDevider
+							previousBlockId={b.id}
+							notebookId={notebookId}
+							pageId={pageId}
+							showDropzone={blockIsDragged}
+						/>
+					</div>
+				))}
+			</div>
+		);
+	}
+
+	return (
+		<div>
+			{sortedBlocks.map((b) => (
+				<NotebookBlock
+					key={b.id}
+					type={b.type}
+					content={b.content}
+					pageId={pageId}
+					notebookId={notebookId}
+					id={b.id}
+				/>
+			))}
+		</div>
+	);
+};
 
 interface NotebookProps {
 	pageId: string;
@@ -16,18 +81,18 @@ interface NotebookProps {
 
 const Notebook: React.FC<NotebookProps> = ({ pageId }) => {
 	const [showModal, setShowModal] = useState(true);
-	const [blockIsDragged, setBlockIsDragged] = useState(false);
+	const { isAuth } = useAuth();
 
 	const router = useRouter();
 	const { data, isError, isLoading } = useGetNotebookQuery(
-		{ pageId, notebookId: router.query.n as string },
+		{ pageId, notebookId: router.query.n as string, isAuth },
 		{ skip: !router.query.n }
 	);
 
 	const notebookId = router.query.n as string;
 
 	useEffect(() => {
-		if (showModal !== true) setShowModal(true);
+		if (showModal !== true && isAuth) setShowModal(true);
 	}, [notebookId]);
 
 	if (isError) {
@@ -39,52 +104,17 @@ const Notebook: React.FC<NotebookProps> = ({ pageId }) => {
 		);
 	}
 
-	if (isLoading) {
-		return (
-			<div>
-				<LoadingSpinner />
-			</div>
-		);
-	}
-
-	let blocks: INotebookBlock[] = [];
-	if (data?.blocks && data?.order) {
-		blocks = orderBlocks(data.blocks, data.order);
-	} else if (data?.blocks) {
-		blocks = data.blocks;
-	}
-
 	return (
 		<>
-			{blocks.map((block) => (
-				<div key={block.id} style={{ height: "auto" }}>
-					<NotebookBlockDraggable
-						notebookBlockId={block.id}
-						onDragChange={(isDragged: boolean) => setBlockIsDragged(isDragged)}
-					>
-						<NotebookBlock
-							type={block.type}
-							content={block.content}
-							pageId={pageId}
-							notebookId={notebookId}
-							id={block.id}
-						/>
-					</NotebookBlockDraggable>
+			<LoadingWrapper delay={0} isLoading={isLoading}>
+				<NotebookBlocksList blocks={data?.blocks} order={data?.order} notebookId={notebookId} pageId={pageId} />
+			</LoadingWrapper>
 
-					<NotebookBlockDevider
-						previousBlockId={block.id}
-						notebookId={notebookId}
-						pageId={pageId}
-						showDropzone={blockIsDragged}
-					/>
-				</div>
-			))}
-
-			{blocks.length === 0 && (
+			{data?.blocks?.length === 0 && isAuth && (
 				<>
 					<NotebookBlockDevider notebookId={notebookId} pageId={pageId} />
 					<AddNotebookBlockModal
-						isOpen={showModal && blocks.length === 0}
+						isOpen={showModal}
 						setIsOpen={setShowModal}
 						notebookId={notebookId}
 						pageId={pageId}
