@@ -147,3 +147,11 @@ export interface NotebookBlockTypeItem {
 	type: NotebookBlockType;
 	disabled: boolean;
 }
+
+export interface UserCardProfile {
+	id: string;
+	username: string;
+	bio?: string;
+	avatar: string | null;
+	joinedAt: Date;
+}
