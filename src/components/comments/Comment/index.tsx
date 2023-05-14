@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { sanitizeHtml } from "helpers/sanitizeHtml";
 import { User } from "models";
 
-import Avatar from "components/UI/Avatar";
+import AvatarWithProfileCard from "components/UI/AvatarWithProfileCard";
 import HoverPopover from "components/UI/HoverPopover";
 
 import styles from "./Comment.module.scss";
@@ -26,7 +26,7 @@ const Comment: React.FC<CommentProps> = ({ user, body, createdAt }) => {
 	return (
 		<li className={styles.comment}>
 			<div className={styles.comment__poster__avatar}>
-				<Avatar tooltip={false} size="md" username={user.username} avatar={user.avatar} />
+				<AvatarWithProfileCard userId={user.id} tooltip={false} size="md" username={user.username} />
 			</div>
 			<div className={styles.comment__right}>
 				<div className={styles.comment__head}>
