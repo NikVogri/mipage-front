@@ -1,0 +1,17 @@
+.avatar__card__container {
+	position: relative;
+
+	.avatar__open__card__btn {
+		position: relative;
+		cursor: pointer;
+	}
+
+	.avatar__profile__card {
+		position: absolute;
+		top: 0;
+		left: calc(100% + 2rem);
+		z-index: 999;
+
+		width: 40rem;
+	}
+}
