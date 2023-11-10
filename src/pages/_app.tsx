@@ -22,11 +22,10 @@ import Script from "next/script";
 
 function MyApp({ Component, pageProps }: AppProps & { user: User }) {
 	const isClientSide = typeof window !== "undefined";
-	const router = useRouter();
 
 	useEffect(() => {
 		store.dispatch(initAuth());
-	}, [store]);
+	}, []);
 
 	useEffect(() => {
 		if (isClientSide) {
